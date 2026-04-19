@@ -1,0 +1,79 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "Hand-Crafted",
+  "dataset_name": "who_and_when",
+  "dataset_size": 3830493,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/Kevin355/Who_and_When@59b9fcba1aaed7bbf206b5f4d3c68b8face2f49c/Hand-Crafted.parquet": {
+      "num_bytes": 1269999,
+      "checksum": null
+    }
+  },
+  "download_size": 1269999,
+  "features": {
+    "history": {
+      "feature": {
+        "content": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "role": {
+          "dtype": "string",
+          "_type": "Value"
+        }
+      },
+      "_type": "List"
+    },
+    "question": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "groundtruth": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "is_corrected": {
+      "dtype": "bool",
+      "_type": "Value"
+    },
+    "mistake_agent": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "mistake_step": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "mistake_reason": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "question_ID": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "mistake_type": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 5100492,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 3830493,
+      "num_examples": 58,
+      "dataset_name": "who_and_when"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

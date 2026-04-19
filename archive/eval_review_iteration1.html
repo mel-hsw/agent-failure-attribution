@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eval Review</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js" integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT" crossorigin="anonymous"></script>
+  <style>
+    :root {
+      --bg: #faf9f5;
+      --surface: #ffffff;
+      --border: #e8e6dc;
+      --text: #141413;
+      --text-muted: #b0aea5;
+      --accent: #d97757;
+      --accent-hover: #c4613f;
+      --green: #788c5d;
+      --green-bg: #eef2e8;
+      --red: #c44;
+      --red-bg: #fceaea;
+      --header-bg: #141413;
+      --header-text: #faf9f5;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Lora', Georgia, serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Header ---- */
+    .header {
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .header .instructions {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-top: 0.25rem;
+    }
+    .header .progress {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      text-align: right;
+    }
+
+    /* ---- Main content ---- */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* ---- Sections ---- */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      flex-shrink: 0;
+    }
+    .section-header {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .section-body {
+      padding: 1rem;
+    }
+
+    /* ---- Config badge ---- */
+    .config-badge {
+      display: inline-block;
+      padding: 0.2rem 0.625rem;
+      border-radius: 9999px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-left: 0.75rem;
+      vertical-align: middle;
+    }
+    .config-badge.config-primary {
+      background: rgba(33, 150, 243, 0.12);
+      color: #1976d2;
+    }
+    .config-badge.config-baseline {
+      background: rgba(255, 193, 7, 0.15);
+      color: #f57f17;
+    }
+
+    /* ---- Prompt ---- */
+    .prompt-text {
+      white-space: pre-wrap;
+      font-size: 0.9375rem;
+      line-height: 1.6;
+    }
+
+    /* ---- Outputs ---- */
+    .output-file {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .output-file + .output-file {
+      margin-top: 1rem;
+    }
+    .output-file-header {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .output-file-header .dl-btn {
+      font-size: 0.7rem;
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 500;
+      opacity: 0.8;
+    }
+    .output-file-header .dl-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+    .output-file-content {
+      padding: 0.75rem;
+      overflow-x: auto;
+    }
+    .output-file-content pre {
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+    }
+    .output-file-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .output-file-content iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+    }
+    .output-file-content table {
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      width: 100%;
+    }
+    .output-file-content table td,
+    .output-file-content table th {
+      border: 1px solid var(--border);
+      padding: 0.375rem 0.5rem;
+      text-align: left;
+    }
+    .output-file-content table th {
+      background: var(--bg);
+      font-weight: 600;
+    }
+    .output-file-content .download-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+    .output-file-content .download-link:hover {
+      background: var(--border);
+    }
+    .empty-state {
+      color: var(--text-muted);
+      font-style: italic;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* ---- Feedback ---- */
+    .prev-feedback {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.625rem 0.75rem;
+      margin-top: 0.75rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .prev-feedback-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+      color: var(--text-muted);
+    }
+    .feedback-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      resize: vertical;
+      color: var(--text);
+    }
+    .feedback-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    .feedback-status {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      min-height: 1.1em;
+    }
+
+    /* ---- Grades (collapsible) ---- */
+    .grades-toggle {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+    .grades-toggle:hover {
+      color: var(--accent);
+    }
+    .grades-toggle .arrow {
+      margin-right: 0.5rem;
+      transition: transform 0.15s;
+      font-size: 0.75rem;
+    }
+    .grades-toggle .arrow.open {
+      transform: rotate(90deg);
+    }
+    .grades-content {
+      display: none;
+      margin-top: 0.75rem;
+    }
+    .grades-content.open {
+      display: block;
+    }
+    .grades-summary {
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .grade-badge {
+      display: inline-block;
+      padding: 0.125rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .grade-pass { background: var(--green-bg); color: var(--green); }
+    .grade-fail { background: var(--red-bg); color: var(--red); }
+    .assertion-list {
+      list-style: none;
+    }
+    .assertion-item {
+      padding: 0.625rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8125rem;
+    }
+    .assertion-item:last-child { border-bottom: none; }
+    .assertion-status {
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+    .assertion-status.pass { color: var(--green); }
+    .assertion-status.fail { color: var(--red); }
+    .assertion-evidence {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      margin-top: 0.25rem;
+      padding-left: 1.5rem;
+    }
+
+    /* ---- View tabs ---- */
+    .view-tabs {
+      display: flex;
+      gap: 0;
+      padding: 0 2rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .view-tab {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      transition: all 0.15s;
+    }
+    .view-tab:hover { color: var(--text); }
+    .view-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .view-panel { display: none; }
+    .view-panel.active { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+
+    /* ---- Benchmark view ---- */
+    .benchmark-view {
+      padding: 1.5rem 2rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .benchmark-table {
+      border-collapse: collapse;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 0.8125rem;
+      width: 100%;
+      margin-bottom: 1.5rem;
+    }
+    .benchmark-table th, .benchmark-table td {
+      padding: 0.625rem 0.75rem;
+      text-align: left;
+      border: 1px solid var(--border);
+    }
+    .benchmark-table th {
+      font-family: 'Poppins', sans-serif;
+      background: var(--header-bg);
+      color: var(--header-text);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .benchmark-table tr:hover { background: var(--bg); }
+    .benchmark-table tr.benchmark-row-with { background: rgba(33, 150, 243, 0.06); }
+    .benchmark-table tr.benchmark-row-without { background: rgba(255, 193, 7, 0.06); }
+    .benchmark-table tr.benchmark-row-with:hover { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-without:hover { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-table tr.benchmark-row-avg { font-weight: 600; border-top: 2px solid var(--border); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-with { background: rgba(33, 150, 243, 0.12); }
+    .benchmark-table tr.benchmark-row-avg.benchmark-row-without { background: rgba(255, 193, 7, 0.12); }
+    .benchmark-delta-positive { color: var(--green); font-weight: 600; }
+    .benchmark-delta-negative { color: var(--red); font-weight: 600; }
+    .benchmark-notes {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+    }
+    .benchmark-notes h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+    .benchmark-notes ul {
+      list-style: disc;
+      padding-left: 1.25rem;
+    }
+    .benchmark-notes li {
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      margin-bottom: 0.375rem;
+    }
+    .benchmark-empty {
+      color: var(--text-muted);
+      font-style: italic;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    /* ---- Navigation ---- */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .done-btn {
+      font-family: 'Poppins', sans-serif;
+      padding: 0.5rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .done-btn:hover {
+      background: var(--bg);
+      border-color: var(--text-muted);
+    }
+    .done-btn.ready {
+      border: none;
+      background: var(--accent);
+      color: white;
+      font-weight: 600;
+    }
+    .done-btn.ready:hover {
+      background: var(--accent-hover);
+    }
+    /* ---- Done overlay ---- */
+    .done-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+    }
+    .done-overlay.visible {
+      display: flex;
+    }
+    .done-card {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 2rem 3rem;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      max-width: 500px;
+    }
+    .done-card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .done-card p {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .done-card .btn-row {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    .done-card button {
+      padding: 0.5rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      cursor: pointer;
+      font-size: 0.875rem;
+    }
+    .done-card button:hover {
+      background: var(--bg);
+    }
+    /* ---- Toast ---- */
+    .toast {
+      position: fixed;
+      bottom: 5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--header-bg);
+      color: var(--header-text);
+      padding: 0.625rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 200;
+    }
+    .toast.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="height:100vh; display:flex; flex-direction:column;">
+    <div class="header">
+      <div>
+        <h1>Eval Review: <span id="skill-name"></span></h1>
+        <div class="instructions">Review each output and leave feedback below. Navigate with arrow keys or buttons. When done, copy feedback and paste into Claude Code.</div>
+      </div>
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- View tabs (only shown when benchmark data exists) -->
+    <div class="view-tabs" id="view-tabs" style="display:none;">
+      <button class="view-tab active" onclick="switchView('outputs')">Outputs</button>
+      <button class="view-tab" onclick="switchView('benchmark')">Benchmark</button>
+    </div>
+
+    <!-- Outputs panel (qualitative review) -->
+    <div class="view-panel active" id="panel-outputs">
+    <div class="main">
+      <!-- Prompt -->
+      <div class="section">
+        <div class="section-header">Prompt <span class="config-badge" id="config-badge" style="display:none;"></span></div>
+        <div class="section-body">
+          <div class="prompt-text" id="prompt-text"></div>
+        </div>
+      </div>
+
+      <!-- Outputs -->
+      <div class="section">
+        <div class="section-header">Output</div>
+        <div class="section-body" id="outputs-body">
+          <div class="empty-state">No output files found</div>
+        </div>
+      </div>
+
+      <!-- Previous Output (collapsible) -->
+      <div class="section" id="prev-outputs-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="togglePrevOutputs()">
+            <span class="arrow" id="prev-outputs-arrow">&#9654;</span>
+            Previous Output
+          </div>
+        </div>
+        <div class="grades-content" id="prev-outputs-content"></div>
+      </div>
+
+      <!-- Grades (collapsible) -->
+      <div class="section" id="grades-section" style="display:none;">
+        <div class="section-header">
+          <div class="grades-toggle" onclick="toggleGrades()">
+            <span class="arrow" id="grades-arrow">&#9654;</span>
+            Formal Grades
+          </div>
+        </div>
+        <div class="grades-content" id="grades-content"></div>
+      </div>
+
+      <!-- Feedback -->
+      <div class="section">
+        <div class="section-header">Your Feedback</div>
+        <div class="section-body">
+          <textarea
+            class="feedback-textarea"
+            id="feedback"
+            placeholder="What do you think of this output? Any issues, suggestions, or things that look great?"
+          ></textarea>
+          <div class="feedback-status" id="feedback-status"></div>
+          <div class="prev-feedback" id="prev-feedback" style="display:none;">
+            <div class="prev-feedback-label">Previous feedback</div>
+            <div id="prev-feedback-text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav" id="outputs-nav">
+      <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">&#8592; Previous</button>
+      <button class="done-btn" id="done-btn" onclick="showDoneDialog()">Submit All Reviews</button>
+      <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+    </div><!-- end panel-outputs -->
+
+    <!-- Benchmark panel (quantitative stats) -->
+    <div class="view-panel" id="panel-benchmark">
+      <div class="benchmark-view" id="benchmark-content">
+        <div class="benchmark-empty">No benchmark data available. Run a benchmark to see quantitative results here.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Done overlay -->
+  <div class="done-overlay" id="done-overlay">
+    <div class="done-card">
+      <h2>Review Complete</h2>
+      <p>Your feedback has been saved. Go back to your Claude Code session and tell Claude you're done reviewing.</p>
+      <div class="btn-row">
+        <button onclick="closeDoneDialog()">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ---- Embedded data (injected by generate_review.py) ----
+    const EMBEDDED_DATA = {"skill_name": "conversation-handoff", "runs": [{"id": "eval-0-churn-analysis-with_skill", "prompt": "We've been working together for a while on a data analysis project. Here's a summary of what we've covered:\n\nI'm a researcher studying customer churn for a SaaS company. I uploaded a CSV file at ~/data/customer_churn.csv with ~12,000 rows. We cleaned the data (removed 340 rows with missing contract_end dates), did exploratory analysis finding that churned customers had significantly shorter avg session durations (4.2 min vs 9.8 min), and ran a logistic regression model that achieved 81% accuracy on the test set. The most predictive features were: session_duration, support_tickets_last_90d, and months_since_last_login.\n\nWe haven't finished yet \u2014 I still need to: (1) build a random forest model for comparison, (2) generate a summary report with charts, and (3) share findings with the product team.\n\nThe scripts we've written so far are saved at ~/analysis/clean_data.py and ~/analysis/logistic_model.py. The cleaned data is at ~/data/customer_churn_cleaned.csv.\n\nThis conversation is getting quite long. Please create a handoff document so I can continue this work in a new session.", "eval_id": 0, "outputs": [{"name": "handoff.md", "type": "text", "content": "# Handoff: Customer Churn Prediction Model Development\n*Generated: 2026-04-18*\n\n## Goal\nBuild a predictive model to identify SaaS customers at risk of churning, enabling proactive retention strategies. The analysis uses customer behavioral data to identify key churn drivers and compare model performance across different algorithms.\n\n## Context\nThis is a data science project for a SaaS company analyzing customer churn patterns. The dataset contains approximately 12,000 customer records with engagement and account history features. Initial exploratory analysis revealed that churned customers have significantly shorter average session durations (4.2 minutes vs. 9.8 minutes for retained customers), suggesting engagement is a strong churn signal. The team has identified three highly predictive features: session_duration, support_tickets_last_90d, and months_since_last_login.\n\n## Progress\n- **Data cleaning completed**: Removed 340 rows with missing contract_end dates. Cleaned dataset: ~11,660 rows.\n- **Exploratory analysis finished**: Discovered session duration as a key differentiator between churned and retained customers.\n- **Logistic regression model built**: Achieved 81% accuracy on the test set with the three identified predictive features.\n- **Scripts created**: `clean_data.py` and `logistic_model.py` are saved and working.\n- **Cleaned data exported**: `customer_churn_cleaned.csv` ready for modeling.\n\n## Current State\nThe logistic regression baseline is established and validated. The next phase requires building a random forest model for comparison to determine which approach generalizes better. After model comparison, a comprehensive summary report with visualizations will be needed. Finally, findings must be packaged for presentation to the product team.\n\n## Key Files\n- `~/data/customer_churn.csv` \u2014 Original raw dataset (~12,000 rows)\n- `~/data/customer_churn_cleaned.csv` \u2014 Cleaned dataset ready for modeling\n- `~/analysis/clean_data.py` \u2014 Data cleaning and preprocessing script\n- `~/analysis/logistic_model.py` \u2014 Logistic regression model and evaluation code\n\n## Next Steps\n1. **Build random forest model** \u2014 Train on the same cleaned dataset using session_duration, support_tickets_last_90d, and months_since_last_login as features; evaluate test set accuracy and compare performance to logistic regression.\n2. **Generate summary report with visualizations** \u2014 Create charts showing feature importance, model comparison, and churn risk distribution; document key insights from both models.\n3. **Prepare findings for product team** \u2014 Summarize actionable insights (e.g., which customers to target for retention, what engagement thresholds indicate churn risk) in a clear, non-technical format.\n\n---\n\n## Opening Message for New Session\n\nI'm continuing a customer churn prediction project for a SaaS company. We've already done the hard work: cleaned the dataset (removed 340 rows with missing contract_end dates), ran exploratory analysis, and built a logistic regression model that achieved 81% accuracy.\n\nHere's what we found: churned customers have much shorter session durations (4.2 min vs. 9.8 min), and the three most predictive features are session_duration, support_tickets_last_90d, and months_since_last_login.\n\nThe cleaned data is at `~/data/customer_churn_cleaned.csv`, and we have two working scripts: `~/analysis/clean_data.py` and `~/analysis/logistic_model.py`.\n\nI still need to finish three things:\n1. Build a random forest model to compare against the logistic regression baseline\n2. Create a summary report with charts showing model performance and key insights\n3. Package the findings for the product team\n\nCan you start with the random forest model? Train it on the same features and dataset, then compare its test accuracy to the logistic regression score (81%). After that, we'll move on to the report and team presentation.\n"}], "grading": null}, {"id": "eval-0-churn-analysis-without_skill", "prompt": "We've been working together for a while on a data analysis project. Here's a summary of what we've covered:\n\nI'm a researcher studying customer churn for a SaaS company. I uploaded a CSV file at ~/data/customer_churn.csv with ~12,000 rows. We cleaned the data (removed 340 rows with missing contract_end dates), did exploratory analysis finding that churned customers had significantly shorter avg session durations (4.2 min vs 9.8 min), and ran a logistic regression model that achieved 81% accuracy on the test set. The most predictive features were: session_duration, support_tickets_last_90d, and months_since_last_login.\n\nWe haven't finished yet \u2014 I still need to: (1) build a random forest model for comparison, (2) generate a summary report with charts, and (3) share findings with the product team.\n\nThe scripts we've written so far are saved at ~/analysis/clean_data.py and ~/analysis/logistic_model.py. The cleaned data is at ~/data/customer_churn_cleaned.csv.\n\nThis conversation is getting quite long. Please create a handoff document so I can continue this work in a new session.", "eval_id": 0, "outputs": [], "grading": null}, {"id": "eval-0-failure-classification-with_skill", "prompt": "Agent trace failure classification - 47/200 done, taxonomy with judgment calls", "eval_id": 0, "outputs": [{"name": "handoff.md", "type": "text", "content": "# Handoff: Failure Attribution Classification for GAIA Benchmark Traces\n*Generated: 2026-04-18*\n\n## Goal\n\nClassify failure types across ~200 execution traces from multi-agent systems tested on the GAIA benchmark. The goal is to evaluate whether the Google ADK evaluation suite can accurately perform **failure attribution** \u2014 identifying the **failure origin** (the earliest step where the error enters the trajectory), and distinguishing whether failures are **node-level** (localized to a specific step) or **process-level** (cascading from an earlier decision and surfacing later).\n\n## Context\n\nThis is part of the Failure Attribution Experiment. The core evaluation task is to test the ADK suite's ability to identify failure origins regardless of whether a failure is node-level (the error originates at a specific step) or process-level (the error cascades from an earlier bad decision and only manifests later). The project lives in `/Users/mel/Documents/GitHub/failure_experiment/` and follows the instructions in `CLAUDE.md` (the stable project contract) with evolving details in `docs/PROJECT.md`.\n\nThe working agreement is to keep GAIA as the canonical benchmark scope and treat category names as guidelines, not mandates \u2014 let the data suggest clusters rather than forcing data into predefined buckets.\n\n## Schema / Categories\n\nTwo-level taxonomy:\n\n**Node-Level Failures** (error originates at a specific step):\n- **Tool Error**: Agent calls a tool incorrectly (wrong parameters, syntax, format), or the tool fails and the agent cannot recover.\n- **Hallucination**: Agent generates false information (nonexistent file paths, incorrect API responses, made-up function signatures, factual errors). Only label if the hallucination is on the critical path to failure.\n- **Context Loss**: Agent forgets or fails to retain earlier instructions, constraints, or context from previous steps.\n- **Refusal**: Agent explicitly refuses to perform a task per its guidelines or policy.\n\n**Process-Level Failures** (error cascades from an earlier decision):\n- **Flawed Plan**: Initial plan is wrong, incomplete, or unachievable; error cascades from this. Include traces where the agent partially recovers but the fundamental plan was flawed.\n- **Incorrect Assumption**: Agent makes an incorrect assumption about state, capability, or environment early on, and this assumption poisons downstream steps.\n- **Compounding Error**: Multiple smaller errors or missteps accumulate, each making the next one more likely. Reserve for cases where no single earlier error is the clear origin.\n\n## Established Rules & Decisions\n\n1. **Hallucination on critical path only**: If an agent hallucinates a file path or API response but the task still succeeds (e.g., succeeds despite the hallucination, or hallucinates something non-essential), label as Hallucination only if the hallucination is on the critical path to the failure.\n\n2. **Context Loss vs. Refusal distinction**: Context Loss applies when the agent genuinely forgets or fails to retain earlier instructions (demonstrates no awareness of them). Refusal is when the agent is aware of a constraint but explicitly chooses not to follow it.\n\n3. **Flawed Plan includes partial recovery**: Traces where the initial plan was fundamentally wrong but the agent partially recovers or pivots mid-execution still go to Flawed Plan (not Compounding Error), because the root failure origin is the bad plan.\n\n4. **Unresolved question (set aside)**: Whether to split Hallucination into factual vs. navigational subtypes has not been resolved; defer this for now.\n\n## Progress\n\n- **Traces processed**: 47 out of ~200 (23.5% complete)\n- **Data source**: Traces located in `data/consolidated/`\n- **Methodology**: Manual classification together, with judgment calls validated on the spot\n- **Key patterns emerging**: \n  - Tool errors are common early in traces\n  - Hallucinations tend to propagate when agents don't validate outputs\n  - Flawed plans often surface as cascading Incorrect Assumptions downstream\n  - Context Loss is relatively rare; most \"forgotten\" instructions are actually ignored (Refusal)\n\n## Current State\n\n- Classification is in-progress: 47 traces classified, ~153 remaining\n- No traces have been finalized or written to output yet\n- All judgment calls are documented in the conversation context above\n- The taxonomy is stable and applicable; edge cases are well-understood\n\n## Next Steps\n\n1. Continue classifying remaining traces (starting from trace 48) using the established taxonomy and judgment calls\n2. For each trace, identify the failure origin and classify as node-level or process-level\n3. Document any new edge cases or patterns that emerge\n4. Once all ~200 traces are classified, perform a final review pass to check for consistency\n5. Export final classifications to a structured output format (CSV or JSON) for evaluation suite ingestion\n\n## Key Files\n\n- `/Users/mel/Documents/GitHub/failure_experiment/CLAUDE.md` \u2014 project instructions and stable contract\n- `/Users/mel/Documents/GitHub/failure_experiment/docs/PROJECT.md` \u2014 evolving taxonomy, data sources, decisions log\n- `/Users/mel/Documents/GitHub/failure_experiment/data/consolidated/` \u2014 the trace data to classify\n\n---\n\n## Opening Message for New Session\n\nI'm classifying failure types in execution traces from multi-agent systems tested on the GAIA benchmark. The goal is to evaluate whether the Google ADK suite can accurately identify the **failure origin** \u2014 the earliest step where an error enters the trajectory.\n\nI use a two-level taxonomy:\n\n**Node-Level Failures** (error originates at a specific step):\n- **Tool Error** \u2014 agent calls a tool incorrectly or cannot recover from tool failure\n- **Hallucination** \u2014 agent generates false information (but only count as failure if on critical path)\n- **Context Loss** \u2014 agent forgets earlier instructions (not ignores them)\n- **Refusal** \u2014 agent explicitly refuses to perform a task\n\n**Process-Level Failures** (error cascades from earlier decision):\n- **Flawed Plan** \u2014 initial plan is wrong; includes traces where agent partially recovers\n- **Incorrect Assumption** \u2014 agent makes a false assumption early on that poisons downstream steps\n- **Compounding Error** \u2014 multiple smaller errors accumulate (use sparingly; usually a earlier error is the clearer origin)\n\n**Key judgment calls** we've settled on:\n- Hallucination only counts if it's on the critical path\n- Context Loss = genuinely forgot (no awareness); Refusal = aware but chose not to follow\n- Flawed Plan includes partial recovery cases\n- We haven't yet split Hallucination into factual vs. navigational subtypes\n\n**Progress**: I've classified 47 out of ~200 traces. I'm now working through the next batch. Each trace should be labeled with one failure type and classified as either node-level or process-level. Please use the judgment calls above consistently and let me know if you encounter a case that doesn't fit neatly \u2014 we'll document it as a new pattern or edge case.\n\nThe trace data is in `/Users/mel/Documents/GitHub/failure_experiment/data/consolidated/`. Please see CLAUDE.md and docs/PROJECT.md for full project context.\n"}], "grading": null}, {"id": "eval-0-failure-classification-without_skill", "prompt": "Agent trace failure classification - 47/200 done, taxonomy with judgment calls", "eval_id": 0, "outputs": [], "grading": null}, {"id": "eval-1-cli-tool-bug-with_skill", "prompt": "Hey, I need a handoff doc. We've been building a CLI tool in Python called 'projtrack' \u2014 a project time-tracking tool. The repo is at ~/code/projtrack/. We designed the architecture (SQLite backend, Click for CLI), wrote the database schema in db/schema.sql, and implemented the 'start' and 'stop' commands in cli.py. But we hit a bug: the 'stop' command sometimes doesn't write the end time if the process is interrupted with Ctrl+C \u2014 it's a signal handling issue in cli.py around line 87. We decided to fix it using Python's signal module with a SIGINT handler, but haven't written that code yet. There are also two features still on the backlog: a 'report' command (shows time by project) and a 'sync' command (exports to CSV). I need to hand this off because I'm switching to a different agent that specializes in Python.", "eval_id": 1, "outputs": [{"name": "handoff.md", "type": "text", "content": "# Handoff: Fix Signal Handling Bug in projtrack CLI Tool\n*Generated: 2026-04-18*\n\n## Goal\n\nFix a signal handling bug in the 'projtrack' Python CLI tool where the 'stop' command fails to write the end time when interrupted with Ctrl+C. The project is being handed off to a Python-specialized agent to implement this fix using Python's signal module, and to develop two backlog features: a 'report' command and a 'sync' command.\n\n## Context\n\nThe **projtrack** tool is a project time-tracking application with the following architecture:\n- **Backend**: SQLite database with schema defined in `db/schema.sql`\n- **CLI Framework**: Python Click library\n- **Current commands**: 'start' and 'stop' for tracking project time\n\nThe tool is designed to help users log time spent on projects. The 'start' command begins a timer for a project, and the 'stop' command ends the timer and writes the elapsed time to the database.\n\n## Progress\n\n- Completed architecture design (SQLite + Click)\n- Implemented database schema in `db/schema.sql`\n- Implemented 'start' and 'stop' commands in `cli.py`\n- Identified critical bug: signal handling issue in `cli.py` around line 87\n- Determined solution approach: Use Python's `signal` module with a SIGINT handler\n\n## Current State\n\nThe codebase is functional for basic time tracking but has a reliability issue. When a user interrupts the 'stop' command with Ctrl+C (SIGINT), the end time is not written to the database. This leaves time entries incomplete and creates data integrity issues. The code is ready for the bug fix \u2014 no refactoring needed, just implementation of proper signal handling.\n\nThe bug location is known: `cli.py` line 87 (approximately).\n\n## Key Files\n\n- `~/code/projtrack/db/schema.sql` \u2014 SQLite database schema\n- `~/code/projtrack/cli.py` \u2014 Click CLI implementation, contains the 'start' and 'stop' commands\n- `~/code/projtrack/` \u2014 Root directory of the project repository\n\n## Next Steps\n\n1. **Fix signal handling bug** (Priority 1): Implement a SIGINT handler in `cli.py` using Python's `signal` module. The handler should gracefully catch Ctrl+C interrupts and ensure the end time is written to the database before exiting the 'stop' command.\n2. **Test the fix**: Verify that interrupting 'stop' with Ctrl+C now properly records the end time.\n3. **Implement 'report' command** (Backlog): Create a new command that displays time logged by project (summary view).\n4. **Implement 'sync' command** (Backlog): Create a new command that exports time tracking data to CSV format.\n\n---\n\n## Opening Message for New Session\n\nHi! I'm handing off work on **projtrack**, a Python CLI tool for project time tracking. The repo is at `~/code/projtrack/`.\n\nWe've completed the architecture (SQLite backend, Click CLI framework) and implemented the 'start' and 'stop' commands. However, there's a critical bug: when users interrupt the 'stop' command with Ctrl+C, the end time isn't written to the database, leaving time entries incomplete.\n\nThe issue is in `cli.py` around line 87. We decided to fix it using Python's `signal` module with a SIGINT handler.\n\n**What I need:**\n1. Implement the SIGINT handler in `cli.py` to ensure end times are always written, even when interrupted\n2. Test that the fix works (try interrupting 'stop' with Ctrl+C)\n3. Once the bug is fixed, implement two backlog features: a 'report' command (shows time by project) and a 'sync' command (exports to CSV)\n\nThe project is ready for implementation \u2014 architecture and schema are solid. Just need the signal handling fix and the two new commands. You specialize in Python, so this should be right in your wheelhouse!\n"}], "grading": null}, {"id": "eval-1-cli-tool-bug-without_skill", "prompt": "Hey, I need a handoff doc. We've been building a CLI tool in Python called 'projtrack' \u2014 a project time-tracking tool. The repo is at ~/code/projtrack/. We designed the architecture (SQLite backend, Click for CLI), wrote the database schema in db/schema.sql, and implemented the 'start' and 'stop' commands in cli.py. But we hit a bug: the 'stop' command sometimes doesn't write the end time if the process is interrupted with Ctrl+C \u2014 it's a signal handling issue in cli.py around line 87. We decided to fix it using Python's signal module with a SIGINT handler, but haven't written that code yet. There are also two features still on the backlog: a 'report' command (shows time by project) and a 'sync' command (exports to CSV). I need to hand this off because I'm switching to a different agent that specializes in Python.", "eval_id": 1, "outputs": [], "grading": null}, {"id": "eval-1-lit-synthesis-with_skill", "prompt": "LLM eval literature synthesis - 22 papers coded, 6-dimension scheme", "eval_id": 1, "outputs": [{"name": "handoff.md", "type": "text", "content": "# Failure Attribution Classification \u2014 Handoff Document\n\n**Date:** 2026-04-18  \n**Context:** 47 of ~200 traces classified so far (23.5% complete)  \n**Project:** Evaluating failure attribution accuracy on GAIA benchmark trajectories using Google ADK evaluation suite.\n\n---\n\n## Core Taxonomy (Two-Level Framework)\n\n### Node-Level Failures (Single-step, localized \u2014 55% of dataset)\n\nThe error originates at a specific step and does not propagate; detection is local to that step.\n\n| Cluster | Definition | Validation | Example |\n|---------|-----------|-----------|---------|\n| **N1: Hallucination / Factual Fabrication** | Agent asserts false factual information without evidence in the context. | Requires ground-truth comparison. | \"Tom Ridge received his bachelor's from University of Maryland UMBC\" (false). Verified by checking actual biographical data. |\n| **N2: Code Implementation Bug** | The agent writes syntactically valid code with logical errors. | Runtime-verifiable by executing the code. | Rounding 16,788.35 hours to 16,000 instead of 17,000. |\n| **N3: Tool Execution or Retrieval Failure** | Tool call fails (error signal, timeout, no results, malformed response). | Detectable from tool output/error signals. | WebSurfer cannot access PDF; Orchestrator encounters \"Model not found\" error. |\n| **N4: Wrong Tool Selection** | Agent picks a tool that does not match the task requirement. | Requires task-goal vs. tool-purpose comparison. | Using `wikipedia_knowledge_searcher` to access Tropicos database (the tool doesn't provide that access). |\n| **N5: Invalid Tool Parameters / Input** | Parameters do not conform to tool schema (wrong type, nonsensical value, out of range). | Schema validation. | Searching a nonsensical query; passing an invalid number. |\n\n### Process-Level Failures (Multi-step, structural or cumulative \u2014 45% of dataset)\n\nThe error originates at an early decision point but only manifests or surfaces later; success depends on fixing the root cause early.\n\n| Cluster | Definition | Example |\n|---------|-----------|---------|\n| **P1: Improper Task Decomposition / Bad Plan** | Agent's initial strategy is fundamentally flawed or impossible given available tools. Includes inefficient plans and impossible action proposals. | Agent plans to extract YouTube video transcript using only URL text extractor (wrong tool). Agent repeatedly attempts the same failed strategy. |\n| **P2: Progress Misassessment** | Agent misinterprets results or draws incorrect conclusions, believing forward progress has been made when it hasn't. | Reflection module concludes task is complete when it isn't; agent misinterprets search results as success. |\n| **P3: Cascading Error (Explicit Propagation)** | Early step (often in memory/summary module) loses critical information or oversimplifies, forcing downstream steps to proceed on incomplete/corrupted data. | Memory module summarizes movie extraction as \"identified the top 10 movies\" without storing actual titles, so subsequent steps cannot access them. |\n| **P4: Constraint Ignorance / Unchecked Assumption** | Agent ignores or does not verify a stated constraint (time frame, scope, specificity requirement). | Task asks for roster \"as of July 2023\"; agent provides current roster without verifying time. Assumes population value is 2020 estimate without confirming. |\n\n---\n\n## Key Decision Rules (Judgment Calls Established)\n\n### 1. Hallucination Activation Rule\n**When to label N1 (Hallucination) vs. ignoring it:**\n- Label as **N1 only if the hallucination is on the critical path** to task success.\n- If an agent hallucinates a file path but the task succeeds anyway, it is **not** a critical failure; do not label N1.\n- **Rationale:** We are classifying *failure attribution*, not all mistakes. A hallucination that does not prevent success is not a failure origin.\n\n### 2. Context Loss vs. Refusal Distinction\n**When to label Context Loss (now part of N1) vs. Refusal:**\n- **Context Loss / N1:** Agent genuinely forgets earlier instructions that were provided.  \n  - Example: Initial constraint stated in first step; agent stops applying it by step 5.\n- **Refusal / (currently unrepresented, would need new label):** Agent knowingly ignores instructions it read and understood.\n- **Rationale:** Cognition vs. agency. Forgetting indicates a module-level failure (memory); ignoring indicates deliberate choice (not in current taxonomy).\n\n### 3. Partial Recovery in Process-Level Plans\n**When a bad plan triggers recovery:**\n- If initial plan is wrong **but the agent partially recovers** \u2192 label **P1 (Flawed Plan)**, not P3 (Compounding Error).\n- P3 is reserved for cases where **the early failure directly causes the late-stage error without recovery opportunity**.\n- **Rationale:** P1 emphasizes the root cause (bad decomposition); recovery is a second-order behavior. We want to point to where the strategy failed, not where the agent clawed back.\n\n### 4. Critical-Path Threshold for N1\n**Apply this when uncertain whether a hallucination caused the failure:**\n- Ask: \"If this hallucination had not occurred, would the agent have succeeded with minimal replanning?\"\n- If **yes** \u2192 N1 (critical path).\n- If **no** \u2192 Likely a symptom of a deeper issue (P1, P2, etc.); classify the root issue instead.\n\n### 5. Tool Failure vs. Wrong Selection (N3 vs. N4)\n- **N3 (Tool Execution Failure):** Tool is the right choice, but it fails to deliver (no results, error, timeout).\n- **N4 (Wrong Tool Selection):** Tool is the wrong choice; a different tool would have succeeded.\n- **Overlap case:** If agent picks tool X which fails, then blames the tool instead of pivoting to tool Y \u2192 N3 (tool failure) not N4, because the tool was appropriate in intent.\n\n### 6. Constraint Ignorance (P4) vs. Incomplete Search\n- **P4 (Constraint Ignorance):** Agent is aware of or should be aware of the constraint but does not apply it.  \n  - Example: Question specifies \"2023\" but agent provides \"current/undated\" result without checking.\n- **Not P4:** Agent searches incompletely by accident (e.g., limited search budget); this is closer to inefficient planning (P1).\n\n---\n\n## Unresolved Questions (Parked for Future Work)\n\n1. **Hallucination Subtyping**  \n   - Should we split N1 into:\n     - **N1a: Factual Hallucination** (wrong fact about the world)\n     - **N1b: Navigational Hallucination** (wrong file path, wrong URL, wrong entity name)\n   - **Status:** Parked. We recognize the distinction but haven't resolved whether to formalize it yet.\n\n---\n\n## Dataset Summary (47 Traces Classified)\n\n| Source | Count | Status |\n|--------|-------|--------|\n| AgentErrorBench (GPT-4o) | 17 | Complete |\n| AgentErrorBench (Llama3.3-70B-Turbo) | 17 | Complete |\n| AgentErrorBench (Qwen3-8B) | 17 | Complete |\n| Who_and_When Hand-Crafted | ~29 | In progress or complete (check consolidated CSV) |\n| **Total Classified** | ~80 | Need to verify exact count |\n| **Total Dataset** | 154 | AgentErrorBench (50) + W&W Hand-Crafted (29) + W&W Algorithm-Generated (75) |\n\n**Data location:** `/Users/mel/Documents/GitHub/failure_experiment/data/consolidated/failure_classifications.csv`\n\n---\n\n## Workflow for Next Session\n\n1. **Resume from:** Row 47 in `failure_classifications.csv` (or verify last classified trace).\n2. **For each new trace:**\n   - Read the failure reasoning text and trajectory steps.\n   - Match to one of the 9 clusters (N1\u2013N5, P1\u2013P4) using the definitions above.\n   - If the reasoning doesn't fit cleanly, check the decision rules first before creating a new cluster.\n   - If still ambiguous, flag it (could be a gap in the taxonomy).\n3. **Use this document as reference** for consistency on judgment calls.\n4. **Update `docs/PROJECT.md`** when a new decision rule emerges or a new pattern appears.\n\n---\n\n## File References\n\n- **Stable contract:** `/Users/mel/Documents/GitHub/failure_experiment/CLAUDE.md`\n- **Evolving project state:** `/Users/mel/Documents/GitHub/failure_experiment/docs/PROJECT.md`\n- **Classified data:** `/Users/mel/Documents/GitHub/failure_experiment/data/consolidated/failure_classifications.csv`\n- **Consolidated trajectories:** `/Users/mel/Documents/GitHub/failure_experiment/data/consolidated/gaia_consolidated.jsonl`\n- **Classification scripts:** `/Users/mel/Documents/GitHub/failure_experiment/scripts/`\n\n---\n\n## Next Steps (After Classification Complete)\n\n1. Run Google ADK evaluation suite against `gaia_consolidated.jsonl`.\n2. Score predictions three ways:\n   - (a) Predicted origin step matches annotated origin step.\n   - (b) Predicted cluster/level matches classification.\n   - (c) Process-level origins attributed to early step, not late symptom.\n3. Report performance per cluster. Stress-test on P3 (cascading errors) for late-symptom bias.\n4. Decide whether to pursue additional data for unrepresented categories (goal drift, causal misattribution).\n\n---\n\n## Contact & Email\n\nUser email: mwong3@andrew.cmu.edu\n\n---\n\n**End of handoff document.**\n"}], "grading": null}, {"id": "eval-1-lit-synthesis-without_skill", "prompt": "LLM eval literature synthesis - 22 papers coded, 6-dimension scheme", "eval_id": 1, "outputs": [{"name": "handoff.md", "type": "text", "content": "# Literature Synthesis Handoff: LLM Evaluation Methods\n**Date:** 2026-04-18  \n**User:** mwong3@andrew.cmu.edu\n\n---\n\n## Project Overview\n\n**Goal:** Conduct a structured literature synthesis to identify the most commonly used evaluation dimensions across LLM evaluation papers, with the output feeding into a coding scheme for a systematic review.\n\n**Status:** 22 papers coded; ~40 papers remain in queue.\n\n---\n\n## Coding Framework\n\n### Evaluation Dimensions (6 total)\n\n1. **Task Performance** \u2014 Accuracy on a benchmark (MMLU, HellaSwag, etc.)\n   - Papers that only evaluate task performance without robustness testing are coded as Task Performance only.\n\n2. **Robustness** \u2014 Performance under distribution shift or adversarial inputs.\n\n3. **Calibration** \u2014 Whether confidence scores match actual accuracy.\n\n4. **Safety/Alignment** \u2014 Refusal rates, bias detection, harmful output detection.\n\n5. **Efficiency** \u2014 Token usage, latency, cost metrics.\n\n6. **Reasoning Quality** \u2014 Chain-of-thought quality assessed independently from final answer.\n   - *Note:* This was a late addition (after ~10 papers) when we observed multiple papers scoring CoT separately.\n\n### Tagging Convention\n\n- **'HE' tag:** Papers that use human evaluation rather than automated metrics.\n  - Apply this tag when human raters judge outputs, not just when humans author the benchmark data.\n\n---\n\n## Key Decisions Log\n\n- **Reasoning Quality as separate dimension:** Several papers explicitly scored CoT quality independent of final answer correctness. This warrants its own dimension rather than subsuming it into Task Performance.\n  \n- **Task Performance + nothing else:** Papers that benchmark only on MMLU/HellaSwag without any robustness, calibration, or efficiency testing should be coded as Task Performance only\u2014do not artificially add other dimensions.\n\n- **Human evaluation tagging:** Use 'HE' to flag papers relying on human judgment. This helps track methodology differences at synthesis stage.\n\n---\n\n## Paper Queue Status\n\n**Completed:** 22 papers  \n**Remaining:** ~40 papers  \n\n**Next paper to code:** \"Holistic Evaluation of Language Models\" (HELM)\n\n**Queue location:** `~/papers/to_code/`\n\n---\n\n## Coding Checklist (for each paper)\n\n- [ ] Read paper title, abstract, and methods section\n- [ ] Identify which of the 6 dimensions are evaluated\n- [ ] Check if human evaluation is used (apply 'HE' tag if yes)\n- [ ] Note any dimension-specific details (e.g., which benchmarks for Task Performance, which adversarial attacks for Robustness)\n- [ ] Flag any novel evaluation approach not fitting the 6 dimensions\n- [ ] Record metadata: authors, year, venue, primary focus\n\n---\n\n## Next Steps\n\n1. Code HELM paper and subsequent papers in queue using the 6-dimension framework above.\n2. As you code, watch for:\n   - Patterns in which dimensions co-occur (e.g., do Safety/Alignment papers always also measure Task Performance?)\n   - Frequency distribution across dimensions (which are most common?)\n   - Any evaluation approaches that don't fit the current 6 dimensions\u2014log these as potential new clusters.\n3. After completing the remaining ~40 papers, consolidate frequency counts and prepare a summary table of dimension prevalence.\n4. If new dimensions emerge, add them to the framework and flag for validation discussion.\n\n---\n\n## Reference Materials\n\n- **Framework definition:** See \"Coding Framework\" section above.\n- **Decision history:** See \"Key Decisions Log\" section.\n- **Paper queue:** `~/papers/to_code/`\n- **Output format:** (Suggest maintaining a spreadsheet or JSON file with columns: Paper ID, Title, Authors, Year, Venue, Dimensions [checkboxes], HE tag [yes/no], Notes)\n\n---\n\n## Contact & Validation\n\nIf you encounter a paper that doesn't fit neatly, or if the data suggests clustering that differs from the 6 dimensions above, note it clearly and flag for Mel's review before forcing it into an existing category.\n"}], "grading": null}, {"id": "eval-2-interview-prep-with_skill", "prompt": "Quant hedge fund interview prep - some topics covered, gaps remaining", "eval_id": 2, "outputs": [{"name": "handoff.md", "type": "text", "content": "# Handoff: Systematic Trading Researcher Interview Prep\n*Generated: 2026-04-18*\n\n## Goal\n\nPrepare for a quantitative hedge fund interview for a systematic trading researcher role in 3 days. The interview covers algorithmic trading, risk factor models, and market microstructure. The goal is to drill the remaining weak areas (execution cost modeling, market microstructure, and options pricing) so you can answer questions with confidence and depth.\n\n## Context\n\nThis is an interview for a systematic trading researcher position at a quantitative hedge fund. The role expects deep understanding of:\n- Momentum strategies and cross-sectional portfolio construction\n- Risk factor decomposition and how to separate alpha from beta exposure\n- Execution costs and their impact on strategy profitability\n- Market microstructure and how price discovery happens\n- Options pricing and its relationship to equity strategies\n\nYou have a quantitative finance background and are comfortable with math and statistics. The interview will likely probe both conceptual understanding and practical application (e.g., \"how would you actually build this?\").\n\n## Progress Made\n\n**Completed topics:**\n1. **Momentum strategies** \u2014 deep dive on cross-sectional momentum: how it works, why it decays after ~12 months, and how to construct a simple long-short portfolio with proper long/short sizing\n2. **Risk factor decomposition** \u2014 Fama-French 3-factor vs 5-factor models, how to think about alpha (strategy-specific outperformance) vs. beta (systematic factor exposure)\n\n## Current Gaps & Weak Areas\n\n1. **Execution cost modeling** \u2014 barely touched; needs depth on:\n   - Impact costs (permanent and temporary components)\n   - How to estimate execution cost as a function of order size and market conditions\n   - How execution costs eat into strategy returns and set a floor on position sizing\n\n2. **Market microstructure** \u2014 not yet covered; key concepts to master:\n   - Bid-ask spreads and why they exist (adverse selection, inventory risk, order processing)\n   - The Kyle model of strategic trading and how informed traders move prices\n   - Market depth and how order book structure affects execution\n\n3. **Options pricing basics** \u2014 not covered at all; priority areas:\n   - Black-Scholes model and the Greeks (delta, gamma, vega, theta)\n   - Put-call parity and basic arbitrage relationships\n   - Implied vs. realized volatility and why they diverge\n\n## Current State\n\n- Interview is in 3 days\n- Momentum and risk factor topics are solidly covered\n- Execution costs, microstructure, and options pricing are the three priority gaps\n- No materials created yet (this is a conversational prep session)\n\n## Next Steps\n\n1. **Deep dive on execution costs** (target: 30\u201345 min)\n   - Walk through the components: temporary impact, permanent impact, opportunity costs\n   - Discuss models: linear impact, square-root impact, general functional forms\n   - Practice framing: \"For a 1M-share order in a stock with avg daily volume of 10M, what execution costs might I face?\"\n\n2. **Market microstructure** (target: 45\u201360 min)\n   - Intuitive foundation: why bid-ask spreads exist and what causes them\n   - Kyle model: walk through the math and intuition for how informed demand affects prices\n   - Practical application: how to think about market depth, liquidity, and adverse selection in strategy construction\n\n3. **Options pricing fundamentals** (target: 30\u201345 min)\n   - Black-Scholes model: assumptions, formula, and when it breaks down\n   - Greeks and their interpretation: delta as hedge ratio, gamma as convexity risk, vega as vol exposure, theta as time decay\n   - Put-call parity and how to spot arbitrage\n\n4. **Integration & interview mock** (target: 15\u201320 min)\n   - Tie together: how execution costs and microstructure interact with factor models and momentum strategies\n   - Practice answering scenario-based questions: \"You want to build a momentum portfolio but execution costs are 50 bps. How do you think about position sizing?\"\n\n---\n\n## Opening Message for New Session\n\nI'm prepping for a quantitative hedge fund interview for a systematic trading researcher role \u2014 my interview is in 3 days. We've already covered momentum strategies (cross-sectional momentum, why it decays, portfolio construction) and risk factor decomposition (Fama-French 3-factor vs 5-factor, alpha vs. beta). \n\nI'm solid on those topics now. But I have three major gaps that I need to drill:\n\n1. **Execution cost modeling** \u2014 I barely understand how to model execution costs (impact costs, temporary vs permanent components, functional forms) or how they constrain strategy profitability\n2. **Market microstructure** \u2014 I haven't studied bid-ask spreads, adverse selection, or the Kyle model of strategic trading\n3. **Options pricing basics** \u2014 I haven't covered Black-Scholes, the Greeks, or put-call parity at all\n\nCan we do a deep dive on these three areas? I want to move quickly and get to the point where I can explain these concepts clearly in an interview and answer scenario-based questions (e.g., \"Your momentum strategy has 50 bps of execution costs \u2014 how do you think about position sizing and profitability?\"). \n\nFor each topic, please:\n- Explain the key intuition first, then walk through the math\n- Give me a concrete example or two\n- Flag the bits that come up most in interviews\n- Tell me what assumptions or edge cases to watch out for\n\nLet's start with execution costs \u2014 that feels like the most practical place to begin.\n"}], "grading": null}, {"id": "eval-2-interview-prep-without_skill", "prompt": "Quant hedge fund interview prep - some topics covered, gaps remaining", "eval_id": 2, "outputs": [{"name": "handoff.md", "type": "text", "content": "# Systematic Trading Researcher Interview Prep \u2014 Handoff Document\n\n## Interview Context\n- **Role:** Systematic Trading Researcher\n- **Firm Type:** Quantitative Hedge Fund\n- **Timeline:** 3 days until interview\n- **Date Prepared:** April 18, 2026\n\n---\n\n## What We've Covered (Solid Foundation)\n\n### 1. Momentum Strategies\n- **Cross-sectional momentum mechanics:** How past winners/losers are ranked and what signals persist\n- **Decay dynamics:** Why momentum profits decay after ~12 months (market efficiency, profit dissipation, rebalancing effects)\n- **Portfolio construction:** Building a long-short portfolio with momentum signals\n  - Ranking systems, weight assignment, rebalancing frequency\n  - How to think about transaction costs at the implementation level\n\n### 2. Risk Factor Decomposition\n- **Fama-French 3-factor model:** Market risk (beta), size (SMB), value (HML)\n- **Fama-French 5-factor extension:** Added profitability and investment factors\n- **Alpha vs. beta clarity:** How to decompose returns \u2014 which portions are compensation for factor exposure vs. true outperformance\n- **Regression mechanics:** Running factor exposures to understand strategy risk profile\n\n---\n\n## Critical Gaps (Priority Focus \u2014 3 Days)\n\nThese are the areas where weak knowledge could hurt you in technical questions:\n\n### 1. Execution Cost Modeling (HIGH PRIORITY)\n**Why it matters:** Quant funds obsess over execution. Your profit margins disappear if you don't model costs accurately.\n\n**Key concepts to master:**\n- **Bid-ask spread:** What it is, how it eats into returns, when it widens\n- **Market impact:** How your own orders move the market against you\n  - Temporary impact (immediate, recovers)\n  - Permanent impact (reflects new info, doesn't recover)\n- **Implementation shortfall:** Actual cost = benchmark price - execution price\n- **Cost modeling framework:**\n  - How to estimate costs before trading (pre-trade analysis)\n  - Linear impact models (cost \u221d order size)\n  - Non-linear models (concave impact for larger orders)\n- **Optimization angle:** How to incorporate execution costs into portfolio optimization\n  - Optimal execution algorithms (TWAP, VWAP, Almgren-Chriss)\n\n**Interview angle:** Be ready to discuss trade-offs (e.g., \"If execution costs are high, how might you adjust your strategy?\")\n\n### 2. Market Microstructure (HIGH PRIORITY)\n**Why it matters:** Understanding how markets actually work is essential for a trading researcher role.\n\n**Key concepts to master:**\n- **Bid-ask spread mechanics:**\n  - Why spreads exist (inventory, adverse selection, order processing costs)\n  - What widens/tightens them (volatility, time of day, liquidity)\n- **Adverse selection (Kyle model intro):**\n  - Market maker perspective: \"How do I avoid losing money to informed traders?\"\n  - Informed traders move prices; uninformed traders (noise) provide liquidity\n  - Spread = compensation for adverse selection risk\n- **Information asymmetry:**\n  - Public vs. private information\n  - How dealers price against potential informed traders\n- **Liquidity dimensions:**\n  - Immediacy (can you trade now?)\n  - Quantity (can you trade the size you want?)\n  - Cost (at what price?)\n- **Market resilience:** How fast prices return to fundamentals after shocks\n\n**Interview angle:** Questions like \"Why are some assets more liquid than others?\" or \"How would you detect informed trading?\" test this knowledge directly.\n\n### 3. Options Pricing Basics (MEDIUM PRIORITY)\n**Why it matters:** Options are standard in systematic trading (hedging, implementation, strategy construction).\n\n**Key concepts to master:**\n- **Put-call parity:** Foundation of options pricing (relationship between calls, puts, and spot)\n- **Black-Scholes model:**\n  - Inputs: S (spot), K (strike), T (time to maturity), r (rate), \u03c3 (volatility)\n  - The Greeks: Delta (directional exposure), Gamma (convexity), Vega (volatility exposure), Theta (time decay)\n- **Implied volatility vs. realized volatility:**\n  - IV reflects market expectations of future volatility\n  - Realized volatility is what actually happened\n  - The gap = volatility mispricing opportunity\n- **Volatility smile/skew:** Why implied vol varies by strike (not constant, as Black-Scholes assumes)\n- **Practical intuitions:**\n  - Buying calls = betting on volatility and upside\n  - Selling calls = collecting premium, capping upside\n  - How option Greeks help hedge (e.g., delta-neutral construction)\n\n**Interview angle:** Expect practical questions like \"If you wanted to hedge a long equity position with options, what would you buy?\" or \"How does gamma risk affect a short call position?\"\n\n---\n\n## Recommended 3-Day Study Plan\n\n### Day 1: Execution Costs & Implementation\n- **Morning (2 hours):** Bid-ask spreads, market impact, implementation shortfall\n  - Work through a simple example: \"I want to buy 100k shares of a $50 stock. What costs might I incur?\"\n  - Read about linear impact models and Almgren-Chriss framework (high-level, not deep math)\n- **Afternoon (2 hours):** Pre-trade analysis and cost optimization\n  - Understand the trade-off: slow execution (lower market impact) vs. urgency (higher immediate costs)\n  - Be able to articulate how execution costs feed into portfolio construction\n\n### Day 2: Market Microstructure & Kyle Model\n- **Morning (2 hours):** Bid-ask spread origins, adverse selection, inventory risk\n  - Focus on intuition: \"Why do dealers widen spreads when volatility spikes?\"\n  - Kyle model basics (informed trader, market maker, noise traders)\n- **Afternoon (2 hours):** Liquidity, information asymmetry, practical implications\n  - How to spot liquidity risk (e.g., in backtests, live trading)\n  - Connect microstructure to execution costs\n\n### Day 3: Options Pricing & Interview Prep\n- **Morning (2 hours):** Black-Scholes, Greeks, put-call parity\n  - Work through 1\u20132 examples (e.g., \"price a call option given S, K, T, r, \u03c3\")\n  - Practice explaining Delta and Gamma intuitively\n- **Afternoon (2 hours):** Implied vs. realized vol, volatility smile, practical applications\n  - Mock interview questions (e.g., \"How would you detect if an option is mispriced?\")\n  - Tie options back to execution and risk management\n\n---\n\n## Key Talking Points for the Interview\n\nBe ready to discuss these without prompting:\n\n1. **Why momentum matters:** It's been the most robust anomaly in financial research; your understanding shows you've done real work.\n\n2. **Execution is where returns live and die:** Most quant funds know factors work in theory. What separates top performers is execution discipline. Show you think operationally, not just theoretically.\n\n3. **Microstructure = competitive advantage:** Understanding why markets work the way they do (spreads, liquidity, adverse selection) is what separates researchers from traders.\n\n4. **Options as a hedge and a signal:** Be ready to explain how options can be part of both risk management and alpha generation.\n\n5. **Trade-offs are everything:** In strategies, in execution, in risk management. Show that you understand the cost-benefit logic that quant funds live by.\n\n---\n\n## Interview Prep Checklist\n\n- [ ] Can you explain momentum decay without notes?\n- [ ] Can you walk someone through building a long-short portfolio (weights, rebalancing)?\n- [ ] Can you decompose a strategy's returns into factor exposures and alpha?\n- [ ] Can you explain bid-ask spreads and why they widen/tighten?\n- [ ] Can you work through a simple execution cost example (order size vs. impact)?\n- [ ] Can you explain the Kyle model intuitively (informed trader, dealer, noise)?\n- [ ] Can you compute a simple option price using Black-Scholes inputs?\n- [ ] Can you explain what Delta and Gamma measure?\n- [ ] Can you explain implied volatility and why it varies by strike?\n- [ ] Can you defend why execution costs matter in a live trading context?\n\n---\n\n## Resources to Reference\n\n- **Execution:** Almgren-Chriss framework, Kissell Research Group papers\n- **Microstructure:** Easley & O'Hara on adverse selection, Kyle's model papers\n- **Options:** Hull's \"Options, Futures, and Other Derivatives\" (Chapters 13\u201316 for Greeks and pricing)\n- **Fama-French:** Original papers + updated factor data from Ken French's website\n\n---\n\n## Good Luck!\n\nYou have a solid foundation. The next 3 days should focus on closing the execution and microstructure gaps \u2014 these are where quant researchers most often stumble, and also where they add the most value. Options pricing is important but slightly lower priority; still, go in with at least Black-Scholes intuition and Greeks down cold.\n\nYou've got this. \ud83d\udcaa\n"}], "grading": null}, {"id": "eval-2-thesis-litreview-with_skill", "prompt": "Can you create a handoff document? I've been working on a literature review for my PhD thesis on transformer attention mechanisms. The thesis is in Overleaf but I've also been working on a local draft at ~/thesis/chapters/ch2_attention.tex. We've reviewed about 35 papers so far. Key findings I've confirmed: (1) sparse attention reduces quadratic complexity but has quality tradeoffs on tasks requiring long-range dependencies, (2) linear attention approximations like Performer and Linformer lose significant quality on retrieval tasks specifically. I have a structured notes file at ~/thesis/notes/attention_papers.md with summaries of all 35 papers. Still need to: cover the Flash Attention and sliding window attention papers (I have PDFs in ~/thesis/papers/to_read/), write the synthesis section comparing sparse vs linear approaches, and get advisor feedback on the current draft. My advisor specifically asked me to make sure I address why sparse attention underperforms on WikiText-103 \u2014 I haven't answered that yet.", "eval_id": 2, "outputs": [{"name": "handoff.md", "type": "text", "content": "# Handoff: Transformer Attention Mechanisms Literature Review\n*Generated: 2026-04-18*\n\n## Goal\nComplete a PhD thesis chapter on transformer attention mechanisms, specifically reviewing the landscape of sparse and linear attention approaches and their tradeoffs. The chapter will synthesize findings from 35+ papers and address key empirical questions about attention quality across different task types.\n\n## Context\nThis is Chapter 2 of a PhD thesis on transformer architectures. The thesis is maintained in Overleaf but you're also working on a local draft. The research focuses on two major attention optimization strategies: sparse attention (reduces quadratic complexity but has quality tradeoffs) and linear attention approximations (like Performer and Linformer, which lose quality on retrieval tasks). Your advisor has specifically asked you to address why sparse attention underperforms on WikiText-103 \u2014 this is a critical gap that needs empirical or theoretical justification in the final draft.\n\n## Progress\n- Reviewed and summarized 35 papers on attention mechanisms\n- Confirmed two key findings:\n  1. Sparse attention reduces quadratic complexity but has quality tradeoffs on tasks requiring long-range dependencies\n  2. Linear attention approximations lose significant quality on retrieval tasks specifically\n- Created a structured notes file with summaries of all 35 papers\n- Started local draft chapter at ~/thesis/chapters/ch2_attention.tex\n- Organized papers to read in ~/thesis/papers/to_read/\n\n## Current State\n- Core findings documented and validated\n- Synthesis section not yet written\n- Flash Attention and sliding window attention papers (PDFs in to_read/) not yet reviewed\n- Advisor feedback not yet requested\n- **Critical gap:** Have not yet addressed advisor's specific question about WikiText-103 underperformance in sparse attention\n\n## Key Files\n- `~/thesis/chapters/ch2_attention.tex` \u2014 Local draft of Chapter 2\n- `~/thesis/notes/attention_papers.md` \u2014 Structured summaries of all 35 reviewed papers\n- `~/thesis/papers/to_read/` \u2014 PDFs for Flash Attention and sliding window attention papers (still to review)\n- Thesis project on Overleaf (synced with local draft)\n\n## Next Steps\n1. Review the two outstanding papers in ~/thesis/papers/to_read/ (Flash Attention and sliding window attention)\n2. Integrate findings from these papers into the notes file\n3. Write the synthesis section comparing sparse vs. linear attention approaches, including performance profiles across task types\n4. Investigate and document why sparse attention underperforms on WikiText-103 \u2014 this is the advisor's key request and must be answered before submission\n5. Request feedback from advisor on the updated draft\n6. Incorporate advisor feedback and finalize Chapter 2\n\n---\n\n## Opening Message for New Session\n\nI'm working on Chapter 2 of my PhD thesis on transformer attention mechanisms. I've done most of the literature review \u2014 I've summarized 35 papers and confirmed two key findings: sparse attention reduces quadratic complexity but has tradeoffs on long-range dependencies, and linear approximations like Performer/Linformer lose quality on retrieval tasks.\n\nHere's where I stand: my notes are organized in ~/thesis/notes/attention_papers.md, and I have a local draft at ~/thesis/chapters/ch2_attention.tex (also synced to Overleaf). I still need to review Flash Attention and sliding window attention papers (PDFs in ~/thesis/papers/to_read/), then write the synthesis section comparing sparse vs. linear approaches.\n\n**Critical blocker:** My advisor specifically asked me to explain why sparse attention underperforms on WikiText-103 \u2014 I haven't addressed that yet and it needs to be in the final draft.\n\nCan you help me move forward? I'd like to:\n1. Review the remaining papers and integrate them\n2. Write the synthesis section\n3. Figure out the WikiText-103 answer\n4. Get the draft ready for advisor feedback\n\nWhat should we tackle first?\n"}], "grading": null}, {"id": "eval-2-thesis-litreview-without_skill", "prompt": "Can you create a handoff document? I've been working on a literature review for my PhD thesis on transformer attention mechanisms. The thesis is in Overleaf but I've also been working on a local draft at ~/thesis/chapters/ch2_attention.tex. We've reviewed about 35 papers so far. Key findings I've confirmed: (1) sparse attention reduces quadratic complexity but has quality tradeoffs on tasks requiring long-range dependencies, (2) linear attention approximations like Performer and Linformer lose significant quality on retrieval tasks specifically. I have a structured notes file at ~/thesis/notes/attention_papers.md with summaries of all 35 papers. Still need to: cover the Flash Attention and sliding window attention papers (I have PDFs in ~/thesis/papers/to_read/), write the synthesis section comparing sparse vs linear approaches, and get advisor feedback on the current draft. My advisor specifically asked me to make sure I address why sparse attention underperforms on WikiText-103 \u2014 I haven't answered that yet.", "eval_id": 2, "outputs": [], "grading": null}], "previous_feedback": {}, "previous_outputs": {}};
+
+    // ---- State ----
+    let feedbackMap = {};  // run_id -> feedback text
+    let currentIndex = 0;
+    let visitedRuns = new Set();
+
+    // ---- Init ----
+    async function init() {
+      // Load saved feedback from server — but only if this isn't a fresh
+      // iteration (indicated by previous_feedback being present). When
+      // previous feedback exists, the feedback.json on disk is stale from
+      // the prior iteration and should not pre-fill the textareas.
+      const hasPrevious = Object.keys(EMBEDDED_DATA.previous_feedback || {}).length > 0
+        || Object.keys(EMBEDDED_DATA.previous_outputs || {}).length > 0;
+      if (!hasPrevious) {
+        try {
+          const resp = await fetch("/api/feedback");
+          const data = await resp.json();
+          if (data.reviews) {
+            for (const r of data.reviews) feedbackMap[r.run_id] = r.feedback;
+          }
+        } catch { /* first run, no feedback yet */ }
+      }
+
+      document.getElementById("skill-name").textContent = EMBEDDED_DATA.skill_name;
+      showRun(0);
+
+      // Wire up feedback auto-save
+      const textarea = document.getElementById("feedback");
+      let saveTimeout = null;
+      textarea.addEventListener("input", () => {
+        clearTimeout(saveTimeout);
+        document.getElementById("feedback-status").textContent = "";
+        saveTimeout = setTimeout(() => saveCurrentFeedback(), 800);
+      });
+    }
+
+    // ---- Navigation ----
+    function navigate(delta) {
+      const newIndex = currentIndex + delta;
+      if (newIndex >= 0 && newIndex < EMBEDDED_DATA.runs.length) {
+        saveCurrentFeedback();
+        showRun(newIndex);
+      }
+    }
+
+    function updateNavButtons() {
+      document.getElementById("prev-btn").disabled = currentIndex === 0;
+      document.getElementById("next-btn").disabled =
+        currentIndex === EMBEDDED_DATA.runs.length - 1;
+    }
+
+    // ---- Show a run ----
+    function showRun(index) {
+      currentIndex = index;
+      const run = EMBEDDED_DATA.runs[index];
+
+      // Progress
+      document.getElementById("progress").textContent =
+        `${index + 1} of ${EMBEDDED_DATA.runs.length}`;
+
+      // Prompt
+      document.getElementById("prompt-text").textContent = run.prompt;
+
+      // Config badge
+      const badge = document.getElementById("config-badge");
+      const configMatch = run.id.match(/(with_skill|without_skill|new_skill|old_skill)/);
+      if (configMatch) {
+        const config = configMatch[1];
+        const isBaseline = config === "without_skill" || config === "old_skill";
+        badge.textContent = config.replace(/_/g, " ");
+        badge.className = "config-badge " + (isBaseline ? "config-baseline" : "config-primary");
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+
+      // Outputs
+      renderOutputs(run);
+
+      // Previous outputs
+      renderPrevOutputs(run);
+
+      // Grades
+      renderGrades(run);
+
+      // Previous feedback
+      const prevFb = (EMBEDDED_DATA.previous_feedback || {})[run.id];
+      const prevEl = document.getElementById("prev-feedback");
+      if (prevFb) {
+        document.getElementById("prev-feedback-text").textContent = prevFb;
+        prevEl.style.display = "block";
+      } else {
+        prevEl.style.display = "none";
+      }
+
+      // Feedback
+      document.getElementById("feedback").value = feedbackMap[run.id] || "";
+      document.getElementById("feedback-status").textContent = "";
+
+      updateNavButtons();
+
+      // Track visited runs and promote done button when all visited
+      visitedRuns.add(index);
+      const doneBtn = document.getElementById("done-btn");
+      if (visitedRuns.size >= EMBEDDED_DATA.runs.length) {
+        doneBtn.classList.add("ready");
+      }
+
+      // Scroll main content to top
+      document.querySelector(".main").scrollTop = 0;
+    }
+
+    // ---- Render outputs ----
+    function renderOutputs(run) {
+      const container = document.getElementById("outputs-body");
+      container.innerHTML = "";
+
+      const outputs = run.outputs || [];
+      if (outputs.length === 0) {
+        container.innerHTML = '<div class="empty-state">No output files</div>';
+        return;
+      }
+
+      for (const file of outputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        // Always show file header with download link
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const content = document.createElement("div");
+        content.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          content.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          content.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          content.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(content, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          content.appendChild(a);
+        } else if (file.type === "error") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          pre.style.color = "var(--red)";
+          content.appendChild(pre);
+        }
+
+        fileDiv.appendChild(content);
+        container.appendChild(fileDiv);
+      }
+    }
+
+    // ---- XLSX rendering via SheetJS ----
+    function renderXlsx(container, b64Data) {
+      try {
+        const raw = Uint8Array.from(atob(b64Data), c => c.charCodeAt(0));
+        const wb = XLSX.read(raw, { type: "array" });
+
+        for (let i = 0; i < wb.SheetNames.length; i++) {
+          const sheetName = wb.SheetNames[i];
+          const ws = wb.Sheets[sheetName];
+
+          if (wb.SheetNames.length > 1) {
+            const sheetLabel = document.createElement("div");
+            sheetLabel.style.cssText =
+              "font-weight:600; font-size:0.8rem; color:#b0aea5; margin-top:0.5rem; margin-bottom:0.25rem;";
+            sheetLabel.textContent = "Sheet: " + sheetName;
+            container.appendChild(sheetLabel);
+          }
+
+          const htmlStr = XLSX.utils.sheet_to_html(ws, { editable: false });
+          const wrapper = document.createElement("div");
+          wrapper.innerHTML = htmlStr;
+          container.appendChild(wrapper);
+        }
+      } catch (err) {
+        container.textContent = "Error rendering spreadsheet: " + err.message;
+      }
+    }
+
+    // ---- Grades ----
+    function renderGrades(run) {
+      const section = document.getElementById("grades-section");
+      const content = document.getElementById("grades-content");
+
+      if (!run.grading) {
+        section.style.display = "none";
+        return;
+      }
+
+      const grading = run.grading;
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("grades-arrow").classList.remove("open");
+
+      const summary = grading.summary || {};
+      const expectations = grading.expectations || [];
+
+      let html = '<div style="padding: 1rem;">';
+
+      // Summary line
+      const passRate = summary.pass_rate != null
+        ? Math.round(summary.pass_rate * 100) + "%"
+        : "?";
+      const badgeClass = summary.pass_rate >= 0.8 ? "grade-pass" : summary.pass_rate >= 0.5 ? "" : "grade-fail";
+      html += '<div class="grades-summary">';
+      html += '<span class="grade-badge ' + badgeClass + '">' + passRate + '</span>';
+      html += '<span>' + (summary.passed || 0) + ' passed, ' + (summary.failed || 0) + ' failed of ' + (summary.total || 0) + '</span>';
+      html += '</div>';
+
+      // Assertions list
+      html += '<ul class="assertion-list">';
+      for (const exp of expectations) {
+        const statusClass = exp.passed ? "pass" : "fail";
+        const statusIcon = exp.passed ? "\u2713" : "\u2717";
+        html += '<li class="assertion-item">';
+        html += '<span class="assertion-status ' + statusClass + '">' + statusIcon + '</span>';
+        html += '<span>' + escapeHtml(exp.text) + '</span>';
+        if (exp.evidence) {
+          html += '<div class="assertion-evidence">' + escapeHtml(exp.evidence) + '</div>';
+        }
+        html += '</li>';
+      }
+      html += '</ul>';
+
+      html += '</div>';
+      content.innerHTML = html;
+    }
+
+    function toggleGrades() {
+      const content = document.getElementById("grades-content");
+      const arrow = document.getElementById("grades-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Previous outputs (collapsible) ----
+    function renderPrevOutputs(run) {
+      const section = document.getElementById("prev-outputs-section");
+      const content = document.getElementById("prev-outputs-content");
+      const prevOutputs = (EMBEDDED_DATA.previous_outputs || {})[run.id];
+
+      if (!prevOutputs || prevOutputs.length === 0) {
+        section.style.display = "none";
+        return;
+      }
+
+      section.style.display = "block";
+      // Reset to collapsed
+      content.classList.remove("open");
+      document.getElementById("prev-outputs-arrow").classList.remove("open");
+
+      // Render the files into the content area
+      content.innerHTML = "";
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "1rem";
+
+      for (const file of prevOutputs) {
+        const fileDiv = document.createElement("div");
+        fileDiv.className = "output-file";
+
+        const header = document.createElement("div");
+        header.className = "output-file-header";
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = file.name;
+        header.appendChild(nameSpan);
+        const dlBtn = document.createElement("a");
+        dlBtn.className = "dl-btn";
+        dlBtn.textContent = "Download";
+        dlBtn.download = file.name;
+        dlBtn.href = getDownloadUri(file);
+        header.appendChild(dlBtn);
+        fileDiv.appendChild(header);
+
+        const fc = document.createElement("div");
+        fc.className = "output-file-content";
+
+        if (file.type === "text") {
+          const pre = document.createElement("pre");
+          pre.textContent = file.content;
+          fc.appendChild(pre);
+        } else if (file.type === "image") {
+          const img = document.createElement("img");
+          img.src = file.data_uri;
+          img.alt = file.name;
+          fc.appendChild(img);
+        } else if (file.type === "pdf") {
+          const iframe = document.createElement("iframe");
+          iframe.src = file.data_uri;
+          fc.appendChild(iframe);
+        } else if (file.type === "xlsx") {
+          renderXlsx(fc, file.data_b64);
+        } else if (file.type === "binary") {
+          const a = document.createElement("a");
+          a.className = "download-link";
+          a.href = file.data_uri;
+          a.download = file.name;
+          a.textContent = "Download " + file.name;
+          fc.appendChild(a);
+        }
+
+        fileDiv.appendChild(fc);
+        wrapper.appendChild(fileDiv);
+      }
+
+      content.appendChild(wrapper);
+    }
+
+    function togglePrevOutputs() {
+      const content = document.getElementById("prev-outputs-content");
+      const arrow = document.getElementById("prev-outputs-arrow");
+      content.classList.toggle("open");
+      arrow.classList.toggle("open");
+    }
+
+    // ---- Feedback (saved to server -> feedback.json) ----
+    function saveCurrentFeedback() {
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // Build reviews array from map
+      const reviews = [];
+      for (const [run_id, feedback] of Object.entries(feedbackMap)) {
+        if (feedback.trim()) {
+          reviews.push({ run_id, feedback, timestamp: new Date().toISOString() });
+        }
+      }
+
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reviews, status: "in_progress" }),
+      }).then(() => {
+        document.getElementById("feedback-status").textContent = "Saved";
+      }).catch(() => {
+        // Static mode or server unavailable — no-op on auto-save,
+        // feedback will be downloaded on final submit
+        document.getElementById("feedback-status").textContent = "Will download on submit";
+      });
+    }
+
+    // ---- Done ----
+    function showDoneDialog() {
+      // Save current textarea to feedbackMap (but don't POST yet)
+      const run = EMBEDDED_DATA.runs[currentIndex];
+      const text = document.getElementById("feedback").value;
+      if (text.trim() === "") {
+        delete feedbackMap[run.id];
+      } else {
+        feedbackMap[run.id] = text;
+      }
+
+      // POST once with status: complete — include ALL runs so the model
+      // can distinguish "no feedback" (looks good) from "not reviewed"
+      const reviews = [];
+      const ts = new Date().toISOString();
+      for (const r of EMBEDDED_DATA.runs) {
+        reviews.push({ run_id: r.id, feedback: feedbackMap[r.id] || "", timestamp: ts });
+      }
+      const payload = JSON.stringify({ reviews, status: "complete" }, null, 2);
+      fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+      }).then(() => {
+        document.getElementById("done-overlay").classList.add("visible");
+      }).catch(() => {
+        // Server not available (static mode) — download as file
+        const blob = new Blob([payload], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "feedback.json";
+        a.click();
+        URL.revokeObjectURL(url);
+        document.getElementById("done-overlay").classList.add("visible");
+      });
+    }
+
+    function closeDoneDialog() {
+      // Reset status back to in_progress
+      saveCurrentFeedback();
+      document.getElementById("done-overlay").classList.remove("visible");
+    }
+
+    // ---- Toast ----
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("visible");
+      setTimeout(() => toast.classList.remove("visible"), 2000);
+    }
+
+    // ---- Keyboard nav ----
+    document.addEventListener("keydown", (e) => {
+      // Don't capture when typing in textarea
+      if (e.target.tagName === "TEXTAREA") return;
+
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        e.preventDefault();
+        navigate(1);
+      }
+    });
+
+    // ---- Util ----
+    function getDownloadUri(file) {
+      if (file.data_uri) return file.data_uri;
+      if (file.data_b64) return "data:application/octet-stream;base64," + file.data_b64;
+      if (file.type === "text") return "data:text/plain;charset=utf-8," + encodeURIComponent(file.content);
+      return "#";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // ---- View switching ----
+    function switchView(view) {
+      document.querySelectorAll(".view-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".view-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`[onclick="switchView('${view}')"]`).classList.add("active");
+      document.getElementById("panel-" + view).classList.add("active");
+    }
+
+    // ---- Benchmark rendering ----
+    function renderBenchmark() {
+      const data = EMBEDDED_DATA.benchmark;
+      if (!data) return;
+
+      // Show the tabs
+      document.getElementById("view-tabs").style.display = "flex";
+
+      const container = document.getElementById("benchmark-content");
+      const summary = data.run_summary || {};
+      const metadata = data.metadata || {};
+      const notes = data.notes || [];
+
+      let html = "";
+
+      // Header
+      html += "<h2 style='font-family: Poppins, sans-serif; margin-bottom: 0.5rem;'>Benchmark Results</h2>";
+      html += "<p style='color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.25rem;'>";
+      if (metadata.skill_name) html += "<strong>" + escapeHtml(metadata.skill_name) + "</strong> &mdash; ";
+      if (metadata.timestamp) html += metadata.timestamp + " &mdash; ";
+      if (metadata.evals_run) html += "Evals: " + metadata.evals_run.join(", ") + " &mdash; ";
+      html += (metadata.runs_per_configuration || "?") + " runs per configuration";
+      html += "</p>";
+
+      // Summary table
+      html += '<table class="benchmark-table">';
+
+      function fmtStat(stat, pct) {
+        if (!stat) return "—";
+        const suffix = pct ? "%" : "";
+        const m = pct ? (stat.mean * 100).toFixed(0) : stat.mean.toFixed(1);
+        const s = pct ? (stat.stddev * 100).toFixed(0) : stat.stddev.toFixed(1);
+        return m + suffix + " ± " + s + suffix;
+      }
+
+      function deltaClass(val) {
+        if (!val) return "";
+        const n = parseFloat(val);
+        if (n > 0) return "benchmark-delta-positive";
+        if (n < 0) return "benchmark-delta-negative";
+        return "";
+      }
+
+      // Discover config names dynamically (everything except "delta")
+      const configs = Object.keys(summary).filter(k => k !== "delta");
+      const configA = configs[0] || "config_a";
+      const configB = configs[1] || "config_b";
+      const labelA = configA.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const labelB = configB.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+      const a = summary[configA] || {};
+      const b = summary[configB] || {};
+      const delta = summary.delta || {};
+
+      html += "<thead><tr><th>Metric</th><th>" + escapeHtml(labelA) + "</th><th>" + escapeHtml(labelB) + "</th><th>Delta</th></tr></thead>";
+      html += "<tbody>";
+
+      html += "<tr><td><strong>Pass Rate</strong></td>";
+      html += "<td>" + fmtStat(a.pass_rate, true) + "</td>";
+      html += "<td>" + fmtStat(b.pass_rate, true) + "</td>";
+      html += '<td class="' + deltaClass(delta.pass_rate) + '">' + (delta.pass_rate || "—") + "</td></tr>";
+
+      // Time (only show row if data exists)
+      if (a.time_seconds || b.time_seconds) {
+        html += "<tr><td><strong>Time (s)</strong></td>";
+        html += "<td>" + fmtStat(a.time_seconds, false) + "</td>";
+        html += "<td>" + fmtStat(b.time_seconds, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.time_seconds) + '">' + (delta.time_seconds ? delta.time_seconds + "s" : "—") + "</td></tr>";
+      }
+
+      // Tokens (only show row if data exists)
+      if (a.tokens || b.tokens) {
+        html += "<tr><td><strong>Tokens</strong></td>";
+        html += "<td>" + fmtStat(a.tokens, false) + "</td>";
+        html += "<td>" + fmtStat(b.tokens, false) + "</td>";
+        html += '<td class="' + deltaClass(delta.tokens) + '">' + (delta.tokens || "—") + "</td></tr>";
+      }
+
+      html += "</tbody></table>";
+
+      // Per-eval breakdown (if runs data available)
+      const runs = data.runs || [];
+      if (runs.length > 0) {
+        const evalIds = [...new Set(runs.map(r => r.eval_id))].sort((a, b) => a - b);
+
+        html += "<h3 style='font-family: Poppins, sans-serif; margin-bottom: 0.75rem;'>Per-Eval Breakdown</h3>";
+
+        const hasTime = runs.some(r => r.result && r.result.time_seconds != null);
+        const hasErrors = runs.some(r => r.result && r.result.errors > 0);
+
+        for (const evalId of evalIds) {
+          const evalRuns = runs.filter(r => r.eval_id === evalId);
+          const evalName = evalRuns[0] && evalRuns[0].eval_name ? evalRuns[0].eval_name : "Eval " + evalId;
+
+          html += "<h4 style='font-family: Poppins, sans-serif; margin: 1rem 0 0.5rem; color: var(--text);'>" + escapeHtml(evalName) + "</h4>";
+          html += '<table class="benchmark-table">';
+          html += "<thead><tr><th>Config</th><th>Run</th><th>Pass Rate</th>";
+          if (hasTime) html += "<th>Time (s)</th>";
+          if (hasErrors) html += "<th>Crashes During Execution</th>";
+          html += "</tr></thead>";
+          html += "<tbody>";
+
+          // Group by config and render with average rows
+          const configGroups = [...new Set(evalRuns.map(r => r.configuration))];
+          for (let ci = 0; ci < configGroups.length; ci++) {
+            const config = configGroups[ci];
+            const configRuns = evalRuns.filter(r => r.configuration === config);
+            if (configRuns.length === 0) continue;
+
+            const rowClass = ci === 0 ? "benchmark-row-with" : "benchmark-row-without";
+            const configLabel = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+
+            for (const run of configRuns) {
+              const r = run.result || {};
+              const prClass = r.pass_rate >= 0.8 ? "benchmark-delta-positive" : r.pass_rate < 0.5 ? "benchmark-delta-negative" : "";
+              html += '<tr class="' + rowClass + '">';
+              html += "<td>" + configLabel + "</td>";
+              html += "<td>" + run.run_number + "</td>";
+              html += '<td class="' + prClass + '">' + ((r.pass_rate || 0) * 100).toFixed(0) + "% (" + (r.passed || 0) + "/" + (r.total || 0) + ")</td>";
+              if (hasTime) html += "<td>" + (r.time_seconds != null ? r.time_seconds.toFixed(1) : "—") + "</td>";
+              if (hasErrors) html += "<td>" + (r.errors || 0) + "</td>";
+              html += "</tr>";
+            }
+
+            // Average row
+            const rates = configRuns.map(r => (r.result || {}).pass_rate || 0);
+            const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
+            const avgPrClass = avgRate >= 0.8 ? "benchmark-delta-positive" : avgRate < 0.5 ? "benchmark-delta-negative" : "";
+            html += '<tr class="benchmark-row-avg ' + rowClass + '">';
+            html += "<td>" + configLabel + "</td>";
+            html += "<td>Avg</td>";
+            html += '<td class="' + avgPrClass + '">' + (avgRate * 100).toFixed(0) + "%</td>";
+            if (hasTime) {
+              const times = configRuns.map(r => (r.result || {}).time_seconds).filter(t => t != null);
+              html += "<td>" + (times.length ? (times.reduce((a, b) => a + b, 0) / times.length).toFixed(1) : "—") + "</td>";
+            }
+            if (hasErrors) html += "<td></td>";
+            html += "</tr>";
+          }
+          html += "</tbody></table>";
+
+          // Per-assertion detail for this eval
+          const runsWithExpectations = {};
+          for (const config of configGroups) {
+            runsWithExpectations[config] = evalRuns.filter(r => r.configuration === config && r.expectations && r.expectations.length > 0);
+          }
+          const hasAnyExpectations = Object.values(runsWithExpectations).some(runs => runs.length > 0);
+          if (hasAnyExpectations) {
+            // Collect all unique assertion texts across all configs
+            const allAssertions = [];
+            const seen = new Set();
+            for (const config of configGroups) {
+              for (const run of runsWithExpectations[config]) {
+                for (const exp of (run.expectations || [])) {
+                  if (!seen.has(exp.text)) {
+                    seen.add(exp.text);
+                    allAssertions.push(exp.text);
+                  }
+                }
+              }
+            }
+
+            html += '<table class="benchmark-table" style="margin-top: 0.5rem;">';
+            html += "<thead><tr><th>Assertion</th>";
+            for (const config of configGroups) {
+              const label = config.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+              html += "<th>" + escapeHtml(label) + "</th>";
+            }
+            html += "</tr></thead><tbody>";
+
+            for (const assertionText of allAssertions) {
+              html += "<tr><td>" + escapeHtml(assertionText) + "</td>";
+
+              for (const config of configGroups) {
+                html += "<td>";
+                for (const run of runsWithExpectations[config]) {
+                  const exp = (run.expectations || []).find(e => e.text === assertionText);
+                  if (exp) {
+                    const cls = exp.passed ? "benchmark-delta-positive" : "benchmark-delta-negative";
+                    const icon = exp.passed ? "\u2713" : "\u2717";
+                    html += '<span class="' + cls + '" title="Run ' + run.run_number + ': ' + escapeHtml(exp.evidence || "") + '">' + icon + "</span> ";
+                  } else {
+                    html += "— ";
+                  }
+                }
+                html += "</td>";
+              }
+              html += "</tr>";
+            }
+            html += "</tbody></table>";
+          }
+        }
+      }
+
+      // Notes
+      if (notes.length > 0) {
+        html += '<div class="benchmark-notes">';
+        html += "<h3>Analysis Notes</h3>";
+        html += "<ul>";
+        for (const note of notes) {
+          html += "<li>" + escapeHtml(note) + "</li>";
+        }
+        html += "</ul></div>";
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ---- Start ----
+    init();
+    renderBenchmark();
+  </script>
+</body>
+</html>

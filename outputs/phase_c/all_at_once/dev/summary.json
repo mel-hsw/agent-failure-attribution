@@ -1,0 +1,23 @@
+{
+  "split": "dev",
+  "judge_model": "gemini-2.5-pro",
+  "n_cases": 1,
+  "wall_time_s": 7.7,
+  "errors": 1,
+  "cluster_accuracy": 0.0,
+  "level_accuracy": 0.0,
+  "origin_step_tol0": 0.0,
+  "origin_step_tol3": 0.0,
+  "unassignable_rate": 0.0,
+  "gt_cluster_distribution": {
+    "P1": 1
+  },
+  "predicted_cluster_distribution": {
+    "UNASSIGNED": 1
+  },
+  "confusion_matrix": {
+    "P1": {
+      "UNASSIGNED": 1
+    }
+  }
+}

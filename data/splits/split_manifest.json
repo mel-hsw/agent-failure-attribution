@@ -1,0 +1,25 @@
+{
+  "seed": 20260418,
+  "sizes": {
+    "dev": 5,
+    "calibration": 5,
+    "eval": 123
+  },
+  "source_input": "data/consolidated/gaia_consolidated_with_gt.jsonl",
+  "trajectory_ids": {
+    "dev": [
+      "Qwen3-8B_002_memory_b000_t00_e01-7ab08a46",
+      "WW-AG-076c8171-9b3b-49b9-a477-244d2a532826",
+      "WW-AG-d0633230-7067-47a9-9dbf-ee11e0a2cdd6",
+      "WW-AG-b4cc024b-3f5e-480e-b96a-6656493255b5",
+      "Llama3.3-70B-Turbo_012_memory_b001_t00_e03-21a3a421"
+    ],
+    "calibration": [
+      "Llama3.3-70B-Turbo_016_memory_b001_t00_e07-f5b5d66a",
+      "WW-AG-54612da3-fd56-4941-80f4-5eb82330de25",
+      "WW-AG-305ac316-eef6-4446-960a-92d80d542f82",
+      "WW-AG-dc22a632-937f-4e6a-b72f-ba0ff3f5ff97",
+      "WW-AG-e4e91f1c-1dcd-439e-9fdd-cb976f5293fd"
+    ]
+  }
+}

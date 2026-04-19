@@ -1,0 +1,79 @@
+{
+  "builder_name": "parquet",
+  "citation": "",
+  "config_name": "Algorithm-Generated",
+  "dataset_name": "who_and_when",
+  "dataset_size": 1568230,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/Kevin355/Who_and_When@59b9fcba1aaed7bbf206b5f4d3c68b8face2f49c/Algorithm-Generated.parquet": {
+      "num_bytes": 625066,
+      "checksum": null
+    }
+  },
+  "download_size": 625066,
+  "features": {
+    "is_correct": {
+      "dtype": "bool",
+      "_type": "Value"
+    },
+    "question": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "question_ID": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "ground_truth": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "history": {
+      "feature": {
+        "content": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "name": {
+          "dtype": "string",
+          "_type": "Value"
+        },
+        "role": {
+          "dtype": "string",
+          "_type": "Value"
+        }
+      },
+      "_type": "List"
+    },
+    "mistake_agent": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "mistake_step": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "mistake_reason": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 2193296,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 1568230,
+      "num_examples": 126,
+      "dataset_name": "who_and_when"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

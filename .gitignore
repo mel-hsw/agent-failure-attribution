@@ -1,0 +1,35 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Credentials / env
+.env
+.env.*
+!.env.example
+*.key
+credentials.json
+service-account*.json
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local workspace clutter
+*.log.local
+scratch/
+tmp/
+
+# Claude Code local state (keep .claude/settings.json, ignore transient/user-local)
+.claude/settings.local.json
+.claude/scheduled_tasks.lock

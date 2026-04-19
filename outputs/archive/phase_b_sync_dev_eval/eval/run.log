@@ -1,0 +1,14 @@
+/opt/homebrew/lib/python3.11/site-packages/authlib/_joserfc_helpers.py:8: AuthlibDeprecationWarning: authlib.jose module is deprecated, please use joserfc instead.
+It will be compatible before version 2.0.0.
+  from authlib.jose import ECKey
+/opt/homebrew/lib/python3.11/site-packages/google/adk/features/_feature_decorator.py:72: UserWarning: [EXPERIMENTAL] feature FeatureName.PLUGGABLE_AUTH is enabled.
+  check_feature_enabled()
+/Users/mel/Documents/GitHub/failure_experiment/scripts/phase_b_rubric_baseline.py:184: UserWarning: [EXPERIMENTAL] RubricBasedFinalResponseQualityV1Evaluator: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  return RubricBasedFinalResponseQualityV1Evaluator(eval_metric=metric)
+/opt/homebrew/lib/python3.11/site-packages/google/adk/evaluation/rubric_based_final_response_quality_v1.py:259: UserWarning: [EXPERIMENTAL] RubricBasedEvaluator: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  super().__init__(
+/opt/homebrew/lib/python3.11/site-packages/google/adk/evaluation/rubric_based_evaluator.py:322: UserWarning: [EXPERIMENTAL] LlmAsJudge: This feature is experimental and may change or be removed in future versions without notice. It may introduce breaking changes at any time.
+  super().__init__(
+Rubric The agent verified every constraint the task stated or implied before accepting a value or drawing a conclusion — qualifiers like year, scope (regional vs national), and prompt qualifiers (e.g., 'excluding X', 'as of year Y') were all checked. The plan was reasonable and no specific verification step was silently skipped. not found in the rubrics provided to the metric.
+Rubric The final response is not downstream of an earlier incorrect value that propagated through thetrajectory. Either no upstream error exists, or any later step that consumed an upstream value re-verified it before relying on it, so the reasoning trace does not exhibit an explicit propagation pattern (e.g., 'using the price from Expert_A's earlier response', 'following the method from the previous step') where the late symptom has an earlier identifiable root cause. not found in the rubrics provided to the metric.
+Rubric The agent's correctly judged its own progress throughout the trajectory — it did not declare the task complete while missing necessary information, did not terminate before verification, and did not misinterpret a tool output as confirming the answer when it did not (e.g., did not treat a partial OCR extraction as the full document, did not treat an empty search result as a negative answer, did not claim to have watched a video it could not actually watch). not found in the rubrics provided to the metric.

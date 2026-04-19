@@ -1,0 +1,80 @@
+{
+  "_comment": "Phase B — Off-the-shelf ADK rubric set for rubric_based_final_response_quality_v1. One rubric per cluster; the judge emits yes/no per rubric. The predicted cluster is the one scoring `no` (i.e. the failure mode the trajectory exhibits). Origin-step/confidence/level are NOT emitted here — those live in Phase C's AllAtOnceAttribution custom evaluator.",
+  "_reinterpretation_note": "step4_plan.md §6 called for a single rubric emitting structured JSON. ADK's rubric_based_final_response_quality_v1 has a hardwired Property/Evidence/Rationale/Verdict:yes|no prompt template, so structured JSON does not compose with the built-in. For the honest off-the-shelf baseline, we use 9 yes/no rubrics — one per cluster fingerprint.",
+  "_phrasing_principle": "Each property is phrased as a POSITIVE correctness statement (the trajectory did NOT exhibit this failure). The ADK built-in prompt treats N/A properties as Verdict: yes and correctness-violations as Verdict: no (shown in its few-shot examples). Under this inverted polarity, `no` = the trajectory exhibits the failure; `yes` = it does not. The runner picks argmin(score) with ties broken by cluster priority. Polarity rationale recorded in docs/reports/step4_plan.md.",
+  "polarity": "yes_means_no_failure",
+  "rubrics": [
+    {
+      "rubric_id": "N1",
+      "type": "FINAL_RESPONSE_QUALITY",
+      "rubric_content": {
+        "text_property": "Every specific factual claim in the final response (every name, number, date, identifier, URL, or quotation) is supported by evidence from a procedurally sound tool response the agent actually obtained during the trajectory. No factual value in the final response was fabricated or invented by the agent outside of what the tool outputs supplied."
+      },
+      "description": "N1 Hallucination / factual fabrication. Verdict: no = final response contains an invented fact the tool outputs did not supply."
+    },
+    {
+      "rubric_id": "N2",
+      "type": "FINAL_RESPONSE_QUALITY",
+      "rubric_content": {
+        "text_property": "Every agent-written code block in the trajectory was logically correct for its stated purpose — none introduced a wrong algorithm, off-by-one indexing, incorrect aggregation, or mishandled edge case (null/NaN, empty input, missing columns) that drove the final answer to be wrong. (If the agent wrote no code, the property holds trivially.)"
+      },
+      "description": "N2 Code implementation bug. Verdict: no = a visible code block ran cleanly but its logic was wrong, which is what produced the wrong answer."
+    },
+    {
+      "rubric_id": "N3",
+      "type": "FINAL_RESPONSE_QUALITY",
+      "rubric_content": {
+        "text_property": "Every tool execution in the trajectory completed successfully at the environment level — no tool returned an error code, 4xx/5xx HTTP response, timeout, empty-result signal, or malformed response that caused the agent to proceed with degraded information or give up on the task. (If the agent used no tools, the property holds trivially.)"
+      },
+      "description": "N3 Tool execution or retrieval failure. Verdict: no = the environment itself signaled the failure and the agent's final answer reflects the missing tool output."
+    },
+    {
+      "rubric_id": "N4",
+      "type": "FINAL_RESPONSE_QUALITY",
+      "rubric_content": {
+        "text_property": "For every tool call the agent made, the tool chosen was appropriate for the subtask. There is no instance where a better-fit tool was available but a mismatched one was selected (e.g., generic web search when a specific API was available, image-OCR on a text document, summarizer when a structured extractor was needed) such that the mis-selection is the proximate reason the final answer is wrong. (If the agent used no tools, the property holds trivially.)"
+      },
+      "description": "N4 Wrong tool selection. Verdict: no = a better-fit tool was available; the agent picked the wrong one and that is why the answer is wrong."
+    },
+    {
+      "rubric_id": "N5",
+      "type": "FINAL_RESPONSE_QUALITY",
+      "rubric_content": {
+        "text_property": "Every tool call made by the agent used valid, well-formed inputs — no placeholder values like 'example_id', no fabricated URLs that do not resolve, no wrong file paths, no missing required parameters, and no arguments that violate the tool's schema. (If the agent used no tools, the property holds trivially.)"
+      },
+      "description": "N5 Invalid tool parameters. Verdict: no = the tool choice was OK but the arguments the agent passed were wrong and that is what caused the bad answer."
+    },
+    {
+      "rubric_id": "P1",
+      "type": "FINAL_RESPONSE_QUALITY",
+      "rubric_content": {
+        "text_property": "The agent's plan and task decomposition are structurally sound for this task — no required step is skipped, steps are ordered correctly, and the overall approach could in principle produce the right answer if each individual step executed correctly. The plan architecture itself is not the failure point."
+      },
+      "description": "P1 Improper task decomposition / bad plan. Verdict: no = fixing the plan (not any one step) is what was needed; the plan structure itself is wrong."
+    },
+    {
+      "rubric_id": "P2",
+      "type": "FINAL_RESPONSE_QUALITY",
+      "rubric_content": {
+        "text_property": "The agent correctly judged its own progress throughout the trajectory — it did not declare the task complete while missing necessary information, did not terminate before verification, and did not misinterpret a tool output as confirming the answer when it did not (e.g., did not treat a partial OCR extraction as the full document, did not treat an empty search result as a negative answer, did not claim to have watched a video it could not actually watch)."
+      },
+      "description": "P2 Progress misassessment. Verdict: no = the agent thought it was done or thought it had evidence it did not actually have."
+    },
+    {
+      "rubric_id": "P3",
+      "type": "FINAL_RESPONSE_QUALITY",
+      "rubric_content": {
+        "text_property": "The final response is not downstream of an earlier incorrect value that propagated through the trajectory. Either no upstream error exists, or any later step that consumed an upstream value re-verified it before relying on it, so the reasoning trace does not exhibit an explicit propagation pattern (e.g., 'using the price from Expert_A's earlier response', 'following the method from the previous step') where the late symptom has an earlier identifiable root cause."
+      },
+      "description": "P3 Cascading error (explicit propagation). Verdict: no = the trajectory makes the upstream-to-downstream chain visible and the late symptom traces to an earlier step."
+    },
+    {
+      "rubric_id": "P4",
+      "type": "FINAL_RESPONSE_QUALITY",
+      "rubric_content": {
+        "text_property": "The agent verified every constraint the task stated or implied before accepting a value or drawing a conclusion — qualifiers like year, units, scope (regional vs national), and prompt qualifiers (e.g., 'excluding X', 'as of year Y') were all checked. The plan was reasonable and no specific verification step was silently skipped."
+      },
+      "description": "P4 Constraint ignorance / unchecked assumption. Verdict: no = one specific factual or temporal constraint went unchecked and that caused the wrong answer."
+    }
+  ]
+}
