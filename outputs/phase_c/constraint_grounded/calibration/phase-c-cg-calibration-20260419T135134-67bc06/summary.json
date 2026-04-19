@@ -1,0 +1,41 @@
+{
+  "split": "calibration",
+  "judge_model": "gemini-3.1-pro-preview",
+  "run_id": "phase-c-cg-calibration-20260419T135134-67bc06",
+  "ablation_no_violation_log": false,
+  "n_cases": 5,
+  "errors": 0,
+  "cluster_accuracy": 0.4,
+  "level_accuracy": 0.4,
+  "origin_step_tol0": 0.6,
+  "origin_step_tol3": 0.8,
+  "unassignable_rate": 0.0,
+  "log_citation_rate": 0.6,
+  "static_event_count": 27,
+  "dynamic_event_count": 45,
+  "gt_cluster_distribution": {
+    "P1": 2,
+    "N2": 1,
+    "N1": 1,
+    "P2": 1
+  },
+  "predicted_cluster_distribution": {
+    "N5": 2,
+    "N2": 1,
+    "N1": 2
+  },
+  "confusion_matrix": {
+    "P1": {
+      "N5": 2
+    },
+    "N2": {
+      "N2": 1
+    },
+    "N1": {
+      "N1": 1
+    },
+    "P2": {
+      "N1": 1
+    }
+  }
+}
