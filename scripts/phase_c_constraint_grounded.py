@@ -403,10 +403,11 @@ def main() -> int:
             return 3
         print(f"  Downloaded constraint predictions -> {dyn_output}")
 
-        rows = list(bu.parse_output_rows(dyn_output))
-        rows_by_idx = {i: (resp, err) for i, resp, err in rows}
-        for i, case in enumerate(cases):
-            resp, err = rows_by_idx.get(i, (None, "no output row"))
+        # Vertex batch does NOT preserve input row order — align by trajectory_id
+        # embedded in each prompt (see batch_utils.make_trajectory_id_extractor).
+        by_key = bu.parse_output_by_key(dyn_output, bu.make_trajectory_id_extractor())
+        for case in cases:
+            resp, err = by_key.get(case["eval_id"], (None, "no output row"))
             if err or resp is None:
                 continue
             text = bu.extract_text(resp)
@@ -482,12 +483,12 @@ def main() -> int:
 
     # -----------------------------------------------------------------
     # Parse Pass 2, write per_case + summary
+    # Vertex batch does NOT preserve input row order — align by trajectory_id.
     per_case_path = out_dir / "per_case.jsonl"
     records: list[dict] = []
-    rows = list(bu.parse_output_rows(attr_output))
-    rows_by_idx = {i: (resp, err) for i, resp, err in rows}
+    by_key = bu.parse_output_by_key(attr_output, bu.make_trajectory_id_extractor())
     with per_case_path.open("w") as f:
-        for i, case in enumerate(cases):
+        for case in cases:
             cid = case["eval_id"]
             gt = case["metadata"].get("gt", {})
             base = {
@@ -498,7 +499,7 @@ def main() -> int:
                 "static_events": static_logs_by_id.get(cid, []),
                 "dynamic_events": dynamic_logs_by_id.get(cid, []),
             }
-            resp, err = rows_by_idx.get(i, (None, "no output row"))
+            resp, err = by_key.get(cid, (None, "no output row"))
             if err or resp is None:
                 rec = {**base, "prediction": None, "error": err or "no response"}
             else:
