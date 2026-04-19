@@ -1,0 +1,34 @@
+{
+  "split": "eval",
+  "ablation_no_violation_log": true,
+  "n_cases": 123,
+  "errors": 0,
+  "cluster_accuracy": 0.106,
+  "level_accuracy": 0.48,
+  "origin_step_tol0": 0.081,
+  "origin_step_tol3": 0.423,
+  "log_citation_rate": null,
+  "static_event_count": 0,
+  "dynamic_event_count": 0,
+  "gt_cluster_distribution": {
+    "P1": 28,
+    "N4": 7,
+    "P4": 15,
+    "P3": 8,
+    "N5": 8,
+    "P2": 21,
+    "N3": 11,
+    "N1": 11,
+    "N2": 14
+  },
+  "predicted_cluster_distribution": {
+    "P2": 7,
+    "N1": 45,
+    "N3": 12,
+    "N5": 11,
+    "P1": 13,
+    "N2": 15,
+    "P4": 18,
+    "N4": 2
+  }
+}

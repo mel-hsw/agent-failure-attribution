@@ -227,75 +227,224 @@
     },
     {
       "label": "c2_binary_search",
-      "source_path": "outputs/phase_c/binary_search/eval/phase-c-bs-eval-20260419T025812/per_case.jsonl",
-      "n_cases": 10,
-      "n_with_prediction": 10,
-      "cluster_accuracy": 0.1,
-      "level_accuracy": 0.3,
-      "origin_step_tol0": 0.4,
-      "origin_step_tol3": 0.7,
+      "source_path": "outputs/phase_c/binary_search/eval/phase-c-bs-eval-MERGED/per_case.jsonl",
+      "n_cases": 123,
+      "n_with_prediction": 18,
+      "cluster_accuracy": 0.057,
+      "level_accuracy": 0.073,
+      "origin_step_tol0": 0.041,
+      "origin_step_tol3": 0.073,
       "p3_late_symptom_fidelity_tol3": {
         "rate": 0.0,
-        "n_p3": 0
+        "n_p3": 8
       },
       "by_source": {
         "AEB": {
-          "n": 2,
-          "cluster": 0.0,
-          "level": 0.0,
-          "step_tol3": 0.5
+          "n": 45,
+          "cluster": 0.067,
+          "level": 0.067,
+          "step_tol3": 0.044
         },
         "WW-HC": {
-          "n": 3,
-          "cluster": 0.333,
-          "level": 0.667,
-          "step_tol3": 0.333
+          "n": 22,
+          "cluster": 0.182,
+          "level": 0.227,
+          "step_tol3": 0.091
         },
         "WW-AG": {
-          "n": 5,
+          "n": 56,
           "cluster": 0.0,
-          "level": 0.2,
-          "step_tol3": 1.0
+          "level": 0.018,
+          "step_tol3": 0.089
         }
       },
       "by_cluster": {
+        "N1": {
+          "n": 11,
+          "cluster": 0.0,
+          "level": 0.091,
+          "step_tol3": 0.0
+        },
+        "N2": {
+          "n": 14,
+          "cluster": 0.0,
+          "level": 0.0,
+          "step_tol3": 0.0
+        },
+        "N3": {
+          "n": 11,
+          "cluster": 0.091,
+          "level": 0.091,
+          "step_tol3": 0.091
+        },
         "N4": {
-          "n": 1,
+          "n": 7,
+          "cluster": 0.0,
+          "level": 0.0,
+          "step_tol3": 0.0
+        },
+        "N5": {
+          "n": 8,
           "cluster": 0.0,
           "level": 0.0,
           "step_tol3": 0.0
         },
         "P1": {
-          "n": 3,
-          "cluster": 0.0,
-          "level": 0.333,
-          "step_tol3": 0.333
+          "n": 28,
+          "cluster": 0.143,
+          "level": 0.143,
+          "step_tol3": 0.036
         },
         "P2": {
-          "n": 5,
+          "n": 21,
           "cluster": 0.0,
-          "level": 0.2,
-          "step_tol3": 1.0
+          "level": 0.048,
+          "step_tol3": 0.286
+        },
+        "P3": {
+          "n": 8,
+          "cluster": 0.0,
+          "level": 0.0,
+          "step_tol3": 0.0
         },
         "P4": {
-          "n": 1,
-          "cluster": 1.0,
-          "level": 1.0,
-          "step_tol3": 1.0
+          "n": 15,
+          "cluster": 0.133,
+          "level": 0.133,
+          "step_tol3": 0.067
         }
       },
       "gt_cluster_distribution": {
-        "P2": 5,
-        "N4": 1,
-        "P1": 3,
-        "P4": 1
+        "P1": 28,
+        "N4": 7,
+        "P4": 15,
+        "P3": 8,
+        "N5": 8,
+        "P2": 21,
+        "N3": 11,
+        "N1": 11,
+        "N2": 14
       },
       "predicted_cluster_distribution": {
-        "N1": 4,
-        "N3": 1,
-        "P1": 2,
-        "P4": 2,
-        "N4": 1
+        "P1": 6,
+        "N4": 1,
+        "N1": 6,
+        "UNASSIGNED": 105,
+        "N3": 2,
+        "N5": 1,
+        "P4": 2
+      }
+    },
+    {
+      "label": "c3_constraint_grounded",
+      "source_path": "outputs/phase_c/constraint_grounded/eval/phase-c-cg-eval-20260419T113252-c4fd41/per_case.jsonl",
+      "n_cases": 123,
+      "n_with_prediction": 122,
+      "cluster_accuracy": 0.341,
+      "level_accuracy": 0.626,
+      "origin_step_tol0": 0.358,
+      "origin_step_tol3": 0.65,
+      "p3_late_symptom_fidelity_tol3": {
+        "rate": 0.625,
+        "n_p3": 8
+      },
+      "by_source": {
+        "AEB": {
+          "n": 45,
+          "cluster": 0.2,
+          "level": 0.467,
+          "step_tol3": 0.578
+        },
+        "WW-HC": {
+          "n": 22,
+          "cluster": 0.364,
+          "level": 0.727,
+          "step_tol3": 0.409
+        },
+        "WW-AG": {
+          "n": 56,
+          "cluster": 0.446,
+          "level": 0.714,
+          "step_tol3": 0.804
+        }
+      },
+      "by_cluster": {
+        "N1": {
+          "n": 11,
+          "cluster": 0.818,
+          "level": 0.909,
+          "step_tol3": 1.0
+        },
+        "N2": {
+          "n": 14,
+          "cluster": 0.571,
+          "level": 0.857,
+          "step_tol3": 0.714
+        },
+        "N3": {
+          "n": 11,
+          "cluster": 0.455,
+          "level": 1.0,
+          "step_tol3": 0.455
+        },
+        "N4": {
+          "n": 7,
+          "cluster": 0.0,
+          "level": 0.571,
+          "step_tol3": 0.571
+        },
+        "N5": {
+          "n": 8,
+          "cluster": 0.5,
+          "level": 0.75,
+          "step_tol3": 0.625
+        },
+        "P1": {
+          "n": 28,
+          "cluster": 0.214,
+          "level": 0.5,
+          "step_tol3": 0.321
+        },
+        "P2": {
+          "n": 21,
+          "cluster": 0.143,
+          "level": 0.381,
+          "step_tol3": 0.905
+        },
+        "P3": {
+          "n": 8,
+          "cluster": 0.0,
+          "level": 0.5,
+          "step_tol3": 0.5
+        },
+        "P4": {
+          "n": 15,
+          "cluster": 0.467,
+          "level": 0.533,
+          "step_tol3": 0.867
+        }
+      },
+      "gt_cluster_distribution": {
+        "P1": 28,
+        "N4": 7,
+        "P4": 15,
+        "P3": 8,
+        "N5": 8,
+        "P2": 21,
+        "N3": 11,
+        "N1": 11,
+        "N2": 14
+      },
+      "predicted_cluster_distribution": {
+        "P2": 8,
+        "P1": 12,
+        "N5": 12,
+        "N1": 42,
+        "P4": 22,
+        "N3": 14,
+        "N4": 1,
+        "UNASSIGNED": 1,
+        "N2": 11
       }
     }
   ],

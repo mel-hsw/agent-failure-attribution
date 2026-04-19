@@ -10,7 +10,8 @@ _Primary split reported: `eval`_
 |---|---|---|---|---|---|---|---|
 | `phase_b_batch` | 123 | 0.22 | 0.48 | 0.0 | 0.0 | 0.0 (n=8) | 120 |
 | `c1_all_at_once` | 123 | 0.358 | 0.553 | 0.667 | 0.358 | 0.75 (n=8) | 122 |
-| `c2_binary_search` | 10 | 0.1 | 0.3 | 0.7 | 0.4 | 0.0 (n=0) | 10 |
+| `c2_binary_search` | 123 | 0.057 | 0.073 | 0.073 | 0.041 | 0.0 (n=8) | 18 |
+| `c3_constraint_grounded` | 123 | 0.341 | 0.626 | 0.65 | 0.358 | 0.625 (n=8) | 122 |
 
 ## 2. Stratified by source
 
@@ -22,9 +23,12 @@ _Primary split reported: `eval`_
 | `c1_all_at_once` | AEB | 45 | 0.178 | 0.267 | 0.6 |
 | `c1_all_at_once` | WW-HC | 22 | 0.5 | 0.682 | 0.409 |
 | `c1_all_at_once` | WW-AG | 56 | 0.446 | 0.732 | 0.821 |
-| `c2_binary_search` | AEB | 2 | 0.0 | 0.0 | 0.5 |
-| `c2_binary_search` | WW-HC | 3 | 0.333 | 0.667 | 0.333 |
-| `c2_binary_search` | WW-AG | 5 | 0.0 | 0.2 | 1.0 |
+| `c2_binary_search` | AEB | 45 | 0.067 | 0.067 | 0.044 |
+| `c2_binary_search` | WW-HC | 22 | 0.182 | 0.227 | 0.091 |
+| `c2_binary_search` | WW-AG | 56 | 0.0 | 0.018 | 0.089 |
+| `c3_constraint_grounded` | AEB | 45 | 0.2 | 0.467 | 0.578 |
+| `c3_constraint_grounded` | WW-HC | 22 | 0.364 | 0.727 | 0.409 |
+| `c3_constraint_grounded` | WW-AG | 56 | 0.446 | 0.714 | 0.804 |
 
 ## 3. Stratified by ground-truth cluster
 
@@ -48,10 +52,24 @@ _Primary split reported: `eval`_
 | `c1_all_at_once` | P2 | 21 | 0.19 | 0.381 | 0.905 |
 | `c1_all_at_once` | P3 | 8 | 0.0 | 0.375 | 0.75 |
 | `c1_all_at_once` | P4 | 15 | 0.4 | 0.467 | 0.867 |
-| `c2_binary_search` | N4 | 1 | 0.0 | 0.0 | 0.0 |
-| `c2_binary_search` | P1 | 3 | 0.0 | 0.333 | 0.333 |
-| `c2_binary_search` | P2 | 5 | 0.0 | 0.2 | 1.0 |
-| `c2_binary_search` | P4 | 1 | 1.0 | 1.0 | 1.0 |
+| `c2_binary_search` | N1 | 11 | 0.0 | 0.091 | 0.0 |
+| `c2_binary_search` | N2 | 14 | 0.0 | 0.0 | 0.0 |
+| `c2_binary_search` | N3 | 11 | 0.091 | 0.091 | 0.091 |
+| `c2_binary_search` | N4 | 7 | 0.0 | 0.0 | 0.0 |
+| `c2_binary_search` | N5 | 8 | 0.0 | 0.0 | 0.0 |
+| `c2_binary_search` | P1 | 28 | 0.143 | 0.143 | 0.036 |
+| `c2_binary_search` | P2 | 21 | 0.0 | 0.048 | 0.286 |
+| `c2_binary_search` | P3 | 8 | 0.0 | 0.0 | 0.0 |
+| `c2_binary_search` | P4 | 15 | 0.133 | 0.133 | 0.067 |
+| `c3_constraint_grounded` | N1 | 11 | 0.818 | 0.909 | 1.0 |
+| `c3_constraint_grounded` | N2 | 14 | 0.571 | 0.857 | 0.714 |
+| `c3_constraint_grounded` | N3 | 11 | 0.455 | 1.0 | 0.455 |
+| `c3_constraint_grounded` | N4 | 7 | 0.0 | 0.571 | 0.571 |
+| `c3_constraint_grounded` | N5 | 8 | 0.5 | 0.75 | 0.625 |
+| `c3_constraint_grounded` | P1 | 28 | 0.214 | 0.5 | 0.321 |
+| `c3_constraint_grounded` | P2 | 21 | 0.143 | 0.381 | 0.905 |
+| `c3_constraint_grounded` | P3 | 8 | 0.0 | 0.5 | 0.5 |
+| `c3_constraint_grounded` | P4 | 15 | 0.467 | 0.533 | 0.867 |
 
 ## 4. Calibration κ (judge vs human, cluster label)
 
@@ -96,18 +114,37 @@ _Primary split reported: `eval`_
 ### `c2_binary_search`
 | cluster | GT | predicted |
 |---|---|---|
-| N1 | 0 | 4 |
-| N3 | 0 | 1 |
-| N4 | 1 | 1 |
-| P1 | 3 | 2 |
-| P2 | 5 | 0 |
-| P4 | 1 | 2 |
+| N1 | 11 | 6 |
+| N2 | 14 | 0 |
+| N3 | 11 | 2 |
+| N4 | 7 | 1 |
+| N5 | 8 | 1 |
+| P1 | 28 | 6 |
+| P2 | 21 | 0 |
+| P3 | 8 | 0 |
+| P4 | 15 | 2 |
+| UNASSIGNED | 0 | 105 |
+
+### `c3_constraint_grounded`
+| cluster | GT | predicted |
+|---|---|---|
+| N1 | 11 | 42 |
+| N2 | 14 | 11 |
+| N3 | 11 | 14 |
+| N4 | 7 | 1 |
+| N5 | 8 | 12 |
+| P1 | 28 | 12 |
+| P2 | 21 | 8 |
+| P3 | 8 | 0 |
+| P4 | 15 | 22 |
+| UNASSIGNED | 0 | 1 |
 
 ## 6. Source runs
 
 - `phase_b_batch` → `outputs/phase_b_batch/eval/phase-b-eval-20260419T021853-28ec92/per_case.jsonl` (n=123)
 - `c1_all_at_once` → `outputs/phase_c/all_at_once/eval/phase-c-eval-20260419T021854-9714af/per_case.jsonl` (n=123)
-- `c2_binary_search` → `outputs/phase_c/binary_search/eval/phase-c-bs-eval-20260419T025812/per_case.jsonl` (n=10)
+- `c2_binary_search` → `outputs/phase_c/binary_search/eval/phase-c-bs-eval-MERGED/per_case.jsonl` (n=123)
+- `c3_constraint_grounded` → `outputs/phase_c/constraint_grounded/eval/phase-c-cg-eval-20260419T113252-c4fd41/per_case.jsonl` (n=123)
 
 ---
 
