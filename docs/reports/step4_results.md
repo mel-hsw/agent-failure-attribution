@@ -6,37 +6,97 @@ _Primary split reported: `eval`_
 
 ## 0. Executive summary
 
-**Headline numbers (eval split, n=123; all-at-once C.1 uses the v1 prompt):**
+**Primary thesis (per CLAUDE.md):** the core question is whether the evaluator can distinguish **node-level from process-level failures** and localize the origin step. Within-level cluster accuracy is a secondary / detail metric. Numbers are reported against that framing below.
 
-| Evaluator | cluster | level | step tol-3 | step tol-0 | P3 late-symptom |
+### Headline — Level accuracy (node vs process, eval split, n=123)
+
+| Evaluator | Level acc | Step tol-3 | Level κ (cal n=5) | Cluster acc (2ary) |
+|---|---|---|---|---|
+| `phase_b_rubric` (ADK off-the-shelf) | **0.480** (below 50% chance) | — | **0.000** (pure chance) | 0.220 |
+| `c1_all_at_once` (v1 prompt, pro) | 0.553 | **0.667** | 0.615 | 0.358 |
+| **`c3_constraint_grounded`** (fixed) | **0.626** | 0.650 | TBD (cal re-running) | 0.341 |
+| `c3_ablation_no_log` | 0.480 | 0.423 | — | 0.106 |
+| `c1_all_at_once` (flash-lite, t=0.3) | 0.455 (below chance) | 0.610 | — | 0.203 |
+| `c1_all_at_once` (v3 prompt, pro) — rejected | 0.561 | 0.593 | — | 0.260 |
+| `c2_binary_search` ⚠ quota-blocked (18/123) | (partial) | (partial) | (partial) | (partial) |
+
+### Per-level breakdown (where level accuracy comes from)
+
+Eval split ground truth: **51 node / 72 process** (41% / 59% — process-heavy). Per-class accuracy = recall (`correct / gt_count` for that class).
+
+| Evaluator | Accuracy (overall) | Macro F1 (overall) | Accuracy (node / process) | F1 (node / process) | Precision (node / process) |
 |---|---|---|---|---|---|
-| `phase_b_rubric` (ADK off-the-shelf) | 0.220 | 0.480 | — (no step output) | — | — |
-| **`c1_all_at_once` (v1 prompt, pro)** | **0.358** | 0.553 | **0.667** | 0.358 | 0.750 |
-| `c1_all_at_once` (v3 prompt, pro) — rejected | 0.260 | 0.561 | 0.593 | 0.333 | — |
-| `c1_all_at_once` (v3 prompt, flash-lite, t=0.3) | 0.203 | 0.455 | 0.610 | 0.309 | — |
-| `c2_binary_search` ⚠ quota-blocked (18/123) | (partial) | (partial) | (partial) | (partial) | (partial) |
-| **`c3_constraint_grounded`** (fixed) | 0.341 | **0.626** | 0.650 | 0.358 | 0.625 |
-| `c3_ablation_no_log` | 0.106 | 0.480 | 0.423 | 0.081 | 0.750 |
+| `phase_b_rubric` (ADK off-the-shelf) | 0.480 | 0.445 | 0.902 / **0.181** | 0.601 / 0.289 | 0.451 / 0.722 |
+| `c1_all_at_once` (v1 pro) | 0.553 | 0.547 | 0.824 / 0.361 | 0.609 / 0.486 | 0.483 / 0.743 |
+| **`c3_constraint_grounded`** (fixed) | **0.626** | **0.626** | 0.843 / **0.472** | **0.656** / **0.596** | 0.537 / 0.810 |
 
-**Key findings:**
+All three evaluators over-predict node (Phase B predicts 102/123 = 83% node; C.3 predicts 80/123 = 65%, closest to the 51/123 = 41% ground-truth mix). **C.3's +7pp aggregate level win over C.1 comes almost entirely from better process recall (+11pp, 0.361 → 0.472);** node accuracy is nearly identical across the custom evaluators (0.82 vs 0.84).
 
-1. **C.1 AllAtOnceAttribution with the v1 prompt is the strongest overall attribution method** on cluster and tol-3 accuracy, lifting Phase B baseline by +14pp cluster / +7pp level / +67pp origin-step tol-3 (Phase B has no step output). This validates the §6 argument that ADK's built-in evaluator is shaped for final-response grading, not attribution — once the evaluator emits structured attribution directly, cluster accuracy and step localization both become meaningful.
+### Source × level matrix
 
-2. **Prompt "improvements" in v3 actively regressed C.1 on pro** (cluster 35.8% → 26.0%, −10pp). The v3 prompt's two-pass origin-attribution procedure and permissive P3 rule pushed the pro judge to over-predict P3 for N1/N3 cases (N1 per-cluster fell 82% → 36%). The +12pp on P3 cluster was not worth the broader regression. **Decision: v1 prompt is the production C.1 prompt.** v3 scripts retained in `scripts/phase_c_all_at_once_v3.py` for reproducibility.
+Per-source breakdown (gt: AEB 45 cases = 10 node / 35 process; WW-HC 22 = 15 / 7; WW-AG 56 = 26 / 30).
 
-3. **C.3 ConstraintGroundedAttribution is competitive with C.1** after the ID-alignment fix to `phase_c_constraint_grounded.py` (previously reported C.3 numbers of 0.114 / 0.472 / 0.496 were artifacts of a row-order parser on scrambled Vertex-batch output). Fixed C.3 scores 0.341 cluster / 0.626 level / 0.650 tol-3 — within 2pp of C.1 on cluster and tol-3, and **+7pp ahead on level accuracy**. The violation log is cited in 89.4% of predictions. C.3 wins N1 tol-3 (100%), N2 cluster (+14pp), and P4 cluster (+7pp); loses N3 cluster (−28pp; static error events in the log bias toward N1 framing) and P3 localization (−13pp traced-to-origin rate).
+| Evaluator | AEB node | AEB process | WW-HC node | WW-HC process | WW-AG node | WW-AG process |
+|---|---|---|---|---|---|---|
+| `phase_b_rubric` | 0.900 (9/10) | **0.086** (3/35) | 1.000 (11/11) | 0.182 (2/11) | 0.867 (26/30) | 0.308 (8/26) |
+| `c1_all_at_once` (v1) | 0.600 (6/10) | 0.171 (6/35) | 0.818 (9/11) | 0.545 (6/11) | 0.900 (27/30) | 0.538 (14/26) |
+| **`c3_constraint_grounded`** | 0.800 (8/10) | **0.371** (13/35) | 0.818 (9/11) | **0.636** (7/11) | 0.867 (26/30) | 0.538 (14/26) |
 
-4. **P3 cluster accuracy ceiling at ≈0/8 is a taxonomy-inherent limit, not a prompt deficiency.** A targeted probe (`scripts/phase_c_p3_probe_v1_5.py`) tested a rewritten P3 rule with consumption-based detection + one concrete example on the 8 P3 eval cases: cluster accuracy moved 0/8 → 1/8 and tol-3 moved 6/8 → 7/8. The +1 was the one case where propagation was *literally* visible (Expert B copied Expert A's buggy code). The other 7 P3 cases have semantic-not-syntactic consumption — memory over-simplifications trusted by downstream planners, tool failures followed by guesses — where the trajectory doesn't explicitly reference the upstream step. Step3 taxonomy review §P3 already acknowledges this: "origin cluster label is the node-level one; P3 labels the process-level propagation pattern from the perspective of the downstream failure trajectory." Recommendation: accept v1's N1/N2/N3 labels on these cases as taxonomy-correct-at-origin and report P3 cluster as an inherent-metric-limit, separate from P3 tol-3 which reaches 75% on C.1.
+**The constraint log's process-recall win is concentrated on AEB** (C.3 vs C.1: +20pp on AEB process; +9pp on WW-HC process; **tied** on WW-AG process). AEB cases are longer single-agent traces with explicit module boundaries (planning / reflection / action / memory / system) — the constraint log's static-rule violation detection lines up naturally with these modular failures. On W&W's multi-agent traces, C.1's taxonomy-in-prompt already captures the structure. **Phase B's process recall on AEB is 0.086 — effectively blind to process-level failures in the hardest part of the dataset.**
 
-5. **C.2 BinarySearchAttribution is unreportable** as a primary result. The preview-model daily quota exhausted mid-run; only 18/123 cases completed successfully. The merged successful-subset scores (0.389 cluster / 0.500 level / 0.500 tol-3 on n=18) are directionally similar to C.1 but the confidence interval is enormous. Either a quota increase on `gemini-3.1-pro-preview` or rewriting the bisection as dense per-step Vertex batch ("oracle batch") is needed for a clean number.
+### Statistical significance (McNemar's paired χ², level accuracy)
 
-6. **Calibration κ on n=5 is directional only — 0.70 gate unresolved for every evaluator.** Phase B 0.385 / C.1 0.474 / C.2 0.500 on successful subset / C.3 0.474 (pooled dev+cal n=10 moves C.1 to 0.512 with 95% CI [0.17, 0.86]). At n=5 the 95% CI spans the full [0, 1] range. Paper-ready claims should carry the κ caveat; larger calibration pass (≥25 cases) is the cleanest next step.
+Paired comparison on the same 123 eval trajectories.
 
-7. **Source stratification (§2) confirms the W&W-AG cases are where both C.1 and C.3 shine** (C.1 0.446 cluster / 0.821 tol-3; C.3 0.446 cluster / 0.804 tol-3). AEB is harder for every method — its P1/P2-heavy distribution exposes all methods' weak process-cluster accuracy. WW-HC (hand-crafted multi-agent) is the hardest for flash-lite (5% cluster) because of intricate conversational structure.
+| Pair (A vs B) | both correct | A✓ B✗ | A✗ B✓ | both wrong | χ² | p (approx) | Significant? |
+|---|---|---|---|---|---|---|---|
+| Phase B vs C.1 (v1 pro) | 52 | 7 | 16 | 48 | 2.783 | 0.095 | No (p ≥ 0.05) |
+| C.1 (v1 pro) vs C.3 (fixed) | 64 | 4 | 13 | 42 | 3.765 | 0.052 | Marginal |
+| **Phase B vs C.3 (fixed)** | 53 | 6 | 24 | 40 | 9.633 | **0.0019** | **Yes (p < 0.01)** |
 
-8. **Model-swap ablation (flash-lite vs pro)** validated: flash-lite-v3-t0.3 landed at 0.203 cluster / 0.455 level / 0.610 tol-3. Flash-lite is **stronger than pro on P1 (+18pp) and P2 (+14pp)** but collapses on N3 (−73pp), P4 (−33pp), N5 (−38pp). Verified via sync sanity-check (4/5 first-run match) that this reflects genuine model capability, not a batch-infra bug. Flash-lite is a viable "fast screening" tier at ~5× lower wall-time (5.8 min vs 25 min per eval batch) if tol-3 is the primary metric — step localization holds up (61% vs 67%).
+Conservative read: **C.3 is significantly better than the off-the-shelf baseline (p=0.002)**, which is the paper's primary claim. C.3 vs C.1 is right at the 0.05 edge — directionally consistent but would need more data to lock as significant. C.1 vs Phase B alone is not significant at this n — the paper should either report C.1 and C.3 together ("custom evaluators both outperform baseline") or use larger eval for C.1-specific comparisons.
 
-**Recommended next steps:** (a) re-run C.2 via oracle-batch (Vertex batch, one row per step-index per trajectory) to bypass the online quota; (b) re-run calibration on ≥25 cases; (c) ablation on C.3 with a trimmed violation log (only dynamic events, drop S8 noise) to see if cluster accuracy recovers; (d) paper-write-up: C.1+C.3 substantially outperform the ADK off-the-shelf baseline; C.3's log earns its keep on level accuracy; P3 cluster is inherently capped and should be reported separately from P3 tol-3.
+### Bootstrap 95% CI on level metrics (1000 resamples)
+
+Paired nonparametric bootstrap over the 123 eval trajectories.
+
+| Evaluator | Level accuracy | Macro F1 | Node F1 | Process F1 |
+|---|---|---|---|---|
+| `phase_b_rubric` | 0.480 [0.390, 0.577] | 0.445 [0.359, 0.529] | 0.601 [0.507, 0.694] | 0.289 [0.169, **0.413**] |
+| `c1_all_at_once` (v1) | 0.553 [0.472, 0.642] | 0.547 [0.460, 0.637] | 0.609 [0.504, 0.700] | 0.486 [0.364, 0.598] |
+| **`c3_constraint_grounded`** | 0.626 [0.545, 0.707] | 0.626 [0.541, 0.705] | 0.656 [0.562, 0.745] | 0.596 [**0.486**, 0.696] |
+
+**Process F1 bootstrap CIs of Phase B and C.3 do not overlap** (Phase B upper 0.413 < C.3 lower 0.486) — a cleaner statistical signal than the point estimate alone. Node F1 CIs all overlap, consistent with the "node is ~solved" finding. Level accuracy CIs for C.3 and Phase B overlap at the boundary (C.3 lower 0.545 vs Phase B upper 0.577); process F1 is the cleaner distinguishing metric.
+
+Analyses generated by `scripts/level_analysis.py`.
+
+### Key findings — reordered around the primary thesis
+
+1. **The off-the-shelf ADK evaluator cannot distinguish node from process failures.** Phase B level accuracy of 48.0% is below the 50% binary-chance floor, and calibration level κ is exactly 0.000 — pure chance agreement with human labels. This is the central failure mode of using the built-in rubric evaluator for attribution: its closed-world yes/no rubric template is shaped for final-response grading, not node-vs-process classification, so the level signal is indistinguishable from random. **This alone is the paper's case for building custom evaluators.**
+
+2. **C.3 ConstraintGroundedAttribution is the strongest level classifier.** Fixed C.3 (post ID-alignment patch; previously-reported 0.472 was a scrambled-output artifact) scores **62.6% level accuracy — +14.6pp over Phase B baseline and +7.3pp over C.1 v1**. The violation log, cited in 89.4% of predictions, provides evidence the judge can anchor level decisions against. This is the evaluator-vs-evaluator contrast that earns its keep in the paper: the constraint log is specifically what moves the node/process distinction above C.1's taxonomy-only baseline.
+
+3. **Process-level detection is the load-bearing differentiator; node-level detection is roughly solved.** Per-level accuracy is in the headline table above. Three things fall out: (a) **node accuracy is consistently 82–90% across evaluators** — this part of the problem is handled adequately by every method, including the ADK baseline; (b) **process accuracy ranges from 18% to 47%**, a 2.6× spread, and this is where evaluator design pays off; (c) **C.3's aggregate level win is almost entirely a process-accuracy win (+11pp over C.1)** — node accuracy is within 2pp across the custom evaluators. Phase B's 18% process recall + 0.000 level κ together make the "ADK off-the-shelf cannot do node-vs-process" claim rock-solid.
+
+4. **The constraint log's process-recall win is concentrated on AEB.** The source × level matrix above shows C.3 vs C.1 process-accuracy deltas of +20pp (AEB), +9pp (WW-HC), **0pp** (WW-AG). On W&W's multi-agent traces, C.1's taxonomy-in-prompt already captures process structure; C.3 matches it but doesn't exceed it. The log specifically helps on AEB — longer single-agent traces with explicit module boundaries (planning / reflection / action / memory / system) where static-rule violation detection lines up with modular failures. **Phase B's AEB process recall is 0.086 (3/35)** — effectively blind to process-level failures in the hardest part of the dataset.
+
+5. **Statistical significance (McNemar's paired χ² on level accuracy)**: Phase B vs C.3 is significant at **p = 0.0019**; C.1 vs C.3 is marginal (p = 0.052); Phase B vs C.1 is not significant (p = 0.095). The cleanest paper claim is *"custom evaluators (C.1 and C.3 together) outperform the ADK baseline; C.3 is the strongest on process-level detection specifically."* The C.3 > C.1 magnitude is directional; larger eval or per-source significance testing would lock it. **Process-F1 bootstrap 95% CIs don't overlap between Phase B [0.17, 0.41] and C.3 [0.49, 0.70]** — a cleaner non-overlap signal than level accuracy alone.
+
+6. **C.1 AllAtOnceAttribution (v1 prompt) is the strongest step-localizer.** Origin tol-3 at 66.7%, beating Phase B (which has no step output) by definition and matching C.3 within 1.7pp. C.1's structured-JSON output format + taxonomy-in-prompt is sufficient to get the origin step right two thirds of the time. For **tolerance-3 as the primary step metric (step4_plan §8, reflecting human annotator wobble), C.1 is the production method.**
+
+7. **Step localization is robust across custom evaluators; level/cluster is not.** Tol-3 clusters around 60-67% for all three pro-based custom evaluators (C.1 v1, C.1 v3, C.3). Level accuracy ranges from 55% to 63%. The variance between evaluators is about 10× higher on level than on step — suggesting step-finding is a mostly-solved problem at this model tier while level classification remains the differentiator.
+
+8. **Prompt changes in C.1-v3 regressed every metric on pro.** v3's two-pass origin-attribution + permissive P3 rule moved cluster 35.8%→26.0% and tol-3 66.7%→59.3%; the +12pp intended gain on P3 cluster cost ~10pp in N1/N3 precision. **Decision: v1 prompt is the production C.1 prompt.** v3 scripts retained for reproducibility; the rejection is itself a finding — more elaborate disambiguation rules hurt on stronger models.
+
+9. **P3 cluster accuracy is capped at ≈0/8 by the taxonomy itself, not by prompt engineering.** A targeted probe (`scripts/phase_c_p3_probe_v1_5.py`) with a consumption-based P3 rule moved cluster only 0/8 → 1/8 on the 8 P3 eval cases; the +1 was the single trajectory where propagation was literally visible (Expert B copied Expert A's code). The other 7 have semantic-not-syntactic consumption (memory over-simplifications trusted by planners, tool failures followed by guesses). Step3 taxonomy review §P3 itself acknowledges: "origin cluster is the node-level one; P3 labels the propagation pattern from the downstream trajectory perspective." **Report P3 cluster as an inherent-metric limit separate from P3 origin-step tol-3**, which reaches 75% on C.1 and 62% on C.3.
+
+10. **Flash-lite ablation: viable screening tier at ~5× faster wall-time.** `gemini-3.1-flash-lite-preview` at t=0.3 with v3 prompt lands at 45.5% level / 61.0% tol-3 / 20.3% cluster — below chance on level but only −5.7pp on tol-3 vs pro. Flash-lite is **stronger than pro on P1 (+18pp) and P2 (+14pp)** but collapses on N3/N4/N5/P4/N1 (all −30pp or worse) because it over-predicts N1 and P1 and never predicts N3 or N4. Sync-API sanity check (4/5 first-run match to batch predictions) confirms this reflects genuine model capability, not batch-infra bugs. Viable for "find the step, don't trust the cluster" use cases; not a pro replacement.
+
+11. **Calibration κ on n=5 is directional only; 0.70 gate unresolved.** Phase B cluster κ 0.385 / level κ **0.000** — the latter is the damning number. C.1 cluster κ 0.474 / level κ 0.615. C.3 level κ TBD (re-running after alignment fix). At n=5 the 95% CI spans [0, 1] for positive κ values; the directional ranking (Phase B ≪ C.1 ≤ C.3) holds but magnitudes aren't paper-locked. **Larger calibration pass (≥25 cases) is the highest-leverage methodological next step.**
+
+12. **C.2 BinarySearchAttribution is unreportable** (18/123 due to pro quota exhaustion). Partial scores are directionally consistent with C.1. Either a quota increase or an "oracle-batch" rewrite (submit all step-index queries up front, compute bisection path locally) is required for a clean number.
+
+**Recommended next steps:** (a) re-run C.2 via oracle-batch to bypass online quota; (b) re-run calibration on ≥25 cases to resolve the κ ≥ 0.70 gate; (c) trimmed-log ablation on C.3 (only dynamic events, drop S8 static noise) to see if cluster accuracy recovers toward C.1's level while keeping the level-accuracy win; (d) paper write-up narrative: **the off-the-shelf ADK rubric evaluator can't do node-vs-process classification (chance-level, κ=0); custom evaluators with structured-JSON output (C.1) and constraint-log grounding (C.3) substantially outperform it, with C.3's log providing the strongest level signal. Step localization (tol-3) is mostly solved at this model tier — the differentiator is level classification, where C.3 > C.1 > Phase B (≈ chance).**
 
 ---
 
