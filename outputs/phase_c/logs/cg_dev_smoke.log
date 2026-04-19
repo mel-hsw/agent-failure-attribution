@@ -6,3 +6,31 @@
   warnings.warn(eol_message.format("3.9"), FutureWarning)
 /Users/mel/Library/Python/3.9/lib/python/site-packages/google/api_core/_python_version_support.py:242: FutureWarning: You are using a non-supported Python version (3.9.6). Google will not post any further updates to google.api_core supporting this Python version. Please upgrade to the latest Python version, or at least Python 3.10, and then update google.api_core.
   warnings.warn(message, FutureWarning)
+Phase C ConstraintGrounded | split=dev | n=3 | model=gemini-3.1-pro-preview | ablation=False
+Run dir: /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/constraint_grounded/dev/phase-c-cg-dev-20260419T023717-7c59ce
+
+[Pass 0] Running TrajectoryReplayer (static constraints)...
+  Static events across corpus: 0 (0/3 trajectories flagged)
+
+[Pass 1] Submitting dynamic-constraint batch...
+  Uploaded constraint batch input -> gs://agenttracebucket/phase_c/constraint_grounded/phase-c-cg-dev-20260419T023717-7c59ce/constraints_input.jsonl
+  [0s] JobState.JOB_STATE_PENDING
+  [40s] JobState.JOB_STATE_RUNNING
+  [244s] JobState.JOB_STATE_SUCCEEDED
+  Downloaded constraint predictions -> /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/constraint_grounded/dev/phase-c-cg-dev-20260419T023717-7c59ce/predictions_constraints.jsonl
+
+[Pass 2] Submitting attribution batch...
+  Uploaded attribution batch input -> gs://agenttracebucket/phase_c/constraint_grounded/phase-c-cg-dev-20260419T023717-7c59ce/attribution_input.jsonl
+  [0s] JobState.JOB_STATE_PENDING
+  [40s] JobState.JOB_STATE_RUNNING
+  [284s] JobState.JOB_STATE_SUCCEEDED
+  Downloaded attribution predictions -> /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/constraint_grounded/dev/phase-c-cg-dev-20260419T023717-7c59ce/predictions_attribution.jsonl
+
+=== Phase C ConstraintGrounded Summary (dev) ===
+  Cases: 3  Errors: 0
+  Cluster accuracy: 0.0
+  Level accuracy:   0.667
+  Origin-step tol-3/tol-0: 0.667 / 0.0
+  Unassignable:     0.0
+  Log citation rate: 0.333
+  Outputs: /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/constraint_grounded/dev/phase-c-cg-dev-20260419T023717-7c59ce/

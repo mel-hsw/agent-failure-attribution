@@ -20,3 +20,25 @@ Warning: there are non-text parts in the response: ['thought_signature'], return
 Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
 Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
 Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Phase C BinarySearch | split=calibration | n=5 | model=gemini-3.1-pro-preview | parallelism=3
+  [1/5] WW-AG-e4e91f1c-1dcd-439e-9fdd-cb976f5293fd: bs_step=2 pred=N1 gt=P2@2 calls=3+1 (OK, 31.25s)
+  [2/5] WW-AG-305ac316-eef6-4446-960a-92d80d542f82: bs_step=2 pred=N1 gt=N1@2 calls=3+1 (OK, 36.05s)
+  [3/5] WW-AG-54612da3-fd56-4941-80f4-5eb82330de25: bs_step=2 pred=N2 gt=N2@4 calls=3+1 (OK, 71.11s)
+  [4/5] Llama3.3-70B-Turbo_016_memory_b001_t00_e07-f5b5d66a: bs_step=13 pred=P1 gt=P1@8 calls=5+1 (OK, 221.95s)
+  [5/5] WW-AG-dc22a632-937f-4e6a-b72f-ba0ff3f5ff97: bs_step=1 pred=N5 gt=P1@2 calls=4+1 (OK, 473.39s)
+
+=== Phase C BinarySearch Summary (calibration) ===
+  Cases: 5  Errors: 0  Wall: 504.7s
+  Cluster accuracy: 0.6
+  Level accuracy:   0.6
+  Origin-step (bisected)   tol-3/tol-0: 0.8 / 0.4
+  Origin-step (classified) tol-3/tol-0: 0.8 / 0.6
+  Mean judge calls/case: 4.6 (expected ~3.8)
+  Outputs: /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/binary_search/calibration/phase-c-bs-calibration-20260419T023722/

@@ -6,3 +6,19 @@
   warnings.warn(eol_message.format("3.9"), FutureWarning)
 /Users/mel/Library/Python/3.9/lib/python/site-packages/google/api_core/_python_version_support.py:242: FutureWarning: You are using a non-supported Python version (3.9.6). Google will not post any further updates to google.api_core supporting this Python version. Please upgrade to the latest Python version, or at least Python 3.10, and then update google.api_core.
   warnings.warn(message, FutureWarning)
+Phase C AllAtOnce | split=calibration | n=5 | model=gemini-3.1-pro-preview
+Wrote 5 requests to /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/all_at_once/calibration/phase-c-calibration-20260419T023719-f8c819/input.jsonl
+Uploaded -> gs://agenttracebucket/phase_c/all_at_once/phase-c-calibration-20260419T023719-f8c819/input.jsonl
+  [0s] JobState.JOB_STATE_PENDING
+  [40s] JobState.JOB_STATE_RUNNING
+  [284s] JobState.JOB_STATE_SUCCEEDED
+Job final state: JobState.JOB_STATE_SUCCEEDED
+Downloaded predictions -> /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/all_at_once/calibration/phase-c-calibration-20260419T023719-f8c819/predictions.jsonl
+
+=== Phase C AllAtOnce Summary (calibration) ===
+  Cases: 5  Errors: 0
+  Cluster accuracy: 0.6
+  Level accuracy:   0.8
+  Origin-step tol-3: 0.8
+  Origin-step tol-0: 0.4
+  Outputs: /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/all_at_once/calibration/phase-c-calibration-20260419T023719-f8c819/
