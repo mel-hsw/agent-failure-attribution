@@ -1,0 +1,41 @@
+{
+  "split": "calibration",
+  "judge_model": "gemini-3.1-pro-preview",
+  "run_id": "phase-c-calibration-20260419T023719-f8c819",
+  "n_cases": 5,
+  "errors": 0,
+  "cluster_accuracy": 0.6,
+  "level_accuracy": 0.8,
+  "origin_step_tol0": 0.4,
+  "origin_step_tol3": 0.8,
+  "unassignable_rate": 0.0,
+  "gt_cluster_distribution": {
+    "P1": 2,
+    "N2": 1,
+    "N1": 1,
+    "P2": 1
+  },
+  "predicted_cluster_distribution": {
+    "P2": 1,
+    "N2": 1,
+    "N1": 2,
+    "P1": 1
+  },
+  "confusion_matrix": {
+    "P1": {
+      "P2": 1,
+      "P1": 1
+    },
+    "N2": {
+      "N2": 1
+    },
+    "N1": {
+      "N1": 1
+    },
+    "P2": {
+      "N1": 1
+    }
+  },
+  "gcs_input": "gs://agenttracebucket/phase_c/all_at_once/phase-c-calibration-20260419T023719-f8c819/input.jsonl",
+  "gcs_output_prefix": "gs://agenttracebucket/phase_c/all_at_once/phase-c-calibration-20260419T023719-f8c819/output"
+}

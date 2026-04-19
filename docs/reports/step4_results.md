@@ -188,9 +188,41 @@ Small-n caveat: n=8 means 75% tol-3 has a 95% Wilson CI of roughly [41%, 93%]. R
 
 ### 5.5 Confidence calibration
 
-_Extracted from Phase C `prediction.confidence` field. Preview — full Phase D will expand._
+_Extracted from Phase C `prediction.confidence` field._
 
-Phase C reports confidence in [0,1]. Dev-smoke observation: 3/5 predictions had confidence 0.95–1.0 regardless of correctness — suggestive of weak calibration. Eval-split calibration table (and κ computation) goes under Phase D, to be populated once the calibration split runs.
+Phase C reports confidence in [0,1]. Dev-smoke observation: 3/5 predictions had confidence 0.95–1.0 regardless of correctness — suggestive of weak calibration. Full confidence-bucketed accuracy table deferred to post-Phase-C.2/C.3 analysis.
+
+### 5.6 Calibration split (κ vs human labels, n=5)
+
+Run via `scripts/phase_c_all_at_once.py --split calibration`; reparsed; κ computed with `scripts/compute_kappa.py`.
+
+| Metric | κ | 95% CI (bootstrap) | Raw agreement | Landis–Koch band |
+|---|---|---|---|---|
+| Cluster (9-way) | **0.474** | [−0.11, 1.00] | 3/5 | moderate |
+| Level (node/process) | **0.615** | [0.00, 1.00] | 4/5 | substantial |
+| Origin step tol-3 | n/a (gt label trivial) | — | 4/5 | — |
+
+**Gate status**: step4_plan §8.3 requires κ ≥ 0.70 before quoting eval numbers as paper-ready. Phase C.1 misses the gate on both cluster and level κ.
+
+**Caveat**: at n=5, the 95% CI on κ spans the full [0, 1] range for level (and [−0.11, 1.00] for cluster). The point estimates are directional only. Interpreting strictly: we do not yet have calibration evidence sufficient to quote eval numbers without hedging.
+
+Options for a stronger calibration claim (Phase D decision):
+1. Expand the calibration set by pulling ~10–15 additional trajectories from the eval split (changes Phase A's seed-locked split — non-trivial).
+2. Run Phase C.2 (binary search) and Phase C.3 (constraint-grounded) on the same calibration split; if all three land around κ ≈ 0.45–0.60, the cross-evaluator consistency tightens the claim.
+3. Report κ with CI in the paper's limitations section and explicitly frame eval results as directional absent a better calibration set.
+
+---
+
+### 5.7 Phase B calibration κ — for comparison
+
+Same n=5 calibration split, Phase B runner.
+
+| Metric | κ | 95% CI | Raw agreement |
+|---|---|---|---|
+| Cluster (9-way) | 0.385 | [0.00, 1.00] | 2/4 (1 UNASSIGNED excluded) |
+| Level (node/process) | **0.000** | [0.00, 0.00] | 2/4 |
+
+Phase B's level κ at 0.000 is notable — the baseline agrees with the human labels only at chance rate (2 node / 2 process by luck). This reinforces the eval finding (§4.1) that Phase B's 48% level accuracy is not a real signal.
 
 ---
 
@@ -293,3 +325,4 @@ python3 scripts/phase_c_all_at_once.py --split eval     # Phase C.1 eval
 |---|---|
 | 2026-04-19 | Skeleton staged; tables pre-populated with TBD markers pending batch completion. |
 | 2026-04-19 | Phase B eval (n=123) + Phase C.1 eval (n=123) landed. Reparsed both via `reparse_batch.py` after discovering Vertex batch does not preserve input row order. Tables filled; headline: C.1 cluster 36% vs B 22%, C.1 tol-3 67%. |
+| 2026-04-19 | Phase B + C.1 calibration split (n=5) landed. C.1 cluster κ=0.47, level κ=0.62 (both below the 0.70 gate, but n=5 CIs span [0,1]). Phase B level κ=0.000 — reinforces that its 48% level accuracy on eval is not real signal. |
