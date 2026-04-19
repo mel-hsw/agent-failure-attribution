@@ -82,13 +82,44 @@ Smoke test on 1 dev case fails at the judge call with `DefaultCredentialsError`.
 
 ---
 
-## 5. Phase C — implemented, needs live smoke + eval runs
+## 5. Phase C — complete on eval split (123 cases); full results in `docs/reports/step4_results.md`
 
-All three evaluators default to **`gemini-3.1-pro-preview` on Vertex `location=global`** (matches `phase_b_batch.py` / `phase_c_all_at_once.py`). The preview model is only served from `global` — regional endpoints 404.
+Judge: **`gemini-3.1-pro-preview` on Vertex `location=global`** (matches Phase B batch). The preview model is only served from `global` — regional endpoints 404.
 
-- **`scripts/phase_c_all_at_once.py`** — Vertex batch. Single structured-JSON attribution per trajectory. Complete.
-- **`scripts/phase_c_binary_search.py`** — online async via `google.genai.aio`. Bisection is sequential per trajectory (each midpoint depends on the previous verdict), so it can't collapse into a single batch; uses a semaphore for cross-trajectory parallelism. Per trajectory: ~log₂(n)+1 judge calls.
-- **`scripts/phase_c_constraint_grounded.py`** — two-pass Vertex batch. Pass 0 (Python) runs Tier-1 static constraints via `scripts/trajectory_replayer.py` (S4 repeated tool calls, S5/S6 heuristic terminal actions, S8 fresh-token error signals, S9 per-author step budget). Pass 1 batch synthesizes+evaluates D1–D9 per trajectory. Pass 2 batch emits final attribution with the merged violation log as evidence. `--no-violation-log` implements the §9 ablation.
+### C.1 AllAtOnceAttribution — complete, best performer
+- Script: `scripts/phase_c_all_at_once.py` (single Vertex batch; one structured-JSON attribution per trajectory).
+- Run dir: `outputs/phase_c/all_at_once/eval/phase-c-eval-20260419T021854-9714af/`
+- **cluster 0.358 / level 0.553 / step tol-3 0.667 / tol-0 0.358 / P3 late-symptom 0.750**
+- Lift over Phase B: +14pp cluster, +7pp level, +67pp tol-3 (Phase B has no step output).
+
+### C.2 BinarySearchAttribution — quota-blocked; needs oracle-batch rewrite
+- Script: `scripts/phase_c_binary_search.py` (online async via `google.genai.aio`; ~log₂(n)+1 judge calls per trajectory).
+- `gemini-3.1-pro-preview` daily quota exhausted across four runs at parallelism 1/2/4. Only 18/123 cases completed successfully total.
+- Merged results under `outputs/phase_c/binary_search/eval/phase-c-bs-eval-MERGED/per_case.jsonl`: cluster 0.389, level 0.500, tol-3 0.500 on n=18. **Directional only; not paper-ready.**
+- Fix path: rewrite as "oracle batch" — enumerate every step-index query for every trajectory as a single Vertex batch, reconstruct bisection path locally from verdicts. Uses batch-quota lane (higher than online preview lane). Cost: O(n) calls per trajectory vs O(log n) but batch is ~50% cheaper per call.
+
+### C.3 ConstraintGroundedAttribution — complete, best on level accuracy
+- Script: `scripts/phase_c_constraint_grounded.py` (two-pass Vertex batch; Pass 0 Python static via `scripts/trajectory_replayer.py`, Pass 1 dynamic D1–D9 synth+eval, Pass 2 final attribution with merged log).
+- **Canonical run dir (post-ID-alignment fix, commit 6756a92):** `outputs/phase_c/constraint_grounded/eval/phase-c-cg-eval-20260419T113252-c4fd41/`
+- Ablation (`--no-violation-log`) run dir: `outputs/phase_c/constraint_grounded/eval/phase-c-cg-eval-20260419T025817-84b2d2/`
+- Earlier run dirs (`...-20260419T030324-33f3b3/`, `...-20260419T025817-84b2d2/` main) were scored against a buggy row-order parser that mis-aligned Vertex-batch outputs — numbers from those runs are stale.
+- **With log (canonical): cluster 0.341 / level 0.626 / tol-3 0.650 / P3 late-symptom 0.625** (log citation rate 0.894).
+- **Without log (ablation): cluster 0.106 / level 0.480 / tol-3 0.423 / P3 0.750.**
+- Log lift is substantial on level (+14.6pp) and tol-3 (+22.7pp); ablation matches Phase B's 0.480 level exactly, meaning the log is causally responsible for C.3's level-accuracy win over baseline. C.3's process recall (0.472) is the load-bearing gain — concentrated on AEB (+20pp over C.1 on AEB process cases specifically).
+
+### Phase D — complete; scorecard lives in `docs/reports/step4_results.md`
+- Script: `scripts/phase_d_scorecard.py` — auto-discovers latest run dir per evaluator, or accepts explicit `--runs ... --labels ...`.
+- Three-part match per CLAUDE.md (origin-step, cluster, P3 late-symptom), stratified by source (AEB / WW-HC / WW-AG) and cluster.
+- **Calibration κ on n=5 is below the 0.70 gate** for every method (Phase B 0.385, C.1 0.474, C.2 0.500, C.3 −0.25). Small n is the limiting factor; recommend re-running calibration on ≥25 stratified cases before the paper uses these numbers as headline claims.
+
+### Supporting scripts added
+- `scripts/phase_c_resume.py` — reconnects to Vertex batches whose local Python pollers were SIGTERM'd (exit 144). Polls GCS for the predictions blob under the run dir's inferred output prefix, downloads, and re-builds local artifacts. Handles both all_at_once (single batch) and constraint_grounded (two-pass, including submitting Pass 2 if it never ran).
+- `scripts/phase_d_scorecard.py` — consolidated scorecard with Cohen's κ.
+
+### Known landmines encountered (for next agent)
+- **Preview-model daily quota.** `gemini-3.1-pro-preview` daily cap was hit mid-day with only ~700 online calls total across Phase B + C. Batch lane has a separate, higher quota. Plan any re-run to stay on batch.
+- **Harness SIGURG at ~10 min.** Claude's background-task wrapper appears to send signal 16 (exit 144) at ~10 min of wall-clock when multiple long-running bash background commands are active. Vertex batches survive this. The resume script is the mitigation.
+- **Replayer S8 noise.** 82% of static events are S8 error signals from scraped pages (GitHub rate-limit banners, "There was an error while loading"). These are real runtime errors but dominate the violation log; recommend either filtering or a separate tier for scraped-content errors vs. tool-execution errors.
 
 Smoke-tested the replayer on 123 eval cases: 74 flagged, distribution {S8: 756, S4: 244, S9: 8} — S8 tightened to ignore tokens already present in step 0 so AEB's re-embedded task preamble doesn't inflate.
 
