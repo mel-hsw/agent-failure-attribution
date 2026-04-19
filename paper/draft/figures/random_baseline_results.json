@@ -1,0 +1,21 @@
+{
+  "n_cases": 123,
+  "trajectory_length_mean": 24.495934959349594,
+  "trajectory_length_median": 10.0,
+  "random_step_tol3_mean": 0.5045040650406504,
+  "random_step_tol3_ci95": [
+    0.43902439024390244,
+    0.5691056910569106
+  ],
+  "midpoint_step_tol3": 0.5284552845528455,
+  "last_tool_error_step_tol3": 0.4065040650406504,
+  "evaluator_step_tol3": {
+    "Baseline": null,
+    "AllAtOnce": 0.667,
+    "ConstraintGrounded": 0.65
+  },
+  "lift_over_random": {
+    "AllAtOnce": 0.16249593495934966,
+    "ConstraintGrounded": 0.14549593495934965
+  }
+}

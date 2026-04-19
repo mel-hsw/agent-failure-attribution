@@ -365,6 +365,24 @@ Without stratification, AEB's process-heaviness and W&W's node-heaviness mask me
 
 Before any scorecard numbers are declared trustworthy: compute Cohen's κ between judge and human on the ~5-record calibration set. Bar to clear: κ ≥ 0.70 (below MAST's 0.77 is acceptable since our task is harder, but sub-0.70 means the judge isn't ready).
 
+### Post-execution addendum (2026-04-19) — reporting structure finalized
+
+After Phase D numbers landed, the analysis section of the paper reorganized around CLAUDE.md's core framing: **node-vs-process discrimination is the primary hypothesis**; 9-way cluster accuracy and step localization are supporting dimensions. Concrete reporting structure committed in `docs/reports/step4_results.md`:
+
+1. **Primary scorecard** — node vs process level accuracy + macro F1 + per-class recall/F1/precision. One headline table. C.3 > C.1 > C.3-ablation ≈ Phase B.
+2. **Strictness ladder (L1 / L2 / L3)** applied to the level classification, where
+   - L1 = level correct only
+   - L2 = level correct AND step within tol-3 (headline tolerance)
+   - L3 = level correct AND step exact (tol-0)
+   One stacked table rather than three. Purpose: show whether the level ranking holds when step fidelity is also required (it does).
+3. **Violation-log ablation** — C.3 full vs C.3-ablation at each of L1/L2/L3. Purpose: prove the log is the causal factor in C.3's advantage, not the prompt scaffold. Finding: C.3-ablation L1 accuracy = Phase B L1 accuracy exactly (0.480 both), so the entire +14.6pp C.3 lift over Phase B traces to the log payload. Lift grows with strictness (+14.6pp → +19.5pp → +21.9pp on accuracy from L1 → L3), confirming the log anchors the step as well as the level.
+4. **9-way cluster accuracy demoted to supporting evidence.** It does not alter the primary ranking and is reported in §5 of `step4_results.md` alongside the N4/P3 taxonomic-floor caveat. The earlier plan treated cluster as a co-headline; that is superseded.
+5. **Statistical support**: McNemar's paired χ² on level accuracy (Phase B vs C.3 p = 0.0019) and bootstrap 95% CIs on process F1 (Phase B upper 0.413 vs C.3 lower 0.486, non-overlapping) — both clean signals at n=123.
+6. **Tolerance unchanged**: tol-3 primary, tol-0 stress, per §8 above. Still the case.
+7. **Late-symptom fidelity** (P3 n=8 in active set): reported in the scorecard table but not the narrative headline. Finding: P3 cluster accuracy is taxonomy-capped near 0 (separate from P3 step tol-3, which reaches 0.75 on C.1 and 0.50 on C.3). The ≈0 cluster-accuracy floor at P3 is driven by the "origin cluster is the node-level one; P3 labels the downstream propagation pattern" convention noted in step3 taxonomy review.
+
+See `docs/reports/step4_results.md` §0 for the narrative exposition and `docs/reports/step4_scorecard.md` §6–9 for the machine-readable tables that back each claim.
+
 ---
 
 ## 9. Ablations [DECIDED — appendix only]
