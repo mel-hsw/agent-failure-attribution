@@ -1,0 +1,30 @@
+Phase C ConstraintGrounded | split=eval | n=123 | model=gemini-3.1-pro-preview | ablation=False
+Run dir: /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/constraint_grounded/eval/phase-c-cg-eval-20260419T113252-c4fd41
+
+[Pass 0] Running TrajectoryReplayer (static constraints)...
+  Static events across corpus: 1008 (74/123 trajectories flagged)
+
+[Pass 1] Submitting dynamic-constraint batch...
+  Uploaded constraint batch input -> gs://agenttracebucket/phase_c/constraint_grounded/phase-c-cg-eval-20260419T113252-c4fd41/constraints_input.jsonl
+  [0s] JobState.JOB_STATE_PENDING
+  [40s] JobState.JOB_STATE_QUEUED
+  [61s] JobState.JOB_STATE_RUNNING
+  [935s] JobState.JOB_STATE_SUCCEEDED
+  Downloaded constraint predictions -> /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/constraint_grounded/eval/phase-c-cg-eval-20260419T113252-c4fd41/predictions_constraints.jsonl
+
+[Pass 2] Submitting attribution batch...
+  Uploaded attribution batch input -> gs://agenttracebucket/phase_c/constraint_grounded/phase-c-cg-eval-20260419T113252-c4fd41/attribution_input.jsonl
+  [0s] JobState.JOB_STATE_PENDING
+  [40s] JobState.JOB_STATE_QUEUED
+  [101s] JobState.JOB_STATE_RUNNING
+  [1952s] JobState.JOB_STATE_SUCCEEDED
+  Downloaded attribution predictions -> /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/constraint_grounded/eval/phase-c-cg-eval-20260419T113252-c4fd41/predictions_attribution.jsonl
+
+=== Phase C ConstraintGrounded Summary (eval) ===
+  Cases: 123  Errors: 0
+  Cluster accuracy: 0.341
+  Level accuracy:   0.626
+  Origin-step tol-3/tol-0: 0.65 / 0.358
+  Unassignable:     0.016
+  Log citation rate: 0.894
+  Outputs: /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/constraint_grounded/eval/phase-c-cg-eval-20260419T113252-c4fd41/

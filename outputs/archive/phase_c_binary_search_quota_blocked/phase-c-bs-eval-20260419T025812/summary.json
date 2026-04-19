@@ -1,0 +1,73 @@
+{
+  "split": "eval",
+  "judge_model": "gemini-3.1-pro-preview",
+  "run_id": "phase-c-bs-eval-20260419T025812",
+  "n_cases": 123,
+  "wall_time_s": 455.3,
+  "errors": 110,
+  "cluster_accuracy": 0.016,
+  "level_accuracy": 0.033,
+  "origin_step_tol0_bisected": 0.024,
+  "origin_step_tol3_bisected": 0.065,
+  "origin_step_tol0_classified": 0.033,
+  "origin_step_tol3_classified": 0.065,
+  "unassignable_rate": 0.0,
+  "mean_judge_calls_per_case": 0.59,
+  "expected_log2_calls": 4.33,
+  "gt_cluster_distribution": {
+    "P2": 21,
+    "N4": 7,
+    "P1": 28,
+    "P4": 15,
+    "N1": 11,
+    "N5": 8,
+    "N2": 14,
+    "P3": 8,
+    "N3": 11
+  },
+  "predicted_cluster_distribution": {
+    "N1": 6,
+    "N3": 1,
+    "P1": 2,
+    "P4": 3,
+    "N4": 1,
+    "UNASSIGNED": 110
+  },
+  "confusion_matrix": {
+    "P2": {
+      "N1": 4,
+      "N3": 1,
+      "P1": 1,
+      "UNASSIGNED": 15
+    },
+    "N4": {
+      "P1": 1,
+      "UNASSIGNED": 6
+    },
+    "P1": {
+      "P4": 1,
+      "N1": 2,
+      "N4": 1,
+      "UNASSIGNED": 24
+    },
+    "P4": {
+      "P4": 2,
+      "UNASSIGNED": 13
+    },
+    "N1": {
+      "UNASSIGNED": 11
+    },
+    "N5": {
+      "UNASSIGNED": 8
+    },
+    "N2": {
+      "UNASSIGNED": 14
+    },
+    "P3": {
+      "UNASSIGNED": 8
+    },
+    "N3": {
+      "UNASSIGNED": 11
+    }
+  }
+}

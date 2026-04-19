@@ -1,0 +1,35 @@
+{
+  "split": "dev",
+  "judge_model": "gemini-3.1-pro-preview",
+  "run_id": "phase-b-dev-20260419T015803-bf09fd",
+  "n_cases": 5,
+  "errors": 5,
+  "cluster_accuracy": 0.0,
+  "level_accuracy": 0.0,
+  "unassignable_rate": 1.0,
+  "gt_cluster_distribution": {
+    "P1": 2,
+    "N2": 1,
+    "N1": 1,
+    "P2": 1
+  },
+  "predicted_cluster_distribution": {
+    "UNASSIGNED": 5
+  },
+  "confusion_matrix": {
+    "P1": {
+      "UNASSIGNED": 2
+    },
+    "N2": {
+      "UNASSIGNED": 1
+    },
+    "N1": {
+      "UNASSIGNED": 1
+    },
+    "P2": {
+      "UNASSIGNED": 1
+    }
+  },
+  "gcs_input": "gs://agenttracebucket/phase_b/batch/phase-b-dev-20260419T015803-bf09fd/input.jsonl",
+  "gcs_output_prefix": "gs://agenttracebucket/phase_b/batch/phase-b-dev-20260419T015803-bf09fd/output"
+}

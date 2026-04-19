@@ -1,0 +1,42 @@
+{
+  "split": "eval",
+  "merged_from": [
+    "phase-c-bs-eval-20260419T025812",
+    "phase-c-bs-eval-20260419T030323",
+    "phase-c-bs-eval-20260419T044337",
+    "phase-c-bs-eval-20260419T044826"
+  ],
+  "judge_model": "gemini-3.1-pro-preview",
+  "n_cases": 123,
+  "n_successful": 18,
+  "errors": 105,
+  "partial_result_note": "Preview-model daily quota exhausted mid-run. Metrics computed over successful subset only \u2014 NOT directly comparable to C.1/C.3 which ran all 123.",
+  "cluster_accuracy_over_successful": 0.389,
+  "level_accuracy_over_successful": 0.5,
+  "origin_step_tol0_over_successful": 0.278,
+  "origin_step_tol3_over_successful": 0.5,
+  "cluster_accuracy_over_all": 0.057,
+  "level_accuracy_over_all": 0.073,
+  "origin_step_tol0_over_all": 0.041,
+  "origin_step_tol3_over_all": 0.073,
+  "gt_cluster_distribution": {
+    "P1": 28,
+    "N4": 7,
+    "P4": 15,
+    "P3": 8,
+    "N5": 8,
+    "P2": 21,
+    "N3": 11,
+    "N1": 11,
+    "N2": 14
+  },
+  "predicted_cluster_distribution": {
+    "P1": 6,
+    "N4": 1,
+    "N1": 6,
+    "UNASSIGNED": 105,
+    "N3": 2,
+    "N5": 1,
+    "P4": 2
+  }
+}

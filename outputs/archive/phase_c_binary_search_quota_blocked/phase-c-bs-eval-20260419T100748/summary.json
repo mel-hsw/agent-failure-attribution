@@ -1,0 +1,32 @@
+{
+  "split": "eval",
+  "judge_model": "gemini-3.1-pro-preview",
+  "run_id": "phase-c-bs-eval-20260419T100748",
+  "n_cases": 3,
+  "wall_time_s": 371.8,
+  "errors": 0,
+  "cluster_accuracy": 0.0,
+  "level_accuracy": 0.0,
+  "origin_step_tol0_bisected": 0.333,
+  "origin_step_tol3_bisected": 0.667,
+  "origin_step_tol0_classified": 0.333,
+  "origin_step_tol3_classified": 0.333,
+  "unassignable_rate": 0.0,
+  "mean_judge_calls_per_case": 7.0,
+  "expected_log2_calls": 6.0,
+  "gt_cluster_distribution": {
+    "P1": 3
+  },
+  "predicted_cluster_distribution": {
+    "N5": 1,
+    "N3": 1,
+    "N4": 1
+  },
+  "confusion_matrix": {
+    "P1": {
+      "N5": 1,
+      "N3": 1,
+      "N4": 1
+    }
+  }
+}

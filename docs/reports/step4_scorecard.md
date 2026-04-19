@@ -77,7 +77,6 @@ _Primary split reported: `eval`_
 |---|---|---|---|---|
 | `phase_b_batch` | 4 | 0.5 | 0.385 | κ ≥ 0.70 |
 | `c1_all_at_once` | 5 | 0.6 | 0.474 | κ ≥ 0.70 |
-| `c2_binary_search` | 5 | 0.6 | 0.5 | κ ≥ 0.70 |
 | `c3_constraint_grounded` | 5 | 0.4 | 0.318 | κ ≥ 0.70 |
 
 ## 5. Prediction distribution vs ground truth

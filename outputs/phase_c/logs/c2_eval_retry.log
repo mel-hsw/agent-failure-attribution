@@ -1,0 +1,239 @@
+/Users/mel/Library/Python/3.9/lib/python/site-packages/google/auth/__init__.py:54: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+/Users/mel/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+/Users/mel/Library/Python/3.9/lib/python/site-packages/google/oauth2/__init__.py:40: FutureWarning: You are using a Python version 3.9 past its end of life. Google will update google-auth with critical bug fixes on a best-effort basis, but not with any other fixes or features. Please upgrade your Python version, and then update google-auth.
+  warnings.warn(eol_message.format("3.9"), FutureWarning)
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+Phase C BinarySearch | split=eval | n=123 | model=gemini-3.1-pro-preview | parallelism=2
+  [1/123] WW-AG-cca530fc-4052-43b2-b130-b30968d8aa44: bs_step=6 pred=N3 gt=P2@7 calls=3+1 (OK, 39.61s)
+  [2/123] WW-HC-1f975693-876d-457b-a649-393859e79bf3: bs_step=1 pred=P1 gt=N4@5 calls=7+1 (OK, 71.91s)
+  [3/123] WW-AG-87c610df-bef7-4932-b950-1d83ef4e282b: bs_step=1 pred=N1 gt=P2@1 calls=3+1 (OK, 38.86s)
+  [4/123] WW-HC-624cbf11-6a41-4692-af9c-36b3e5ca3130: bs_step=14 pred=P1 gt=P1@24 calls=7+1 (OK, 107.21s)
+  [5/123] Qwen3-8B_017_memory_b001_t00_e07-f5b5d66a: bs_step=5 pred=N1 gt=P1@2 calls=3+1 (OK, 92.91s)
+  [6/123] WW-AG-0383a3ee-47a7-41a4-b493-519bdefe0488: bs_step=6 pred=P1 gt=P2@8 calls=3+1 (OK, 40.52s)
+  [7/123] WW-HC-2dfc4c37-fec1-4518-84a7-10095d30ad75: bs_step=10 pred=N5 gt=N1@16 calls=4+1 (OK, 237.31s)
+  [8/123] WW-AG-8f80e01c-1296-4371-9486-bb3d68651a60: bs_step=2 pred=N1 gt=P2@5 calls=4+1 (OK, 58.34s)
+  [9/123] WW-HC-0a65cb96-cb6e-4a6a-8aae-c1084f613456: bs_step=None pred=None gt=P1@32 calls=1+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 426.49s)
+  [10/123] WW-HC-42576abe-0deb-4869-8c63-225c2d75a95a: bs_step=None pred=None gt=P4@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.15s)
+  [11/123] WW-AG-17b5a6a3-bc87-42e8-b0fb-6ab0781ef2cc: bs_step=None pred=None gt=P2@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [12/123] Qwen3-8B_003_memory_b000_t00_e02-8d639e26: bs_step=None pred=None gt=P1@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.14s)
+  [13/123] WW-HC-a0c07678-e491-4bbc-8f0b-07405144218f: bs_step=None pred=None gt=P4@24 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.14s)
+  [14/123] WW-AG-c61d22de-5f6c-4958-a7f6-5e9707bd3466: bs_step=None pred=None gt=N5@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [15/123] WW-AG-c8b7e059-c60d-472e-ad64-3b04ae1166dc: bs_step=None pred=None gt=P1@5 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.14s)
+  [16/123] WW-AG-0512426f-4d28-49f0-be77-06d05daec096: bs_step=None pred=None gt=N5@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.14s)
+  [17/123] GPT-4o_005_memory_b000_t00_e05-c9015705: bs_step=None pred=None gt=P1@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [18/123] WW-AG-cf106601-ab4f-4af9-b045-5295fe67b37d: bs_step=None pred=None gt=P1@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [19/123] WW-AG-48eb8242-1099-4c26-95d4-ef22b002457a: bs_step=None pred=None gt=N5@8 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [20/123] Llama3.3-70B-Turbo_002_memory_b000_t00_e01-7ab08a46: bs_step=None pred=None gt=P1@10 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.19s)
+  [21/123] WW-AG-65638e28-7f37-4fa7-b7b9-8c19bb609879: bs_step=None pred=None gt=P1@9 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [22/123] WW-AG-d1af70ea-a9a4-421a-b9cc-94b5e02f1788: bs_step=None pred=None gt=N1@5 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [23/123] Llama3.3-70B-Turbo_008_memory_b000_t00_e09-f0557a9f: bs_step=None pred=None gt=P1@7 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.16s)
+  [24/123] WW-AG-2a649bb1-795f-4a01-b3be-9a01868dae73: bs_step=None pred=None gt=P1@0 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [25/123] WW-AG-23dd907f-1261-4488-b21c-e9185af91d5e: bs_step=None pred=None gt=N1@7 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [26/123] Qwen3-8B_005_memory_b000_t00_e05-c9015705: bs_step=None pred=None gt=P1@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [27/123] WW-AG-f3917a3d-1d17-4ee2-90c5-683b072218fe: bs_step=None pred=None gt=P1@0 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [28/123] WW-AG-f46b4380-207e-4434-820b-f32ce04ae2a4: bs_step=None pred=None gt=N1@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [29/123] GPT-4o_009_memory_b001_t00_e01-7ab08a46: bs_step=None pred=None gt=P1@8 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.16s)
+  [30/123] WW-AG-65da0822-a48a-4a68-bbad-8ed1b835a834: bs_step=None pred=None gt=P1@0 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [31/123] WW-AG-4b6bb5f7-f634-410e-815d-e673ab7f8632: bs_step=None pred=None gt=N1@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [32/123] Llama3.3-70B-Turbo_017_memory_b001_t00_e08-f572f2ad: bs_step=None pred=None gt=P1@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.19s)
+  [33/123] WW-AG-27d5d136-8563-469e-92bf-fd103c28b57c: bs_step=None pred=None gt=P1@0 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.09s)
+  [34/123] WW-AG-f2feb6a4-363c-4c09-a804-0db564eafd68: bs_step=None pred=None gt=N1@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [35/123] Qwen3-8B_001_memory_b000_t00_e00-7743eba0: bs_step=None pred=None gt=P1@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [36/123] WW-AG-3cef3a44-215e-4aed-8e3b-b1e3f08063b7: bs_step=None pred=None gt=P1@0 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [37/123] WW-AG-46719c30-f4c3-4cad-be07-d5cb21eee6bb: bs_step=None pred=None gt=N1@5 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [38/123] Qwen3-8B_012_memory_b001_t00_e02-8d639e26: bs_step=None pred=None gt=P1@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.14s)
+  [39/123] WW-AG-08f3a05f-5947-4089-a4c4-d4bcfaa6b7a0: bs_step=None pred=None gt=N2@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [40/123] WW-AG-0b260a57-3f3a-4405-9f29-6d7a1012dbfb: bs_step=None pred=None gt=N1@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.09s)
+  [41/123] WW-AG-6b078778-0b90-464d-83f6-59511c811b01: bs_step=None pred=None gt=N2@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [42/123] Llama3.3-70B-Turbo_011_memory_b001_t00_e02-8d639e26: bs_step=None pred=None gt=P1@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.16s)
+  [43/123] WW-AG-0bb3b44a-ede5-4db5-a520-4e844b0079c5: bs_step=None pred=None gt=N1@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.14s)
+  [44/123] Qwen3-8B_009_memory_b000_t00_e09-f0557a9f: bs_step=None pred=None gt=P1@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.16s)
+  [45/123] WW-AG-a26649c6-1cb2-470a-871e-6910c64c3e53: bs_step=None pred=None gt=N2@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [46/123] WW-AG-853c8244-429e-46ca-89f2-addf40dfb2bd: bs_step=None pred=None gt=N1@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [47/123] GPT-4o_016_memory_b001_t00_e08-f572f2ad: bs_step=None pred=None gt=P1@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.2s)
+  [48/123] GPT-4o_001_memory_b000_t00_e00-7743eba0: bs_step=None pred=None gt=P1@5 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.15s)
+  [49/123] WW-AG-32102e3e-d12a-4209-9163-7b3a104efe5d: bs_step=None pred=None gt=N2@8 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [50/123] WW-AG-04a04a9b-226c-43fd-b319-d5e89743676f: bs_step=None pred=None gt=P4@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+Warning: there are non-text parts in the response: ['thought_signature'], returning concatenated text result from text parts. Check the full candidates.content.parts accessor to get the full model response.
+  [51/123] Qwen3-8B_007_memory_b000_t00_e07-f5b5d66a: bs_step=None pred=None gt=P1@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [52/123] WW-AG-bfcd99e1-0690-4b53-a85c-0174a8629083: bs_step=None pred=None gt=N2@0 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [53/123] WW-AG-6359a0b1-8f7b-499b-9336-840f9ab90688: bs_step=None pred=None gt=P4@6 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [54/123] GPT-4o_002_memory_b000_t00_e01-7ab08a46: bs_step=None pred=None gt=N4@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.15s)
+  [55/123] WW-AG-851e570a-e3de-4d84-bcfa-cc85578baa59: bs_step=None pred=None gt=N2@6 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.14s)
+  [56/123] WW-AG-c714ab3a-da30-4603-bacd-d008800188b9: bs_step=None pred=None gt=P4@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [57/123] Llama3.3-70B-Turbo_014_memory_b001_t00_e05-c9015705: bs_step=None pred=None gt=N4@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.19s)
+  [58/123] WW-AG-1dcc160f-c187-48c2-b68e-319bd4354f3d: bs_step=None pred=None gt=N2@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [59/123] WW-AG-023e9d44-96ae-4eed-b912-244ee8c3b994: bs_step=None pred=None gt=P4@5 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [60/123] Qwen3-8B_010_memory_b001_t00_e00-7743eba0: bs_step=None pred=None gt=P4@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [61/123] WW-AG-4fc2f1ae-8625-45b5-ab34-ad4433bc21f8: bs_step=None pred=None gt=N2@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.09s)
+  [62/123] WW-AG-df6561b2-7ee5-4540-baab-5095f742716a: bs_step=None pred=None gt=P4@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.09s)
+  [63/123] Qwen3-8B_004_memory_b000_t00_e04-5e8c1dcf: bs_step=None pred=None gt=P4@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [64/123] WW-AG-ec09fa32-d03f-4bf8-84b0-1f16922c3ae4: bs_step=None pred=None gt=N2@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [65/123] WW-AG-7d4a7d1d-cac6-44a8-96e8-ea9584a70825: bs_step=None pred=None gt=P4@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [66/123] Llama3.3-70B-Turbo_004_memory_b000_t00_e03-21a3a421: bs_step=None pred=None gt=P4@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [67/123] WW-AG-b7f857e4-d8aa-4387-af2a-0e844df5b9d8: bs_step=None pred=None gt=N2@5 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.15s)
+  [68/123] WW-AG-e142056d-56ab-4352-b091-b56054bd1359: bs_step=None pred=None gt=P4@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [69/123] GPT-4o_004_memory_b000_t00_e04-5e8c1dcf: bs_step=None pred=None gt=P4@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [70/123] WW-AG-0e9e85b8-52b9-4de4-b402-5f635ab9631f: bs_step=None pred=None gt=N2@8 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [71/123] WW-AG-3ff6b7a9-a5bd-4412-ad92-0cd0d45c0fee: bs_step=None pred=None gt=P4@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.09s)
+  [72/123] GPT-4o_010_memory_b001_t00_e02-8d639e26: bs_step=None pred=None gt=P4@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [73/123] WW-AG-e8cb5b03-41e0-4086-99e5-f6806cd97211: bs_step=None pred=None gt=N2@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.09s)
+  [74/123] WW-AG-e29834fd-413a-455c-a33e-c3915b07401c: bs_step=None pred=None gt=P3@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [75/123] Llama3.3-70B-Turbo_001_memory_b000_t00_e00-7743eba0: bs_step=None pred=None gt=P1@6 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.15s)
+  [76/123] GPT-4o_008_memory_b000_t00_e09-f0557a9f: bs_step=None pred=None gt=P1@5 calls=4+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 41.76s)
+  [77/123] WW-AG-e1fc63a2-da7a-432f-be78-7c4a95598703: bs_step=None pred=None gt=N2@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.09s)
+  [78/123] GPT-4o_007_memory_b000_t00_e08-f572f2ad: bs_step=None pred=None gt=P3@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [79/123] WW-AG-8e867cd7-cff9-4e6c-867a-ff5ddc2550be: bs_step=None pred=None gt=P3@6 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [80/123] GPT-4o_006_memory_b000_t00_e06-71f77595: bs_step=None pred=None gt=P3@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [81/123] WW-AG-5188369a-3bbe-43d8-8b94-11558f909a08: bs_step=None pred=None gt=N2@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [82/123] WW-AG-71345b0a-9c7d-4b50-b2bf-937ec5879845: bs_step=None pred=None gt=N4@8 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [83/123] WW-AG-9318445f-fe6a-4e1b-acbf-c68228c9906a: bs_step=None pred=None gt=P2@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [84/123] Llama3.3-70B-Turbo_010_memory_b001_t00_e01-7ab08a46: bs_step=None pred=None gt=P3@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [85/123] WW-AG-cffe0e32-c9a6-4c52-9877-78ceb4aaa9fb: bs_step=None pred=None gt=N4@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [86/123] GPT-4o_011_memory_b001_t00_e03-21a3a421: bs_step=None pred=None gt=P3@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [87/123] WW-AG-a56f1527-3abf-41d6-91f8-7296d6336c3f: bs_step=None pred=None gt=P2@5 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.09s)
+  [88/123] WW-AG-7a4a336d-dcfa-45a0-b014-824c7619e8de: bs_step=None pred=None gt=N4@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [89/123] GPT-4o_012_memory_b001_t00_e04-5e8c1dcf: bs_step=None pred=None gt=N5@5 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.14s)
+  [90/123] WW-AG-c365c1c7-a3db-4d5e-a9a1-66f56eae7865: bs_step=None pred=None gt=P2@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [91/123] WW-AG-65afbc8a-89ca-4ad5-8d62-355bb401f61d: bs_step=None pred=None gt=N4@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [92/123] Llama3.3-70B-Turbo_003_memory_b000_t00_e02-8d639e26: bs_step=None pred=None gt=N5@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.19s)
+  [93/123] Llama3.3-70B-Turbo_015_memory_b001_t00_e06-71f77595: bs_step=None pred=None gt=N5@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [94/123] Qwen3-8B_014_memory_b001_t00_e04-5e8c1dcf: bs_step=None pred=None gt=P2@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [95/123] Llama3.3-70B-Turbo_007_memory_b000_t00_e08-f572f2ad: bs_step=None pred=None gt=N5@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [96/123] Qwen3-8B_008_memory_b000_t00_e08-f572f2ad: bs_step=None pred=None gt=P2@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [97/123] Qwen3-8B_015_memory_b001_t00_e05-c9015705: bs_step=None pred=None gt=P2@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [98/123] Llama3.3-70B-Turbo_013_memory_b001_t00_e04-5e8c1dcf: bs_step=None pred=None gt=P2@2 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [99/123] Qwen3-8B_013_memory_b001_t00_e03-21a3a421: bs_step=None pred=None gt=P2@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [100/123] Qwen3-8B_016_memory_b001_t00_e06-71f77595: bs_step=None pred=None gt=P2@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [101/123] GPT-4o_015_memory_b001_t00_e07-f5b5d66a: bs_step=None pred=None gt=P2@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [102/123] Qwen3-8B_011_memory_b001_t00_e01-7ab08a46: bs_step=None pred=None gt=N3@5 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [103/123] Llama3.3-70B-Turbo_006_memory_b000_t00_e05-c9015705: bs_step=None pred=None gt=P2@6 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.17s)
+  [104/123] Qwen3-8B_006_memory_b000_t00_e06-71f77595: bs_step=None pred=None gt=N3@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [105/123] Llama3.3-70B-Turbo_005_memory_b000_t00_e04-5e8c1dcf: bs_step=None pred=None gt=N3@1 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [106/123] Llama3.3-70B-Turbo_009_memory_b001_t00_e00-7743eba0: bs_step=None pred=None gt=N1@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.15s)
+  [107/123] WW-HC-16d825ff-1623-4176-a5b5-42e0f5c2b0ac: bs_step=None pred=None gt=N3@32 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [108/123] WW-HC-114d5fd0-e2ae-4b6d-a65a-870da2d19c08: bs_step=None pred=None gt=N3@32 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [109/123] WW-HC-72e110e7-464c-453c-a309-90a95aed6538: bs_step=None pred=None gt=N3@8 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [110/123] WW-HC-5f982798-16b9-4051-ab57-cfc7ebdb2a91: bs_step=None pred=None gt=N3@3 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [111/123] WW-HC-840bfca7-4f7b-481a-8794-c560c340185d: bs_step=None pred=None gt=N3@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [112/123] WW-HC-5d0080cb-90d7-4712-bc33-848150e917d3: bs_step=None pred=None gt=N3@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [113/123] WW-HC-a3fbeb63-0e8c-4a11-bff6-0e3b484c3e9c: bs_step=None pred=None gt=N3@20 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [114/123] WW-HC-73c1b9fe-ee1d-4cf4-96ca-35c08f97b054: bs_step=None pred=None gt=N3@12 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [115/123] GPT-4o_014_memory_b001_t00_e06-71f77595: bs_step=None pred=None gt=P1@7 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [116/123] WW-HC-42d4198c-5895-4f0a-b0c0-424a66465d83: bs_step=None pred=None gt=P2@18 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+  [117/123] WW-HC-7673d772-ef80-4f0f-a602-1bf4485c9b43: bs_step=None pred=None gt=P2@29 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [118/123] WW-HC-ed58682d-bc52-4baa-9eb0-4eb81e1edacc: bs_step=None pred=None gt=P2@12 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [119/123] WW-HC-a1e91b78-d3d8-4675-bb8d-62741b4b68a6: bs_step=None pred=None gt=P2@8 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [120/123] WW-HC-e2d69698-bc99-4e85-9880-67eaccd66e6c: bs_step=None pred=None gt=P2@25 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.12s)
+  [121/123] WW-HC-b816bfce-3d80-4913-a07d-69b752ce6377: bs_step=None pred=None gt=P3@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.1s)
+  [122/123] WW-HC-08cae58d-4084-4616-b6dd-dd6534e4825b: bs_step=None pred=None gt=P3@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.13s)
+  [123/123] WW-HC-8b3379c0-0981-4f5b-8407-6444610cb212: bs_step=None pred=None gt=N5@4 calls=0+1 (ERR(ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429,), 0.11s)
+
+=== Phase C BinarySearch Summary (eval) ===
+  Cases: 123  Errors: 115  Wall: 584.3s
+  Cluster accuracy: 0.008
+  Level accuracy:   0.024
+  Origin-step (bisected)   tol-3/tol-0: 0.041 / 0.008
+  Origin-step (classified) tol-3/tol-0: 0.033 / 0.016
+  Mean judge calls/case: 0.38 (expected ~4.33)
+  Outputs: /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/binary_search/eval/phase-c-bs-eval-20260419T044826/
+Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x108c5fc10>
+Unclosed connector
+connections: ['deque([(<aiohttp.client_proto.ResponseHandler object at 0x108cb32e0>, 584.998235125), (<aiohttp.client_proto.ResponseHandler object at 0x108c1ee80>, 585.002992291)])']
+connector: <aiohttp.connector.TCPConnector object at 0x108c26190>
+Fatal error on SSL transport
+protocol: <asyncio.sslproto.SSLProtocol object at 0x108c26040>
+transport: <_SelectorSocketTransport closing fd=11>
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 918, in write
+    n = self._sock.send(data)
+OSError: [Errno 9] Bad file descriptor
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/sslproto.py", line 684, in _process_write_backlog
+    self._transport.write(chunk)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 924, in write
+    self._fatal_error(exc, 'Fatal write error on socket transport')
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 719, in _fatal_error
+    self._force_close(exc)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 731, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+Fatal error on SSL transport
+protocol: <asyncio.sslproto.SSLProtocol object at 0x108c79fd0>
+transport: <_SelectorSocketTransport closing fd=12>
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 918, in write
+    n = self._sock.send(data)
+OSError: [Errno 9] Bad file descriptor
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/sslproto.py", line 684, in _process_write_backlog
+    self._transport.write(chunk)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 924, in write
+    self._fatal_error(exc, 'Fatal write error on socket transport')
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 719, in _fatal_error
+    self._force_close(exc)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/selector_events.py", line 731, in _force_close
+    self._loop.call_soon(self._call_connection_lost, exc)
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 746, in call_soon
+    self._check_closed()
+  File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/asyncio/base_events.py", line 510, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed

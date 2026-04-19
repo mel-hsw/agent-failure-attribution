@@ -1,0 +1,40 @@
+{
+  "split": "dev",
+  "judge_model": "gemini-3.1-flash-lite-preview",
+  "temperature": 0.3,
+  "run_id": "phase-c-dev-gemini-3-1-flash-lite-preview-t0.30-20260419T115611-b34bd2",
+  "n_cases": 5,
+  "errors": 0,
+  "cluster_accuracy": 0.8,
+  "level_accuracy": 0.8,
+  "origin_step_tol0": 0.2,
+  "origin_step_tol3": 0.4,
+  "unassignable_rate": 0.0,
+  "gt_cluster_distribution": {
+    "P1": 2,
+    "N2": 1,
+    "N1": 1,
+    "P2": 1
+  },
+  "predicted_cluster_distribution": {
+    "P1": 2,
+    "P2": 2,
+    "N1": 1
+  },
+  "confusion_matrix": {
+    "P1": {
+      "P1": 2
+    },
+    "N2": {
+      "P2": 1
+    },
+    "N1": {
+      "N1": 1
+    },
+    "P2": {
+      "P2": 1
+    }
+  },
+  "gcs_input": "gs://agenttracebucket/phase_c/all_at_once_v3/phase-c-dev-gemini-3-1-flash-lite-preview-t0.30-20260419T115611-b34bd2/input.jsonl",
+  "gcs_output_prefix": "gs://agenttracebucket/phase_c/all_at_once_v3/phase-c-dev-gemini-3-1-flash-lite-preview-t0.30-20260419T115611-b34bd2/output"
+}

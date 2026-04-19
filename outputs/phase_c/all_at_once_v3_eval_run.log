@@ -1,0 +1,17 @@
+Phase C AllAtOnce | split=eval | n=123 | model=gemini-3.1-pro-preview
+Wrote 123 requests to /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/all_at_once_v3/eval/phase-c-eval-20260419T112843-eb0085/input.jsonl
+Uploaded -> gs://agenttracebucket/phase_c/all_at_once_v3/phase-c-eval-20260419T112843-eb0085/input.jsonl
+  [0s] JobState.JOB_STATE_PENDING
+  [40s] JobState.JOB_STATE_QUEUED
+  [102s] JobState.JOB_STATE_RUNNING
+  [2909s] JobState.JOB_STATE_SUCCEEDED
+Job final state: JobState.JOB_STATE_SUCCEEDED
+Downloaded predictions -> /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/all_at_once_v3/eval/phase-c-eval-20260419T112843-eb0085/predictions.jsonl
+
+=== Phase C AllAtOnce Summary (eval) ===
+  Cases: 123  Errors: 1
+  Cluster accuracy: 0.26
+  Level accuracy:   0.561
+  Origin-step tol-3: 0.593
+  Origin-step tol-0: 0.333
+  Outputs: /Users/mel/Documents/GitHub/failure_experiment/outputs/phase_c/all_at_once_v3/eval/phase-c-eval-20260419T112843-eb0085/

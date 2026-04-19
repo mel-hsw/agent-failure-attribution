@@ -1,0 +1,37 @@
+{
+  "split": "dev",
+  "judge_model": "gemini-3.1-pro-preview",
+  "run_id": "phase-c-cg-dev-20260419T023717-7c59ce",
+  "ablation_no_violation_log": false,
+  "n_cases": 3,
+  "errors": 0,
+  "cluster_accuracy": 0.0,
+  "level_accuracy": 0.667,
+  "origin_step_tol0": 0.0,
+  "origin_step_tol3": 0.667,
+  "unassignable_rate": 0.0,
+  "log_citation_rate": 0.333,
+  "static_event_count": 0,
+  "dynamic_event_count": 27,
+  "gt_cluster_distribution": {
+    "P1": 1,
+    "N2": 1,
+    "N1": 1
+  },
+  "predicted_cluster_distribution": {
+    "N5": 1,
+    "N1": 1,
+    "N2": 1
+  },
+  "confusion_matrix": {
+    "P1": {
+      "N5": 1
+    },
+    "N2": {
+      "N1": 1
+    },
+    "N1": {
+      "N2": 1
+    }
+  }
+}

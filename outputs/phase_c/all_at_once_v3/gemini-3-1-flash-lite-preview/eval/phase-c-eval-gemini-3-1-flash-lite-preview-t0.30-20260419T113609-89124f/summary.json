@@ -1,0 +1,94 @@
+{
+  "split": "eval",
+  "judge_model": "gemini-3.1-flash-lite-preview",
+  "temperature": 0.3,
+  "run_id": "phase-c-eval-gemini-3-1-flash-lite-preview-t0.30-20260419T113609-89124f",
+  "n_cases": 123,
+  "errors": 0,
+  "cluster_accuracy": 0.203,
+  "level_accuracy": 0.455,
+  "origin_step_tol0": 0.309,
+  "origin_step_tol3": 0.61,
+  "unassignable_rate": 0.008,
+  "gt_cluster_distribution": {
+    "P1": 28,
+    "N4": 7,
+    "P4": 15,
+    "P3": 8,
+    "N5": 8,
+    "P2": 21,
+    "N3": 11,
+    "N1": 11,
+    "N2": 14
+  },
+  "predicted_cluster_distribution": {
+    "N1": 41,
+    "P1": 40,
+    "P4": 3,
+    "P2": 25,
+    "N5": 2,
+    "N3": 1,
+    "N2": 4,
+    "P3": 7
+  },
+  "confusion_matrix": {
+    "P1": {
+      "N1": 14,
+      "P1": 12,
+      "P4": 1,
+      "P2": 1
+    },
+    "N4": {
+      "P1": 5,
+      "P4": 1,
+      "P2": 1
+    },
+    "P4": {
+      "N1": 4,
+      "P4": 1,
+      "P1": 3,
+      "N2": 1,
+      "P2": 5,
+      "P3": 1
+    },
+    "P3": {
+      "N1": 3,
+      "P2": 1,
+      "P1": 2,
+      "N3": 1,
+      "N2": 1
+    },
+    "N5": {
+      "P1": 4,
+      "N1": 3,
+      "N5": 1
+    },
+    "P2": {
+      "P2": 7,
+      "N1": 7,
+      "N5": 1,
+      "P1": 4,
+      "P3": 2
+    },
+    "N3": {
+      "P1": 2,
+      "N1": 7,
+      "P2": 2
+    },
+    "N1": {
+      "P1": 4,
+      "P2": 2,
+      "P3": 3,
+      "N1": 2
+    },
+    "N2": {
+      "P2": 6,
+      "P1": 4,
+      "N2": 2,
+      "P3": 1,
+      "N1": 1
+    }
+  },
+  "gcs_input": "gs://agenttracebucket/phase_c/all_at_once_v3/phase-c-eval-gemini-3-1-flash-lite-preview-t0.30-20260419T113609-89124f/input.jsonl",
+  "gcs_output_prefix": "gs://agenttracebucket/phase_c/all_at_once_v3/phase-c-eval-gemini-3-1-flash-lite-preview-t0.30-20260419T113609-89124f/output"
+}
