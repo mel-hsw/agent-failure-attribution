@@ -30,6 +30,27 @@ service-account*.json
 scratch/
 tmp/
 
+# Exploratory analysis (not part of the published benchmark; may contain nested repos)
+/data/EDA/
+
+# Evaluation run outputs (large; regenerate with scripts)
+/outputs/
+
+# Agent / personal working notes (not for public GitHub)
+/docs/PROJECT.md
+/docs/HANDOVER.md
+/docs/HANDOVER_paper_consolidation.md
+
+# Superseded root-level artifacts
+/archive/
+
+# Claude Code / Cursor local worktrees (keep machine-specific state out of git)
+.claude/
+
+# Office / LibreOffice lock files
+**/~$*
+.~lock.*
+
 # Claude Code local state (keep .claude/settings.json, ignore transient/user-local)
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
