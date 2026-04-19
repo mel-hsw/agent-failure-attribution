@@ -1,0 +1,328 @@
+{
+  "scores": [
+    {
+      "label": "phase_b_batch",
+      "source_path": "outputs/phase_b_batch/eval/phase-b-eval-20260419T021853-28ec92/per_case.jsonl",
+      "n_cases": 123,
+      "n_with_prediction": 120,
+      "cluster_accuracy": 0.22,
+      "level_accuracy": 0.48,
+      "origin_step_tol0": 0.0,
+      "origin_step_tol3": 0.0,
+      "p3_late_symptom_fidelity_tol3": {
+        "rate": 0.0,
+        "n_p3": 8
+      },
+      "by_source": {
+        "AEB": {
+          "n": 45,
+          "cluster": 0.111,
+          "level": 0.267,
+          "step_tol3": 0.0
+        },
+        "WW-HC": {
+          "n": 22,
+          "cluster": 0.227,
+          "level": 0.591,
+          "step_tol3": 0.0
+        },
+        "WW-AG": {
+          "n": 56,
+          "cluster": 0.304,
+          "level": 0.607,
+          "step_tol3": 0.0
+        }
+      },
+      "by_cluster": {
+        "N1": {
+          "n": 11,
+          "cluster": 0.545,
+          "level": 1.0,
+          "step_tol3": 0.0
+        },
+        "N2": {
+          "n": 14,
+          "cluster": 0.429,
+          "level": 0.857,
+          "step_tol3": 0.0
+        },
+        "N3": {
+          "n": 11,
+          "cluster": 0.364,
+          "level": 1.0,
+          "step_tol3": 0.0
+        },
+        "N4": {
+          "n": 7,
+          "cluster": 0.0,
+          "level": 0.714,
+          "step_tol3": 0.0
+        },
+        "N5": {
+          "n": 8,
+          "cluster": 0.625,
+          "level": 0.875,
+          "step_tol3": 0.0
+        },
+        "P1": {
+          "n": 28,
+          "cluster": 0.0,
+          "level": 0.143,
+          "step_tol3": 0.0
+        },
+        "P2": {
+          "n": 21,
+          "cluster": 0.048,
+          "level": 0.095,
+          "step_tol3": 0.0
+        },
+        "P3": {
+          "n": 8,
+          "cluster": 0.0,
+          "level": 0.125,
+          "step_tol3": 0.0
+        },
+        "P4": {
+          "n": 15,
+          "cluster": 0.333,
+          "level": 0.4,
+          "step_tol3": 0.0
+        }
+      },
+      "gt_cluster_distribution": {
+        "P1": 28,
+        "N4": 7,
+        "P4": 15,
+        "P3": 8,
+        "N5": 8,
+        "P2": 21,
+        "N3": 11,
+        "N1": 11,
+        "N2": 14
+      },
+      "predicted_cluster_distribution": {
+        "N1": 37,
+        "N4": 4,
+        "N3": 30,
+        "N5": 20,
+        "UNASSIGNED": 3,
+        "P4": 11,
+        "P3": 1,
+        "N2": 11,
+        "P2": 5,
+        "P1": 1
+      }
+    },
+    {
+      "label": "c1_all_at_once",
+      "source_path": "outputs/phase_c/all_at_once/eval/phase-c-eval-20260419T021854-9714af/per_case.jsonl",
+      "n_cases": 123,
+      "n_with_prediction": 122,
+      "cluster_accuracy": 0.358,
+      "level_accuracy": 0.553,
+      "origin_step_tol0": 0.358,
+      "origin_step_tol3": 0.667,
+      "p3_late_symptom_fidelity_tol3": {
+        "rate": 0.75,
+        "n_p3": 8
+      },
+      "by_source": {
+        "AEB": {
+          "n": 45,
+          "cluster": 0.178,
+          "level": 0.267,
+          "step_tol3": 0.6
+        },
+        "WW-HC": {
+          "n": 22,
+          "cluster": 0.5,
+          "level": 0.682,
+          "step_tol3": 0.409
+        },
+        "WW-AG": {
+          "n": 56,
+          "cluster": 0.446,
+          "level": 0.732,
+          "step_tol3": 0.821
+        }
+      },
+      "by_cluster": {
+        "N1": {
+          "n": 11,
+          "cluster": 0.818,
+          "level": 0.909,
+          "step_tol3": 0.909
+        },
+        "N2": {
+          "n": 14,
+          "cluster": 0.429,
+          "level": 0.929,
+          "step_tol3": 0.714
+        },
+        "N3": {
+          "n": 11,
+          "cluster": 0.727,
+          "level": 1.0,
+          "step_tol3": 0.455
+        },
+        "N4": {
+          "n": 7,
+          "cluster": 0.0,
+          "level": 0.429,
+          "step_tol3": 0.571
+        },
+        "N5": {
+          "n": 8,
+          "cluster": 0.5,
+          "level": 0.625,
+          "step_tol3": 0.875
+        },
+        "P1": {
+          "n": 28,
+          "cluster": 0.25,
+          "level": 0.286,
+          "step_tol3": 0.286
+        },
+        "P2": {
+          "n": 21,
+          "cluster": 0.19,
+          "level": 0.381,
+          "step_tol3": 0.905
+        },
+        "P3": {
+          "n": 8,
+          "cluster": 0.0,
+          "level": 0.375,
+          "step_tol3": 0.75
+        },
+        "P4": {
+          "n": 15,
+          "cluster": 0.4,
+          "level": 0.467,
+          "step_tol3": 0.867
+        }
+      },
+      "gt_cluster_distribution": {
+        "P1": 28,
+        "N4": 7,
+        "P4": 15,
+        "P3": 8,
+        "N5": 8,
+        "P2": 21,
+        "N3": 11,
+        "N1": 11,
+        "N2": 14
+      },
+      "predicted_cluster_distribution": {
+        "N3": 19,
+        "P1": 16,
+        "N1": 41,
+        "N5": 14,
+        "N4": 3,
+        "UNASSIGNED": 1,
+        "P4": 11,
+        "P2": 8,
+        "N2": 10
+      }
+    },
+    {
+      "label": "c2_binary_search",
+      "source_path": "outputs/phase_c/binary_search/eval/phase-c-bs-eval-20260419T025812/per_case.jsonl",
+      "n_cases": 10,
+      "n_with_prediction": 10,
+      "cluster_accuracy": 0.1,
+      "level_accuracy": 0.3,
+      "origin_step_tol0": 0.4,
+      "origin_step_tol3": 0.7,
+      "p3_late_symptom_fidelity_tol3": {
+        "rate": 0.0,
+        "n_p3": 0
+      },
+      "by_source": {
+        "AEB": {
+          "n": 2,
+          "cluster": 0.0,
+          "level": 0.0,
+          "step_tol3": 0.5
+        },
+        "WW-HC": {
+          "n": 3,
+          "cluster": 0.333,
+          "level": 0.667,
+          "step_tol3": 0.333
+        },
+        "WW-AG": {
+          "n": 5,
+          "cluster": 0.0,
+          "level": 0.2,
+          "step_tol3": 1.0
+        }
+      },
+      "by_cluster": {
+        "N4": {
+          "n": 1,
+          "cluster": 0.0,
+          "level": 0.0,
+          "step_tol3": 0.0
+        },
+        "P1": {
+          "n": 3,
+          "cluster": 0.0,
+          "level": 0.333,
+          "step_tol3": 0.333
+        },
+        "P2": {
+          "n": 5,
+          "cluster": 0.0,
+          "level": 0.2,
+          "step_tol3": 1.0
+        },
+        "P4": {
+          "n": 1,
+          "cluster": 1.0,
+          "level": 1.0,
+          "step_tol3": 1.0
+        }
+      },
+      "gt_cluster_distribution": {
+        "P2": 5,
+        "N4": 1,
+        "P1": 3,
+        "P4": 1
+      },
+      "predicted_cluster_distribution": {
+        "N1": 4,
+        "N3": 1,
+        "P1": 2,
+        "P4": 2,
+        "N4": 1
+      }
+    }
+  ],
+  "kappa": [
+    {
+      "label": "phase_b_batch",
+      "n": 4,
+      "accuracy": 0.5,
+      "kappa": 0.385
+    },
+    {
+      "label": "c1_all_at_once",
+      "n": 5,
+      "accuracy": 0.6,
+      "kappa": 0.474
+    },
+    {
+      "label": "c2_binary_search",
+      "n": 5,
+      "accuracy": 0.6,
+      "kappa": 0.5
+    },
+    {
+      "label": "c3_constraint_grounded",
+      "n": 5,
+      "accuracy": 0.0,
+      "kappa": -0.25
+    }
+  ]
+}
