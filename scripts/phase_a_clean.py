@@ -57,6 +57,23 @@ ANNOTATION_KEYS = {
 # is unnecessary (we already pre-filter to failures).
 ANNOTATION_METADATA_KEYS = {"won"}
 
+# Canonical cluster_code → full human-readable label (per step3_taxonomy_review.md).
+# Used to (re)generate `proposed_cluster_label` in the with_gt block so the label
+# always matches the (possibly post-patch) cluster code. Without this, a patched
+# cluster retains its pre-patch label string and the JSON becomes internally
+# inconsistent (discovered 2026-04-19: 25/123 eval cases had stale labels).
+CLUSTER_LABEL_CANON = {
+    "N1": "Hallucination / factual fabrication",
+    "N2": "Code implementation bug",
+    "N3": "Tool execution or retrieval failure",
+    "N4": "Wrong tool selection",
+    "N5": "Invalid tool parameters / input",
+    "P1": "Improper task decomposition / bad plan",
+    "P2": "Progress misassessment",
+    "P3": "Cascading error (explicit propagation)",
+    "P4": "Constraint ignorance / unchecked assumption",
+}
+
 # Regex patterns used by the leakage scan. Matches are flagged for review.
 LEAKAGE_PATTERNS = [
     re.compile(r"critical[_ ]failure", re.IGNORECASE),
@@ -167,15 +184,22 @@ def build_clean_record(rec: dict) -> dict:
 
 
 def build_with_gt_record(rec: dict, clean: dict) -> dict:
-    """Scoring-side record: clean record + gt block."""
+    """Scoring-side record: clean record + gt block.
+
+    `proposed_cluster_label` is always derived from `proposed_cluster` via
+    CLUSTER_LABEL_CANON, not copied from the source record. This prevents
+    the stale-label drift we saw after cluster_review_patch.jsonl patched
+    `proposed_cluster` codes without rewriting the label strings.
+    """
+    cluster = rec.get("proposed_cluster")
     gt = {
         "ground_truth_answer": rec.get("ground_truth"),
         "critical_failure_step": rec.get("critical_failure_step"),
         "critical_failure_module": rec.get("critical_failure_module"),
         "raw_failure_type": rec.get("raw_failure_type"),
         "failure_reasoning_text": rec.get("failure_reasoning_text"),
-        "proposed_cluster": rec.get("proposed_cluster"),
-        "proposed_cluster_label": rec.get("proposed_cluster_label"),
+        "proposed_cluster": cluster,
+        "proposed_cluster_label": CLUSTER_LABEL_CANON.get(cluster, rec.get("proposed_cluster_label")),
         "proposed_level": rec.get("proposed_level"),
         "won": (rec.get("metadata") or {}).get("won"),
     }
