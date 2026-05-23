@@ -5,12 +5,14 @@
 """
 import json
 import csv
+from pathlib import Path
 
-BASE = "/sessions/festive-sweet-mendel/mnt/failure_experiment"
-IN_JSONL = BASE + "/data/consolidated/gaia_consolidated.jsonl"
-OUT_JSONL = BASE + "/data/consolidated/gaia_consolidated.jsonl"
-OUT_CSV = BASE + "/data/consolidated/failure_classifications.csv"
-OLD_REVIEW_CSV = BASE + "/data/consolidated/failure_classifications_for_review.csv"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+CONSOLIDATED = REPO_ROOT / "data" / "consolidated"
+IN_JSONL = CONSOLIDATED / "gaia_consolidated.jsonl"
+OUT_JSONL = CONSOLIDATED / "gaia_consolidated.jsonl"
+OUT_CSV = CONSOLIDATED / "failure_classifications.csv"
+OLD_REVIEW_CSV = CONSOLIDATED / "failure_classifications_for_review.csv"
 
 # --- Cluster definitions ---
 CLUSTER_LABELS = {

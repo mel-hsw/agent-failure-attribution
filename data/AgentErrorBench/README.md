@@ -1,6 +1,6 @@
-# AgentErrorBench (GAIA slice)
+# AgentErrorBench (local, not redistributed)
 
-Local copy of the **AgentErrorBench** GAIA failure annotations from the AgentDebug project.
+This directory is a **local cache** for the GAIA slice of [AgentErrorBench](https://github.com/ulab-uiuc/AgentDebug). Trajectory data is **not** included in this GitHub repo; download it from the upstream project.
 
 ## Upstream
 
@@ -9,34 +9,18 @@ Local copy of the **AgentErrorBench** GAIA failure annotations from the AgentDeb
 | **Repository** | [ulab-uiuc/AgentDebug](https://github.com/ulab-uiuc/AgentDebug) |
 | **Paper** | Zhu et al. (2025), *Where LLM Agents Fail and How They Can Learn From Failures*, [arXiv:2509.25370](https://arxiv.org/abs/2509.25370) |
 
-AgentErrorBench annotates failed agent trajectories across ALFWorld, WebShop, and GAIA. **This directory contains only the 50 GAIA records** used in the consolidated benchmark (`data/consolidated/`).
+Follow the AgentDebug README to obtain **AgentErrorBench** (Google Drive link in that repo). For this project you need the GAIA subset only.
 
-## Files here
+## Expected layout after download
 
-| File / dir | Description |
-|------------|-------------|
-| `gaia_labels.json` | Step-level failure labels (module, type, reasoning) |
-| `GAIA/*.json` | Full trajectory message logs joined during consolidation |
-
-## Label format
-
-Each label follows this structure:
-
-```json
-{
-    "trajectory_id": "Model_Index_OriginalName",
-    "LLM": "Model Name",
-    "task_type": "Environment",
-    "critical_failure_step": 1,
-    "critical_failure_module": "planning",
-    "step_annotations": []
-}
+```
+data/AgentErrorBench/
+├── gaia_labels.json          # 50 GAIA failure labels
+└── GAIA/
+    └── {trajectory_id}.json  # full message logs (one file per label)
 ```
 
-## Statistics (GAIA slice)
-
-- Total GAIA labels: **50**
-- Models: GPT-4o, Llama3.3-70B-Turbo, Qwen3-8B
+`scripts/consolidate.py` reads these paths and joins labels with trajectories.
 
 ## Citation
 
@@ -48,5 +32,3 @@ Each label follows this structure:
   year={2025}
 }
 ```
-
-Obtain the full AgentErrorBench release from the [AgentDebug repository](https://github.com/ulab-uiuc/AgentDebug).

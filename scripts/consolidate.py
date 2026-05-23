@@ -17,12 +17,15 @@ Rules:
 import json
 import os
 import re
+from pathlib import Path
+
 from datasets import load_from_disk
 
-BASE = "/sessions/festive-sweet-mendel/mnt/failure_experiment"
-OUT_DIR = BASE + "/data/consolidated"
-os.makedirs(OUT_DIR, exist_ok=True)
-OUT_JSONL = OUT_DIR + "/gaia_consolidated.jsonl"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+BASE = str(REPO_ROOT)
+OUT_DIR = REPO_ROOT / "data" / "consolidated"
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+OUT_JSONL = OUT_DIR / "gaia_consolidated.jsonl"
 
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 

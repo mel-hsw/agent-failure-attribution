@@ -1,6 +1,6 @@
-# Who&When (Hugging Face export)
+# Who&When (local, not redistributed)
 
-Local copy of the **Who&When** failure-attribution dataset: Hand-Crafted and Algorithm-Generated splits, saved in Hugging Face `datasets` on-disk format.
+This directory is a **local cache** for the [Who&When](https://github.com/ag2ai/Agents_Failure_Attribution) dataset. Trajectory data is **not** included in this GitHub repo; download it from Hugging Face.
 
 ## Upstream
 
@@ -10,34 +10,29 @@ Local copy of the **Who&When** failure-attribution dataset: Hand-Crafted and Alg
 | **Dataset (HF)** | [Kevin355/Who_and_When](https://huggingface.co/datasets/Kevin355/Who_and_When) (linked from the upstream repo) |
 | **Paper** | Zhang et al. (2025), *Which Agent Causes Task Failures and When?*, ICML 2025 · [arXiv:2505.00212](https://arxiv.org/abs/2505.00212) |
 
-Who&When covers 184 annotated multi-agent failure tasks on GAIA and AssistantBench queries. **This repo keeps GAIA UUID rows only** (AssistantBench hex IDs are dropped during consolidation; see `docs/reports/step2_consolidation.md`).
-
-## Layout
-
-```
-Who_and_When/
-├── Hand-Crafted/train/           # Magentic-One traces (58 rows upstream; 30 GAIA)
-└── Algorithm-Generated/train/    # CaptainAgent traces (126 rows upstream; 78 GAIA post-dedup)
-```
-
-## Key fields
-
-| Field | Description |
-|-------|-------------|
-| `question_ID` | GAIA task UUID (AssistantBench uses 64-char hex; excluded here) |
-| `history` | Multi-agent conversation trace |
-| `mistake_agent` | Agent responsible for the failure |
-| `mistake_step` | Decisive error step |
-| `mistake_reason` | Free-text failure explanation |
-
-## Reload from Hugging Face
+## Download into this repo
 
 ```python
 from datasets import load_dataset
 
 hc = load_dataset("Kevin355/Who_and_When", "Hand-Crafted")
 ag = load_dataset("Kevin355/Who_and_When", "Algorithm-Generated")
+
+hc.save_to_disk("data/Who_and_When/Hand-Crafted")
+ag.save_to_disk("data/Who_and_When/Algorithm-Generated")
 ```
+
+Run from the repo root after `pip install datasets`.
+
+## Expected layout
+
+```
+data/Who_and_When/
+├── Hand-Crafted/
+└── Algorithm-Generated/
+```
+
+Consolidation keeps GAIA UUID rows only and drops AssistantBench (see `docs/reports/step2_consolidation.md`).
 
 ## Citation
 

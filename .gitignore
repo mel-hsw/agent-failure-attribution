@@ -54,3 +54,15 @@ tmp/
 # Claude Code local state (keep .claude/settings.json, ignore transient/user-local)
 .claude/settings.local.json
 .claude/scheduled_tasks.lock
+
+# Upstream and derived trajectory data (fetch locally; see README)
+/data/AgentErrorBench/GAIA/
+/data/AgentErrorBench/gaia_labels.json
+/data/Who_and_When/*
+!/data/Who_and_When/README.md
+
+/data/consolidated/*.jsonl
+/data/consolidated/failure_classifications.csv
+
+/data/evalsets/
+/data/splits/*.jsonl
