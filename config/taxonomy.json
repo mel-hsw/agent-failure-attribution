@@ -1,0 +1,49 @@
+{
+  "clusters": {
+    "N1": {
+      "level": "node",
+      "label": "Hallucination / factual fabrication",
+      "summary": "Final response asserts a fact not grounded in tool outputs."
+    },
+    "N2": {
+      "level": "node",
+      "label": "Code implementation bug",
+      "summary": "Agent code ran but contained a logic error that drove the wrong answer."
+    },
+    "N3": {
+      "level": "node",
+      "label": "Tool execution or retrieval failure",
+      "summary": "Environment or tool returned an error/empty result and the agent proceeded anyway."
+    },
+    "N4": {
+      "level": "node",
+      "label": "Wrong tool selection",
+      "summary": "Agent picked a tool mismatched to the subtask."
+    },
+    "N5": {
+      "level": "node",
+      "label": "Invalid tool parameters",
+      "summary": "Correct tool, malformed or placeholder arguments."
+    },
+    "P1": {
+      "level": "process",
+      "label": "Bad plan / task decomposition",
+      "summary": "Plan was structurally wrong from the start."
+    },
+    "P2": {
+      "level": "process",
+      "label": "Progress misassessment",
+      "summary": "Agent misjudged its own state or declared success too early."
+    },
+    "P3": {
+      "level": "process",
+      "label": "Cascading error",
+      "summary": "Early error propagated without re-verification."
+    },
+    "P4": {
+      "level": "process",
+      "label": "Constraint ignorance",
+      "summary": "Skipped verifying a task-stated constraint."
+    }
+  }
+}

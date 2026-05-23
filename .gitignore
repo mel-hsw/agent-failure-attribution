@@ -1,0 +1,57 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Credentials / env
+.env
+.env.*
+!.env.example
+*.key
+credentials.json
+service-account*.json
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local workspace clutter
+*.log.local
+scratch/
+tmp/
+
+# Evaluation run outputs (regenerate with evaluators/)
+/outputs/
+
+# Local benchmark data (download + build; see docs/data_attribution.md)
+/local/
+
+# Legacy local data/ tree (if present from older checkouts)
+/data/
+
+# Agent / personal working notes (not for public GitHub)
+/docs/PROJECT.md
+/docs/HANDOVER.md
+/docs/HANDOVER_paper_consolidation.md
+
+# Superseded root-level artifacts
+/archive/
+
+# Claude Code / Cursor local worktrees
+.claude/
+.claude/settings.local.json
+.claude/scheduled_tasks.lock
+
+# Office / LibreOffice lock files
+**/~$*
+.~lock.*

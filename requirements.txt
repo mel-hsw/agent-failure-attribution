@@ -1,0 +1,8 @@
+# Core — Phase B/C evaluators (Vertex batch + GCS)
+google-genai
+google-cloud-storage
+python-dotenv
+
+# Optional — only needed to rebuild the benchmark from primary sources
+# (scripts/consolidate.py, scripts/finalize.py)
+datasets
