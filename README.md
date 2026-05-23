@@ -9,7 +9,6 @@ This repository holds the **benchmark data, ADK EvalSets, and evaluation scripts
 - **H1 (structural mismatch).** The off-the-shelf ADK rubric evaluator (`rubric_based_final_response_quality_v1`) should recall **node-level** failures much more often than **process-level** failures on GAIA — operationalized as ≥40 percentage points gap on the eval split, with paired McNemar vs the stronger custom configuration.
 - **Three reported configurations:** **Baseline** (off-the-shelf rubric batch), **AllAtOnce** (one-pass structured JSON judge), **ConstraintGrounded** (two-step judge with a per-trajectory constraint-violation log). *Binary search localization (`phase_c_binary_search.py`) is implemented but not part of the paper narrative.*
 
-Headline numbers from the draft (eval split, *n* = 123): Baseline recalls ~90% of node-level vs ~18% of process-level failures (paired McNemar *p* = 0.002 vs ConstraintGrounded); custom evaluators raise process recall (AllAtOnce ~36%, ConstraintGrounded ~47%); step match at tolerance ±3 is ~65% for the custom methods and not meaningfully available for the Baseline rubric setup.
 
 ## What belongs in this repo (vs local-only)
 
@@ -24,10 +23,6 @@ Headline numbers from the draft (eval split, *n* = 123): Baseline recalls ~90% o
 | `scripts/` | Phase A–D pipelines, batch helpers, `scripts/archive/` retired tools |
 | `docs/` | Step reports and scorecards **cited by the paper** (methods, results, appendices) |
 | `paper/draft/` | Draft text and figures |
-
-**You do not need every folder under `data/` to reproduce the paper’s evaluation.** For **rerunning judges and metrics** after clone, the necessary artifacts are `data/consolidated/`, `data/splits/`, `data/evalsets/`, and `data/rubrics/`. The two upstream library trees are for **rebuilding** the consolidated JSONL from the original releases; omit them only if you treat the consolidated JSONL as the source of truth.
-
-**Local / not for publication** (see `.gitignore`): `data/EDA/` (exploratory EDA and nested tooling), `outputs/` (Vertex batch runs and logs), root `archive/`, `.claude/` worktree state, and optional working docs under `docs/` (`PROJECT.md`, `HANDOVER*.md`) if you keep them only on your machine.
 
 ## Repository layout
 
