@@ -1,6 +1,6 @@
 # Who&When (Hugging Face export)
 
-Local copy of the **Who&When** failure-attribution dataset — Hand-Crafted and Algorithm-Generated splits — saved in Hugging Face `datasets` on-disk format.
+Local copy of the **Who&When** failure-attribution dataset: Hand-Crafted and Algorithm-Generated splits, saved in Hugging Face `datasets` on-disk format.
 
 ## Upstream
 
@@ -24,7 +24,7 @@ Who_and_When/
 
 | Field | Description |
 |-------|-------------|
-| `question_ID` | GAIA task UUID (AssistantBench uses 64-char hex — excluded here) |
+| `question_ID` | GAIA task UUID (AssistantBench uses 64-char hex; excluded here) |
 | `history` | Multi-agent conversation trace |
 | `mistake_agent` | Agent responsible for the failure |
 | `mistake_step` | Decisive error step |

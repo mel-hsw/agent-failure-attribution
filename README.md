@@ -1,6 +1,6 @@
 # Google ADK failure-attribution evaluators
 
-Reference implementations for **localizing where agent trajectories fail** — predicting the earliest failure step and a failure category — using Google's Agent Development Kit (ADK) data format and Vertex AI batch judges.
+Reference implementations for **localizing where agent trajectories fail**: predict the earliest failure step and a failure category using Google's Agent Development Kit (ADK) data format and Vertex AI batch judges.
 
 This repo ships three evaluator patterns you can adapt to your own agents, plus a 133-case GAIA benchmark, ADK `EvalSet` JSON, and a reproducible Phase A–D pipeline.
 
@@ -10,9 +10,9 @@ This repo ships three evaluator patterns you can adapt to your own agents, plus 
 
 | Config | Script | What it does | Best for |
 |--------|--------|--------------|----------|
-| **Baseline** | `phase_b_batch.py` | Off-the-shelf ADK-style rubric judge — 9 yes/no rubrics, one per cluster; no origin step | Showing what the default rubric path can and cannot do |
+| **Baseline** | `phase_b_batch.py` | Off-the-shelf ADK-style rubric judge: 9 yes/no rubrics, one per cluster; no origin step | Showing what the default rubric path can and cannot do |
 | **AllAtOnce** | `phase_c_all_at_once.py` | One-pass structured JSON judge over the full trajectory | Simple custom evaluator; good starting point |
-| **ConstraintGrounded** | `phase_c_constraint_grounded.py` | Static violation log (Python) + two-pass LLM judge grounded in constraint evidence | Harder cases — especially process-level / modular traces |
+| **ConstraintGrounded** | `phase_c_constraint_grounded.py` | Static violation log (Python) + two-pass LLM judge grounded in constraint evidence | Harder cases, especially process-level / modular traces |
 
 All three read ADK `EvalSet` cases from `data/evalsets/`, submit Vertex batch jobs, and write `per_case.jsonl` + `summary.json` under `outputs/`.
 
@@ -20,7 +20,7 @@ All three read ADK `EvalSet` cases from `data/evalsets/`, submit Vertex batch jo
 
 ## Quickstart
 
-**Prerequisites:** Python 3.10+, a GCP project with Vertex AI enabled, Application Default Credentials (`gcloud auth application-default login`), and a GCS bucket for batch I/O (default `agenttracebucket` — override with `--bucket`).
+**Prerequisites:** Python 3.10+, a GCP project with Vertex AI enabled, Application Default Credentials (`gcloud auth application-default login`), and a GCS bucket for batch I/O (default `agenttracebucket`; override with `--bucket`).
 
 ```bash
 git clone https://github.com/mel-hsw/agent-failure-attribution.git
@@ -30,7 +30,7 @@ python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
 cp .env.example .env
-# Edit .env — at minimum set GOOGLE_CLOUD_PROJECT
+# Edit .env: at minimum set GOOGLE_CLOUD_PROJECT
 ```
 
 Verify the bundled data and EvalSets (no Vertex calls):
@@ -58,7 +58,7 @@ python3 scripts/phase_d_scorecard.py
 ## Running at scale
 
 ```bash
-# Full eval split (123 cases) — expect long batch runtimes
+# Full eval split (123 cases); expect long batch runtimes
 python3 scripts/phase_b_batch.py --split eval
 python3 scripts/phase_c_all_at_once.py --split eval
 python3 scripts/phase_c_constraint_grounded.py --split eval
@@ -71,10 +71,10 @@ Common flags (all Phase B/C batch scripts): `--judge-model` (default `gemini-3.1
 
 ## Adapting to your trajectories
 
-1. **Format** — Build ADK `EvalSet` JSON with one `eval_case` per failed trajectory. See the bundled files in `data/evalsets/` for the metadata shape (`gt` lives only in `*.with_gt.evalset.json`).
-2. **Baseline rubrics** — Edit or replace `data/rubrics/option_b_rubric.json` (one rubric per failure cluster).
-3. **Custom judges** — Copy prompt + schema logic from `phase_c_all_at_once.py` or the two-pass flow in `phase_c_constraint_grounded.py`. Shared batch plumbing is in `scripts/batch_utils.py`.
-4. **Static constraints** — `scripts/trajectory_replayer.py` implements Tier-1 heuristics used by ConstraintGrounded pass 0.
+1. **Format:** Build ADK `EvalSet` JSON with one `eval_case` per failed trajectory. See the bundled files in `data/evalsets/` for the metadata shape (`gt` lives only in `*.with_gt.evalset.json`).
+2. **Baseline rubrics:** Edit or replace `data/rubrics/option_b_rubric.json` (one rubric per failure cluster).
+3. **Custom judges:** Copy prompt + schema logic from `phase_c_all_at_once.py` or the two-pass flow in `phase_c_constraint_grounded.py`. Shared batch plumbing is in `scripts/batch_utils.py`.
+4. **Static constraints:** `scripts/trajectory_replayer.py` implements Tier-1 heuristics used by ConstraintGrounded pass 0.
 
 For what ADK ships out of the box vs what you must add yourself, see [`docs/reports/adk_eval_suite_notes.md`](docs/reports/adk_eval_suite_notes.md).
 
@@ -82,7 +82,7 @@ For what ADK ships out of the box vs what you must add yourself, see [`docs/repo
 
 | Asset | Location |
 |-------|----------|
-| 133 labelled trajectories | `data/consolidated/` — see [`data/consolidated/README.md`](data/consolidated/README.md) |
+| 133 labelled trajectories | `data/consolidated/` (see [`data/consolidated/README.md`](data/consolidated/README.md)) |
 | dev / calibration / eval splits | `data/splits/` |
 | ADK EvalSets (judge + with_gt) | `data/evalsets/` |
 | Phase B rubric definition | `data/rubrics/option_b_rubric.json` |
@@ -99,9 +99,9 @@ The bundled benchmark is a **derived GAIA-only subset** of two upstream failure-
 |--------|----------|-------------|------------|
 | **AgentErrorBench** | [ulab-uiuc/AgentDebug](https://github.com/ulab-uiuc/AgentDebug) | 50 GAIA failure trajectories (single-agent; GPT-4o, Llama3.3-70B, Qwen3-8B) | `data/AgentErrorBench/` |
 | **Who&When** | [ag2ai/Agents_Failure_Attribution](https://github.com/ag2ai/Agents_Failure_Attribution) · [HF dataset](https://huggingface.co/datasets/Kevin355/Who_and_When) | Hand-Crafted + Algorithm-Generated splits; GAIA UUID rows only (AssistantBench excluded) | `data/Who_and_When/` |
-| **GAIA** (task substrate) | [gaia-benchmark/GAIA](https://huggingface.co/datasets/gaia-benchmark/GAIA) | Underlying questions/tasks referenced by both libraries | — |
+| **GAIA** (task substrate) | [gaia-benchmark/GAIA](https://huggingface.co/datasets/gaia-benchmark/GAIA) | Underlying questions/tasks referenced by both libraries | n/a |
 
-This repo's consolidated labels (`data/consolidated/`), splits, and EvalSets are **new derivatives** — not redistributions of the upstream annotation formats. If you use the benchmark or results, please cite the upstream works:
+This repo's consolidated labels (`data/consolidated/`), splits, and EvalSets are **new derivatives**, not redistributions of the upstream annotation formats. If you use the benchmark or results, please cite the upstream works:
 
 ```bibtex
 @article{zhu2025agentdebug,
@@ -152,7 +152,7 @@ Per-source READMEs: [`data/AgentErrorBench/README.md`](data/AgentErrorBench/READ
 │   └── archive/            # Retired experiments and smoke tests
 ├── docs/reports/           # Methods, scorecards, ADK reference notes
 ├── paper/draft/            # Academic write-up (companion to this repo)
-└── outputs/                # gitignored — run artifacts
+└── outputs/                # gitignored; run artifacts
 ```
 
 ## Configuration
@@ -179,6 +179,6 @@ Batch artifacts default to `gs://agenttracebucket/<phase>/<run-id>/`. Ensure you
 
 | Script | Notes |
 |--------|-------|
-| `phase_c_binary_search.py` | Step-localization via binary search — implemented, not in the paper comparison |
+| `phase_c_binary_search.py` | Step-localization via binary search; implemented, not in the paper comparison |
 | `phase_c_all_at_once_v3.py` | Prompt variant (rejected in paper runs) |
 | `scripts/archive/render_dev_review.py` | Side-by-side dev review HTML |

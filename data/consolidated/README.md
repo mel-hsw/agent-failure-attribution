@@ -7,7 +7,7 @@
 | File | Use |
 |------|-----|
 | `gaia_consolidated_with_gt.jsonl` | Canonical records with ground-truth labels (split input) |
-| `gaia_consolidated_clean.jsonl` | Judge-visible records — annotation keys stripped |
+| `gaia_consolidated_clean.jsonl` | Judge-visible records; annotation keys stripped |
 | `gaia_consolidated.jsonl` | Pre-review consolidation |
 | `gaia_consolidated_reviewed.jsonl` | Post cluster-review pass |
 | `cluster_review_patch.jsonl` | Row-level review decisions (DROP / FLAG / relabel) |
