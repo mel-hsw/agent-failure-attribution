@@ -2,23 +2,27 @@
 
 Reference implementations for **localizing where agent trajectories fail**: predict the earliest failure step and a failure category using Google's Agent Development Kit (ADK) data format and Vertex AI batch judges.
 
-This repo ships three evaluator patterns you can adapt to your own agents, plus scripts to build a GAIA failure-attribution benchmark from upstream datasets and run a reproducible Phase A–D pipeline.
+This repo ships three evaluator patterns you can adapt to your own agents, plus a reproducible Phase A–D pipeline. Trajectory data is not included; see [Data sources](#data-sources).
 
 **Task.** Given a failed trajectory, predict **origin step** + **failure cluster** (nine clusters: five node-level N1–N5, four process-level P1–P4).
 
-**Data.** This repository publishes **code and evaluation configs only**. Trajectory data comes from [AgentErrorBench](https://github.com/ulab-uiuc/AgentDebug) and [Who&When](https://github.com/ag2ai/Agents_Failure_Attribution); you download those locally (see [Data sources](#data-sources-not-redistributed)).
-
 ## Three evaluators
 
-| Config | Script | What it does | Best for |
-|--------|--------|--------------|----------|
-| **Baseline** | `phase_b_batch.py` | Off-the-shelf ADK-style rubric judge: 9 yes/no rubrics, one per cluster; no origin step | Showing what the default rubric path can and cannot do |
-| **AllAtOnce** | `phase_c_all_at_once.py` | One-pass structured JSON judge over the full trajectory | Simple custom evaluator; good starting point |
-| **ConstraintGrounded** | `phase_c_constraint_grounded.py` | Static violation log (Python) + two-pass LLM judge grounded in constraint evidence | Harder cases, especially process-level / modular traces |
+### Baseline (`phase_b_batch.py`)
+
+Off-the-shelf ADK-style rubric judge: 9 yes/no rubrics, one per cluster; no origin step. Use this to show what the default rubric path can and cannot do.
+
+### AllAtOnce (`phase_c_all_at_once.py`)
+
+One-pass structured JSON judge over the full trajectory. Simplest custom evaluator; good starting point for your own agents.
+
+### ConstraintGrounded (`phase_c_constraint_grounded.py`)
+
+Static violation log (Python) plus a two-pass LLM judge grounded in constraint evidence. Best for harder cases, especially process-level and modular traces.
 
 All three read ADK `EvalSet` cases from `data/evalsets/`, submit Vertex batch jobs, and write `per_case.jsonl` + `summary.json` under `outputs/`.
 
-> **Headline result (133-case eval split, built locally from upstream data):** the Baseline recalls ~90% of node-level failures but only ~18% of process-level ones. AllAtOnce and ConstraintGrounded narrow that gap; details in [`docs/reports/step4_results.md`](docs/reports/step4_results.md).
+> **Headline result (133-case eval split):** the Baseline recalls ~90% of node-level failures but only ~18% of process-level ones. AllAtOnce and ConstraintGrounded narrow that gap; details in [`docs/reports/step4_results.md`](docs/reports/step4_results.md).
 
 ## Quickstart
 
@@ -35,22 +39,9 @@ cp .env.example .env
 # Edit .env: at minimum set GOOGLE_CLOUD_PROJECT
 ```
 
-### 1. Fetch upstream data (required)
+### 1. Prepare data
 
-Trajectory data is **not** stored in this repo. Download from the original sources:
-
-**Who&When** ([ag2ai/Agents_Failure_Attribution](https://github.com/ag2ai/Agents_Failure_Attribution), dataset on [Hugging Face](https://huggingface.co/datasets/Kevin355/Who_and_When)):
-
-```python
-from datasets import load_dataset
-
-load_dataset("Kevin355/Who_and_When", "Hand-Crafted").save_to_disk("data/Who_and_When/Hand-Crafted")
-load_dataset("Kevin355/Who_and_When", "Algorithm-Generated").save_to_disk("data/Who_and_When/Algorithm-Generated")
-```
-
-**AgentErrorBench** ([ulab-uiuc/AgentDebug](https://github.com/ulab-uiuc/AgentDebug)): follow that repo's instructions to download the GAIA slice, then place files under `data/AgentErrorBench/` as described in [`data/AgentErrorBench/README.md`](data/AgentErrorBench/README.md).
-
-### 2. Build benchmark + EvalSets locally
+Download the benchmark inputs listed under [Data sources](#data-sources), then build EvalSets locally:
 
 ```bash
 python3 scripts/consolidate.py
@@ -60,7 +51,7 @@ python3 scripts/phase_a_verify.py   # re-runs Phase A and must exit 0
 
 This writes consolidated JSONL, splits, and ADK EvalSets under `data/` (gitignored).
 
-### 3. Run evaluators
+### 2. Run evaluators
 
 Smoke-test each evaluator on the 5-case dev split:
 
@@ -113,23 +104,31 @@ For what ADK ships out of the box vs what you must add yourself, see [`docs/repo
 
 | Local only (gitignored) | Purpose |
 |-------------------------|---------|
-| `data/AgentErrorBench/`, `data/Who_and_When/` | Upstream downloads |
-| `data/consolidated/*.jsonl`, `data/evalsets/`, `data/splits/*.jsonl` | Built by Phase A |
+| `data/` (except rubrics, split manifest, review patch) | Downloaded + built benchmark artifacts |
 | `outputs/` | Evaluation run artifacts |
 
-## Data sources (not redistributed)
+## Data sources
 
-Benchmark trajectories and annotations belong to the upstream projects below. **Do not republish their data via this repository.** Clone this repo for the ADK evaluator code; fetch datasets from the sources listed here.
+This repo publishes **evaluator code only**. Benchmark trajectories belong to the projects below; fetch them locally and do not republish via this repository.
 
-| Dataset | Where to get it | Used for |
-|---------|-----------------|----------|
-| **AgentErrorBench** | [ulab-uiuc/AgentDebug](https://github.com/ulab-uiuc/AgentDebug) | 50 GAIA single-agent failure trajectories |
-| **Who&When** | [ag2ai/Agents_Failure_Attribution](https://github.com/ag2ai/Agents_Failure_Attribution) · [Kevin355/Who_and_When on HF](https://huggingface.co/datasets/Kevin355/Who_and_When) | Multi-agent failure trajectories (GAIA UUID rows only after consolidation) |
-| **GAIA** (task substrate) | [gaia-benchmark/GAIA](https://huggingface.co/datasets/gaia-benchmark/GAIA) | Underlying questions referenced by both libraries |
+| Dataset | Source | Notes |
+|---------|--------|-------|
+| **AgentErrorBench** | [ulab-uiuc/AgentDebug](https://github.com/ulab-uiuc/AgentDebug) | GAIA slice → `data/AgentErrorBench/` ([README](data/AgentErrorBench/README.md)) |
+| **Who&When** | [Kevin355/Who_and_When](https://huggingface.co/datasets/Kevin355/Who_and_When) | HF export → `data/Who_and_When/` ([README](data/Who_and_When/README.md)) |
+| **GAIA** | [gaia-benchmark/GAIA](https://huggingface.co/datasets/gaia-benchmark/GAIA) | Task substrate for both libraries |
 
-This project's consolidation pipeline (`scripts/consolidate.py`, `finalize.py`, Phase A) merges those sources into a 133-record eval benchmark with a unified 9-cluster taxonomy. That derived JSONL stays on your machine unless upstream licenses allow you to share it separately.
+**Who&When (Hugging Face):**
 
-Per-source fetch notes: [`data/AgentErrorBench/README.md`](data/AgentErrorBench/README.md), [`data/Who_and_When/README.md`](data/Who_and_When/README.md), [`data/consolidated/README.md`](data/consolidated/README.md).
+```python
+from datasets import load_dataset
+
+load_dataset("Kevin355/Who_and_When", "Hand-Crafted").save_to_disk("data/Who_and_When/Hand-Crafted")
+load_dataset("Kevin355/Who_and_When", "Algorithm-Generated").save_to_disk("data/Who_and_When/Algorithm-Generated")
+```
+
+**AgentErrorBench:** follow [AgentDebug](https://github.com/ulab-uiuc/AgentDebug) download instructions for the GAIA labels + trajectory files.
+
+Consolidation details: [`data/consolidated/README.md`](data/consolidated/README.md), `docs/reports/step1_data_cleaning.md` through `step3_taxonomy_review.md`.
 
 ### Citation
 
@@ -167,12 +166,10 @@ If you use the upstream datasets or reproduce the reported numbers, cite:
 ├── requirements.txt
 ├── .env.example
 ├── data/
-│   ├── AgentErrorBench/    # upstream download (gitignored data files)
-│   ├── Who_and_When/       # upstream download (gitignored)
-│   ├── consolidated/       # local build output (gitignored JSONL)
-│   ├── splits/             # split_manifest.json tracked; *.jsonl local
-│   ├── evalsets/           # local build output (gitignored)
-│   └── rubrics/            # Phase B rubric set (tracked)
+│   ├── consolidated/       # local build output
+│   ├── splits/
+│   ├── evalsets/
+│   └── rubrics/
 ├── scripts/
 │   ├── batch_utils.py      # Vertex batch + GCS helpers
 │   ├── phase_a_*.py        # Clean, split, build evalsets, verify
