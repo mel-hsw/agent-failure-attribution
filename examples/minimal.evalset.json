@@ -1,0 +1,40 @@
+{
+  "eval_set_id": "failure_attribution_minimal_example",
+  "name": "failure_attribution_minimal_example",
+  "description": "Minimal ADK EvalSet shape for failure attribution (synthetic).",
+  "eval_cases": [
+    {
+      "eval_id": "example-001",
+      "conversation": [
+        {
+          "invocation_id": "example-001-inv-0",
+          "user_content": {
+            "parts": [{"text": "Task: What is 17 + 25? Use the calculator tool if needed."}],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [{"text": "The answer is 41."}],
+            "role": "model"
+          },
+          "intermediate_data": {"tool_uses": [], "intermediate_responses": []},
+          "creation_timestamp": 0
+        }
+      ],
+      "session_input": {
+        "app_name": "failure_attribution_eval",
+        "user_id": "example",
+        "state": {}
+      },
+      "creation_timestamp": 0,
+      "metadata": {
+        "source": "synthetic",
+        "trajectory": [
+          {"role": "user", "name": null, "content": "Task: What is 17 + 25?"},
+          {"role": "assistant", "name": null, "content": "I'll add the numbers."},
+          {"role": "assistant", "name": null, "content": "Tool result: 42"},
+          {"role": "assistant", "name": null, "content": "The answer is 41."}
+        ]
+      }
+    }
+  ]
+}
